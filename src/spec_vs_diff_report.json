@@ -1,0 +1,28 @@
+{
+  "kind": "spec_vs_diff_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-04T05:54:04.289Z",
+  "summary": "Implemented static sitemap.xml and robots.txt in frontend/public, plus added hosting config files (_headers, _redirects) and updated 404.html logic to avoid SPA fallback for /sitemap.xml and /robots.txt. Deployment checklist changes shown do not include the requested explicit sitemap validation section.",
+  "missing_requirements": [
+    {
+      "id": "REQ-5",
+      "requirement": "Add/update deployment verification documentation to include explicit sitemap checks: verifying dist/sitemap.xml exists, requesting /sitemap.xml returns HTTP 200 with Content-Type: application/xml, and confirming the URL is not being served by SPA fallback HTML.",
+      "reason": "The provided DEPLOYMENT_CHECKLIST.md excerpt includes build, SPA fallback, and other production checks, but does not show a dedicated section/checklist items for /sitemap.xml status/body/content-type verification.",
+      "evidence": [
+        "frontend/DEPLOYMENT_CHECKLIST.md (truncated excerpt shows no sitemap-specific checks)"
+      ]
+    }
+  ],
+  "hallucinated_features": [],
+  "confidence": 0.72,
+  "changed_files": [
+    "frontend-file-summaries.txt",
+    "frontend/DEPLOYMENT_CHECKLIST.md",
+    "frontend/public/404.html",
+    "frontend/public/_headers",
+    "frontend/public/_redirects",
+    "frontend/public/robots.txt",
+    "frontend/public/sitemap.xml",
+    "project_state.json"
+  ]
+}

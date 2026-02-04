@@ -1,0 +1,88 @@
+{
+  "kind": "coverage_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-04T05:54:04.306Z",
+  "sources": {
+    "buildRequest": true,
+    "implementationPlan": true
+  },
+  "requirements": {
+    "total": 5,
+    "implemented": 5,
+    "items": [
+      {
+        "id": "REQ-1",
+        "summary": "Create/replace the production sitemap at `frontend/public/sitemap.xml` with a valid non-empty XML sitemap (raw XML only), so that the Vite build outputs `dist/sitemap.xml` as a standalone static file (not an HTML page).",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/public/sitemap.xml"
+        ],
+        "matchedFiles": [
+          "frontend/public/sitemap.xml"
+        ]
+      },
+      {
+        "id": "REQ-2",
+        "summary": "Fix static hosting / SPA fallback behavior so `/sitemap.xml` is never served by the SPA fallback (e.g., `index.html` or `404.html`) and never redirects; it must be publicly accessible as a static asset at exactly `/sitemap.xml`.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/public/404.html",
+          "frontend/public/_redirects"
+        ],
+        "matchedFiles": [
+          "frontend/public/404.html",
+          "frontend/public/_redirects"
+        ]
+      },
+      {
+        "id": "REQ-3",
+        "summary": "Ensure `/sitemap.xml` is served with the HTTP response header `Content-Type: application/xml` (or an equivalent XML MIME type accepted by Google), and is not served as `text/html`.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/public/_headers"
+        ],
+        "matchedFiles": [
+          "frontend/public/_headers"
+        ]
+      },
+      {
+        "id": "REQ-4",
+        "summary": "Populate `frontend/public/robots.txt` to publicly reference the sitemap at `/sitemap.xml` and ensure it is also emitted as a static file in `dist/robots.txt`.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/public/robots.txt"
+        ],
+        "matchedFiles": [
+          "frontend/public/robots.txt"
+        ]
+      },
+      {
+        "id": "REQ-5",
+        "summary": "Add/update deployment verification documentation to include explicit sitemap checks: verifying `dist/sitemap.xml` exists, requesting `/sitemap.xml` returns HTTP 200 with `Content-Type: application/xml`, and confirming the URL is not being served by SPA fallback HTML.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/DEPLOYMENT_CHECKLIST.md"
+        ],
+        "matchedFiles": [
+          "frontend/DEPLOYMENT_CHECKLIST.md"
+        ]
+      }
+    ]
+  },
+  "changedFiles": [
+    "build-request.json",
+    "feature_evidence.json",
+    "frontend-file-summaries.txt",
+    "frontend-implementation-plan.json",
+    "frontend/DEPLOYMENT_CHECKLIST.md",
+    "frontend/public/404.html",
+    "frontend/public/_headers",
+    "frontend/public/_redirects",
+    "frontend/public/robots.txt",
+    "frontend/public/sitemap.xml",
+    "project_state.json",
+    "scratch/component-selection.json",
+    "spec.md",
+    "spec_vs_diff_report.json"
+  ]
+}

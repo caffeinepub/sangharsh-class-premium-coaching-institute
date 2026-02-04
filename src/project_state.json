@@ -1,0 +1,323 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectStateVersion": 3,
+  "summary": "Sangharsh Class is a Vite + React + TailwindCSS single-page marketing website for a coaching institute (classes 7th–12th). It includes a Motoko canister backend for Internet Identity authentication, role-based access control (admin/user/guest), and per-caller user profile storage. The frontend is primarily static (hardcoded section content) and includes production-hardening for static hosting (relative asset paths, SPA 404 fallback, and a deployment verification checklist) to prevent blank-screen regressions on deployment (e.g., ICP/custom domain hosting).",
+  "existing_features": [
+    {
+      "id": "IF-1",
+      "title": "Single-page public marketing homepage",
+      "synonyms": [
+        "Marketing SPA",
+        "Public landing page"
+      ],
+      "description": "Renders a static homepage composed of Header, Hero, About, Faculty, Courses, Contact, and Footer sections plus a floating WhatsApp button. Content is currently hardcoded in React components.",
+      "reqIds": [],
+      "version": 1
+    },
+    {
+      "id": "IF-2",
+      "title": "Responsive header with smooth-scroll section navigation",
+      "synonyms": [
+        "Section anchor navigation",
+        "Mobile sheet menu"
+      ],
+      "description": "Fixed header that changes styling on scroll and provides desktop + mobile navigation; clicking items smoothly scrolls to section IDs using scrollIntoView.",
+      "reqIds": [],
+      "version": 1
+    },
+    {
+      "id": "IF-3",
+      "title": "Hero section with CTAs and stats",
+      "synonyms": [
+        "Landing hero",
+        "Top banner"
+      ],
+      "description": "Hero banner with background image overlay, bilingual tagline, “100% Result Guarantee” badge, CTA buttons that scroll to contact/courses, and stat cards.",
+      "reqIds": [],
+      "version": 1
+    },
+    {
+      "id": "IF-4",
+      "title": "About section (static)",
+      "synonyms": [
+        "About Sangharsh Classes"
+      ],
+      "description": "Displays hardcoded multi-paragraph description text and a single “Result Oriented” feature card.",
+      "reqIds": [],
+      "version": 1
+    },
+    {
+      "id": "IF-5",
+      "title": "Faculty section (static cards)",
+      "synonyms": [
+        "Teacher listing",
+        "Faculty grid"
+      ],
+      "description": "Renders a responsive grid of faculty cards with photos, subject badges, roles, experience, and specialization text.",
+      "reqIds": [],
+      "version": 1
+    },
+    {
+      "id": "IF-6",
+      "title": "Courses section (classes 7th–12th)",
+      "synonyms": [
+        "Programs grid",
+        "Offerings"
+      ],
+      "description": "Displays hardcoded course cards for classes 7–12 plus a promotional banner for board-preparation subjects.",
+      "reqIds": [],
+      "version": 1
+    },
+    {
+      "id": "IF-7",
+      "title": "Contact section with deep-link actions",
+      "synonyms": [
+        "Call/email/WhatsApp actions"
+      ],
+      "description": "Shows phone/email/location and provides one-click actions using tel:, mailto:, and wa.me links/buttons, including a “Schedule a Visit” WhatsApp CTA.",
+      "reqIds": [],
+      "version": 1
+    },
+    {
+      "id": "IF-8",
+      "title": "Footer with quick links and social links",
+      "synonyms": [
+        "Site footer",
+        "Social icons"
+      ],
+      "description": "Footer includes branding, quick links to section anchors, contact details, and outbound social links (Facebook/Instagram/YouTube) with current-year copyright.",
+      "reqIds": [],
+      "version": 1
+    },
+    {
+      "id": "IF-9",
+      "title": "Floating WhatsApp contact button",
+      "synonyms": [
+        "WhatsApp FAB"
+      ],
+      "description": "Fixed-position WhatsApp button that opens a chat to the configured phone number in a new tab.",
+      "reqIds": [],
+      "version": 1
+    },
+    {
+      "id": "IF-10",
+      "title": "Top-level React error boundary with fallback UI",
+      "synonyms": [
+        "AppErrorBoundary",
+        "Blank-screen prevention"
+      ],
+      "description": "Wraps the app in a React error boundary that catches render/lifecycle errors, logs details to console, and displays a user-friendly fallback UI with refresh/home actions.",
+      "reqIds": [],
+      "version": 1
+    },
+    {
+      "id": "IF-11",
+      "title": "Runtime diagnostics for production debugging",
+      "synonyms": [
+        "Global error logging",
+        "Unhandled rejection capture"
+      ],
+      "description": "Registers window error and unhandledrejection listeners and logs initialization/render markers to help diagnose production failures.",
+      "reqIds": [],
+      "version": 1
+    },
+    {
+      "id": "IF-12",
+      "title": "Internet Identity authentication provider (frontend)",
+      "synonyms": [
+        "AuthClient integration",
+        "InternetIdentityProvider"
+      ],
+      "description": "Provides a React context that initializes @dfinity/auth-client, restores identity on mount, supports login/logout, and exposes status flags and error state.",
+      "reqIds": [],
+      "version": 1
+    },
+    {
+      "id": "IF-13",
+      "title": "Backend canister actor creation & caching hook",
+      "synonyms": [
+        "useActor",
+        "Identity-bound actor"
+      ],
+      "description": "Creates an anonymous actor when logged out and an identity-bound actor when logged in; caches actor by principal in React Query and invalidates/refetches other queries when the actor changes. Attempts RBAC initialization via _initializeAccessControlWithSecret.",
+      "reqIds": [],
+      "version": 1
+    },
+    {
+      "id": "IF-14",
+      "title": "Safe backend actor initialization (non-fatal RBAC init)",
+      "synonyms": [
+        "useBackendActorSafe",
+        "Graceful actor init"
+      ],
+      "description": "Creates an identity-bound actor but only attempts RBAC initialization when a caffeineAdminToken secret is present; initialization failures are caught and logged as warnings rather than breaking UI.",
+      "reqIds": [],
+      "version": 1
+    },
+    {
+      "id": "IF-15",
+      "title": "Secure secret extraction from URL hash with session persistence",
+      "synonyms": [
+        "getSecretParameter",
+        "Hash token cleanup"
+      ],
+      "description": "Utilities to read parameters from query/hash, persist to sessionStorage, and extract sensitive secrets from the URL hash while removing them from the address bar via history.replaceState.",
+      "reqIds": [],
+      "version": 1
+    },
+    {
+      "id": "IF-16",
+      "title": "Per-caller user profile hooks (frontend)",
+      "synonyms": [
+        "useGetCallerUserProfile",
+        "useSaveCallerUserProfile"
+      ],
+      "description": "React Query hook to fetch the current caller’s profile and an async helper to save it via the backend actor; combines actor-fetching and query loading states.",
+      "reqIds": [],
+      "version": 1
+    },
+    {
+      "id": "IF-17",
+      "title": "Role-based access control (Motoko)",
+      "synonyms": [
+        "RBAC",
+        "AccessControl",
+        "admin/user/guest roles"
+      ],
+      "description": "Implements RBAC with roles #admin/#user/#guest; supports initialization using an environment admin token + user-provided secret, querying caller role/admin status, and admin-only role assignment.",
+      "reqIds": [],
+      "version": 1
+    },
+    {
+      "id": "IF-18",
+      "title": "Per-user profile storage with authorization (Motoko)",
+      "synonyms": [
+        "UserProfile storage",
+        "getCallerUserProfile/saveCallerUserProfile"
+      ],
+      "description": "Stores a per-principal UserProfile (currently { name : Text }) in a canister map. Read/write is gated to #user permission; admins can query other users via getUserProfile.",
+      "reqIds": [],
+      "version": 1
+    },
+    {
+      "id": "IF-19",
+      "title": "Production build configuration for correct static hosting asset paths",
+      "synonyms": [
+        "Vite base configuration",
+        "Hashed assets output"
+      ],
+      "description": "Vite config sets base to './' for relative asset paths and configures Rollup output naming (assets/[name]-[hash]) to produce stable, cache-friendly build artifacts in dist/ for static/IC hosting.",
+      "reqIds": [],
+      "version": 1
+    },
+    {
+      "id": "IF-20",
+      "title": "SPA deep-link fallback for static hosting",
+      "synonyms": [
+        "404.html fallback",
+        "Static host deep links"
+      ],
+      "description": "Adds frontend/public/404.html that redirects unknown routes back to root for static hosting environments that serve 404.html, enabling deep-link compatibility patterns.",
+      "reqIds": [],
+      "version": 1
+    },
+    {
+      "id": "IF-21",
+      "title": "Deployment verification checklist documentation",
+      "synonyms": [
+        "Deployment checklist",
+        "Release smoke tests"
+      ],
+      "description": "Provides frontend/DEPLOYMENT_CHECKLIST.md with explicit pre/post-deploy validation steps (clean build, verify dist/index.html asset refs, publish directory correctness, SPA fallback testing, and console/network audits) to prevent blank-screen regressions.",
+      "reqIds": [],
+      "version": 1
+    },
+    {
+      "id": "IF-22",
+      "title": "Local development proxy to ICP backend",
+      "synonyms": [
+        "Vite dev proxy",
+        "/api proxy"
+      ],
+      "description": "Vite dev server proxies /api requests to a local ICP replica (127.0.0.1:4943) for frontend-backend development.",
+      "reqIds": [],
+      "version": 1
+    },
+    {
+      "id": "feature-create-replace-the-production-sitemap-at-frontend-public-sitemap-xml-with-a-valid-non-empty-xml-sitemap-raw-xml-only-so-that-the-vite-build-outputs-dist-sitemap-xml-as-a-standalone-static-file-not-an-html-page",
+      "title": "Create/replace the production sitemap at `frontend/public/sitemap.xml` with a valid non-empty XML sitemap (raw XML only), so that the Vite build outputs `dist/sitemap.xml` as a standalone static file (not an HTML page).",
+      "reqIds": [
+        "REQ-1"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-fix-static-hosting-spa-fallback-behavior-so-sitemap-xml-is-never-served-by-the-spa-fallback-e-g-index-html-or-404-html-and-never-redirects-it-must-be-publicly-accessible-as-a-static-asset-at-exactly-sitemap-xml",
+      "title": "Fix static hosting / SPA fallback behavior so `/sitemap.xml` is never served by the SPA fallback (e.g., `index.html` or `404.html`) and never redirects; it must be publicly accessible as a static asset at exactly `/sitemap.xml`.",
+      "reqIds": [
+        "REQ-2"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-sitemap-xml-is-served-with-the-http-response-header-content-type-application-xml-or-an-equivalent-xml-mime-type-accepted-by-google-and-is-not-served-as-text-html",
+      "title": "Ensure `/sitemap.xml` is served with the HTTP response header `Content-Type: application/xml` (or an equivalent XML MIME type accepted by Google), and is not served as `text/html`.",
+      "reqIds": [
+        "REQ-3"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-populate-frontend-public-robots-txt-to-publicly-reference-the-sitemap-at-sitemap-xml-and-ensure-it-is-also-emitted-as-a-static-file-in-dist-robots-txt",
+      "title": "Populate `frontend/public/robots.txt` to publicly reference the sitemap at `/sitemap.xml` and ensure it is also emitted as a static file in `dist/robots.txt`.",
+      "reqIds": [
+        "REQ-4"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-update-deployment-verification-documentation-to-include-explicit-sitemap-checks-verifying-dist-sitemap-xml-exists-requesting-sitemap-xml-returns-http-200-with-content-type-application-xml-and-confirming-the-url-is-not-being-served-by-spa-fallback-html",
+      "title": "Add/update deployment verification documentation to include explicit sitemap checks: verifying `dist/sitemap.xml` exists, requesting `/sitemap.xml` returns HTTP 200 with `Content-Type: application/xml`, and confirming the URL is not being served by SPA fallback HTML.",
+      "reqIds": [
+        "REQ-5"
+      ],
+      "version": 1
+    }
+  ],
+  "new_feature_requests": [
+    {
+      "id": "AR-1",
+      "summary": "Fix sitemap.xml being served as text/html: ensure valid static XML at /sitemap.xml with Content-Type application/xml, exclude from SPA fallback/routing, and verify Google Search Console can fetch it",
+      "reqIds": [],
+      "status": "pending"
+    }
+  ],
+  "architectural_notes": [
+    "Frontend is a Vite + React SPA composed of section components (Header/Hero/About/Faculty/Courses/Contact/Footer) and uses smooth scrolling to element IDs rather than a router.",
+    "Styling uses TailwindCSS with CSS-variable design tokens (OKLCH) and shadcn/ui-style primitives (e.g., Button, Card, Sheet).",
+    "Async state management uses TanStack React Query; backend actors are created via a query keyed by principal (identity) and reused with infinite staleTime.",
+    "Authentication is integrated via an Internet Identity React context built on @dfinity/auth-client; it restores persisted identity, supports login/logout, and exposes status flags.",
+    "Backend is an ICP Motoko canister; authorization is composed using a mixin pattern (MixinAuthorization) over an AccessControl state module.",
+    "RBAC bootstrap uses an environment variable (CAFFEINE_ADMIN_TOKEN) combined with a user-provided secret to assign the first admin and subsequent users.",
+    "Frontend includes a “safe actor” hook that avoids breaking public rendering by skipping/catching RBAC initialization failures when an admin token is missing/invalid.",
+    "URL/session utilities support reading parameters from query or hash, persisting to sessionStorage, and clearing sensitive hash parameters via history.replaceState.",
+    "Vite build configuration is tuned for static/IC hosting: base set to './' and Rollup output naming set for hashed assets; dev server proxies /api to a local ICP replica.",
+    "Ensure SEO static assets (sitemap.xml, robots.txt, Google verification HTML) are served as true static files from the host root and explicitly excluded from SPA fallback/redirect rules so they return correct content-types (e.g., sitemap.xml -> application/xml) and do not get rewritten to index.html."
+  ],
+  "known_issues": [
+    "Many admin-related UI files under frontend/src/admin/** are empty placeholders in this snapshot (AdminShell, AdminGate, AdminAuthPanel, editor/manager pages); there is no functional admin CMS implemented.",
+    "Several hooks/utilities are empty placeholders (useWebsiteContent.ts, useSectionConfigs.ts, useAdminStatus.ts, useAdminUsers.ts, contentSerialization.ts, DomainSetupDialog.tsx).",
+    "SEO/static indexing assets appear empty in this snapshot (frontend/public/robots.txt, frontend/public/sitemap.xml, frontend/public/google53082ab74af04c28.html), so crawler guidance and Google verification likely won’t work until populated correctly.",
+    "The “unsafe” actor hook (useActor) always calls _initializeAccessControlWithSecret (even if token is empty). The backend init method traps if CAFFEINE_ADMIN_TOKEN is not set; this can crash authenticated flows in misconfigured environments. (The safe hook mitigates this by skipping/catching init.)",
+    "AccessControl.getUserRole traps for non-anonymous principals that have not been registered via initialization; any backend method that checks permissions will trap until initialization is performed at least once for that principal.",
+    "Backend state (roles and userProfiles) uses in-memory Maps only; there is no stable memory persistence/migration, so data will be lost on canister upgrade.",
+    "frontend/public/404.html stores redirectPath in sessionStorage for deep links, but the app does not implement any restoration/handling of redirectPath (and there is no router), limiting the usefulness of this mechanism.",
+    "There are two global CSS files (frontend/index.css and frontend/src/index.css) with different token sets; only the src version is imported, but the duplicate file can cause confusion/drift.",
+    "Google Search Console reports sitemap.xml served with Content-Type text/html (likely due to SPA fallback/hosting rewrite serving index.html for /sitemap.xml); sitemap must be served as a static XML file with application/xml and no redirects."
+  ],
+  "isFixRequest": true,
+  "gameProjectType": "none",
+  "projectName": "Sangharsh Class - Premium Coaching Institute",
+  "clarification_mode": "instant",
+  "clarification_rounds": 0
+}

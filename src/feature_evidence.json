@@ -1,0 +1,101 @@
+{
+  "kind": "feature_evidence_report",
+  "features": [
+    {
+      "featureId": "feature-create-replace-the-production-sitemap-at-frontend-public-sitemap-xml-with-a-valid-non-empty-xml-sitemap-raw-xml-only-so-that-the-vite-build-outputs-dist-sitemap-xml-as-a-standalone-static-file-not-an-html-page",
+      "featureTitle": "Create/replace the production sitemap at `frontend/public/sitemap.xml` with a valid non-empty XML sitemap (raw XML only), so that the Vite build outputs `dist/sitemap.xml` as a standalone static file (not an HTML page).",
+      "files": [
+        "frontend/public/sitemap.xml"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0",
+        "authorization@4.0.0"
+      ],
+      "testIds": [
+        "REQ-1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-fix-static-hosting-spa-fallback-behavior-so-sitemap-xml-is-never-served-by-the-spa-fallback-e-g-index-html-or-404-html-and-never-redirects-it-must-be-publicly-accessible-as-a-static-asset-at-exactly-sitemap-xml",
+      "featureTitle": "Fix static hosting / SPA fallback behavior so `/sitemap.xml` is never served by the SPA fallback (e.g., `index.html` or `404.html`) and never redirects; it must be publicly accessible as a static asset at exactly `/sitemap.xml`.",
+      "files": [
+        "frontend/public/404.html",
+        "frontend/public/_redirects"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0",
+        "authorization@4.0.0"
+      ],
+      "testIds": [
+        "REQ-2"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-ensure-sitemap-xml-is-served-with-the-http-response-header-content-type-application-xml-or-an-equivalent-xml-mime-type-accepted-by-google-and-is-not-served-as-text-html",
+      "featureTitle": "Ensure `/sitemap.xml` is served with the HTTP response header `Content-Type: application/xml` (or an equivalent XML MIME type accepted by Google), and is not served as `text/html`.",
+      "files": [
+        "frontend/public/_headers"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0",
+        "authorization@4.0.0"
+      ],
+      "testIds": [
+        "REQ-3"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-populate-frontend-public-robots-txt-to-publicly-reference-the-sitemap-at-sitemap-xml-and-ensure-it-is-also-emitted-as-a-static-file-in-dist-robots-txt",
+      "featureTitle": "Populate `frontend/public/robots.txt` to publicly reference the sitemap at `/sitemap.xml` and ensure it is also emitted as a static file in `dist/robots.txt`.",
+      "files": [
+        "frontend/public/robots.txt"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0",
+        "authorization@4.0.0"
+      ],
+      "testIds": [
+        "REQ-4"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-update-deployment-verification-documentation-to-include-explicit-sitemap-checks-verifying-dist-sitemap-xml-exists-requesting-sitemap-xml-returns-http-200-with-content-type-application-xml-and-confirming-the-url-is-not-being-served-by-spa-fallback-html",
+      "featureTitle": "Add/update deployment verification documentation to include explicit sitemap checks: verifying `dist/sitemap.xml` exists, requesting `/sitemap.xml` returns HTTP 200 with `Content-Type: application/xml`, and confirming the URL is not being served by SPA fallback HTML.",
+      "files": [
+        "frontend/DEPLOYMENT_CHECKLIST.md"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0",
+        "authorization@4.0.0"
+      ],
+      "testIds": [
+        "REQ-5"
+      ],
+      "confidence": "high"
+    }
+  ]
+}

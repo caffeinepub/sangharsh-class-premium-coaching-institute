@@ -1,0 +1,8 @@
+# Exclude static files from SPA fallback
+# These files should be served directly, not rewritten to /index.html
+
+/sitemap.xml  /sitemap.xml  200
+/robots.txt   /robots.txt   200
+
+# SPA fallback for all other routes
+/*  /index.html  200

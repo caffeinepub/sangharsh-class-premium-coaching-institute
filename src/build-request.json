@@ -1,0 +1,109 @@
+{
+  "kind": "build_request",
+  "title": "Fix sitemap.xml being served as text/html by ensuring correct static XML + headers",
+  "priority": "high",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "text": "Create/replace the production sitemap at `frontend/public/sitemap.xml` with a valid non-empty XML sitemap (raw XML only), so that the Vite build outputs `dist/sitemap.xml` as a standalone static file (not an HTML page).",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-6"
+        ],
+        "quotes": [
+          "Ensure the sitemap is a valid XML file, not an HTML page.",
+          "Since this is a React/Vite website, serve sitemap.xml as a static file and exclude it from SPA routing."
+        ]
+      },
+      "acceptanceCriteria": [
+        "`frontend/public/sitemap.xml` contains a valid XML sitemap document (starts with XML declaration and a `<urlset>` root with the proper sitemap namespace).",
+        "After `npm run build`, `frontend/dist/sitemap.xml` exists at the root of the build output.",
+        "Requesting `/sitemap.xml` returns raw XML (no HTML content)."
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "text": "Fix static hosting / SPA fallback behavior so `/sitemap.xml` is never served by the SPA fallback (e.g., `index.html` or `404.html`) and never redirects; it must be publicly accessible as a static asset at exactly `/sitemap.xml`.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-6"
+        ],
+        "quotes": [
+          "Make sure the sitemap URL returns raw XML only (no HTML, redirect, or error page).",
+          "Fix any routing, SPA fallback, or hosting configuration that is serving sitemap.xml as text/html.",
+          "Make sure the sitemap file name is correct (sitemap.xml) and publicly accessible."
+        ]
+      },
+      "acceptanceCriteria": [
+        "A direct request to `/sitemap.xml` returns HTTP 200 (not a 3xx redirect and not a 404 fallback).",
+        "The response body for `/sitemap.xml` is the XML sitemap content and does not contain `<!DOCTYPE html>` or `<html>`.",
+        "If the hosting configuration includes SPA rewrite rules / fallback behavior, those rules explicitly exclude `/sitemap.xml` (and do not rewrite it to `/index.html`)."
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "text": "Ensure `/sitemap.xml` is served with the HTTP response header `Content-Type: application/xml` (or an equivalent XML MIME type accepted by Google), and is not served as `text/html`.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-6"
+        ],
+        "quotes": [
+          "Set the correct HTTP response header: Content-Type: application/xml",
+          "Incorrect HTTP header content-type: text/html (expected: application/xml)"
+        ]
+      },
+      "acceptanceCriteria": [
+        "A `curl -I https://<production-origin>/sitemap.xml` (or equivalent header inspection) shows `Content-Type: application/xml` (or `application/xml; charset=utf-8`).",
+        "Google Search Console sitemap fetch no longer reports `Incorrect HTTP header content-type: text/html (expected: application/xml)` after deployment."
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "text": "Populate `frontend/public/robots.txt` to publicly reference the sitemap at `/sitemap.xml` and ensure it is also emitted as a static file in `dist/robots.txt`.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-6"
+        ],
+        "quotes": [
+          "Ensure the sitemap file name is correct (sitemap.xml) and publicly accessible."
+        ]
+      },
+      "acceptanceCriteria": [
+        "`frontend/public/robots.txt` is non-empty and includes a `Sitemap: https://<production-origin>/sitemap.xml` directive (using the correct production origin for the deployed site).",
+        "After `npm run build`, `frontend/dist/robots.txt` exists and matches the intended contents."
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "text": "Add/update deployment verification documentation to include explicit sitemap checks: verifying `dist/sitemap.xml` exists, requesting `/sitemap.xml` returns HTTP 200 with `Content-Type: application/xml`, and confirming the URL is not being served by SPA fallback HTML.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-6"
+        ],
+        "quotes": [
+          "Test the sitemap URL and confirm it works correctly in Google Search Console."
+        ]
+      },
+      "acceptanceCriteria": [
+        "`frontend/DEPLOYMENT_CHECKLIST.md` includes a new checklist section specifically for validating `/sitemap.xml` response status, body (raw XML), and `Content-Type` header in production."
+      ]
+    }
+  ],
+  "constraints": [
+    "Do not redesign the website. Only fix the sitemap and HTTP header issue.",
+    "Do not modify files under `frontend/src/components/ui` or any other `frontend.immutablePaths` entries."
+  ],
+  "nonGoals": [
+    "Adding new website pages, routes, or redesigning layout/content.",
+    "Implementing a dynamic sitemap generated by the backend canister."
+  ],
+  "imageRequirements": {
+    "required": [],
+    "edits": []
+  }
+}
