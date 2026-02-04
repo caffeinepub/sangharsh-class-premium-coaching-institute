@@ -1,76 +1,95 @@
 {
   "kind": "coverage_report",
   "version": "1.0",
-  "generatedAt": "2026-02-04T13:31:02.945Z",
+  "generatedAt": "2026-02-04T13:56:23.021Z",
   "sources": {
     "buildRequest": true,
     "implementationPlan": true
   },
   "requirements": {
-    "total": 5,
-    "implemented": 5,
+    "total": 4,
+    "implemented": 4,
     "items": [
       {
         "id": "REQ-1",
-        "summary": "Add a favicon generated from the existing Sangharsh Classes logo and ensure it is published at the site root so it is accessible at https://sangharshclasses.in/favicon.png and/or https://sangharshclasses.in/favicon.ico. Place the favicon files in the frontend public root so the build outputs them at the domain root.",
+        "summary": "Generate a complete offline-capable static export of the current marketing website (same content, sections, text, and layout as the existing React site) in the following exact folder structure inside the downloadable package: index.html, css/style.css, js/script.js, assets/images/.",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/public/assets/generated/favicon.png.dim_32x32.png",
-          "frontend/public/assets/generated/favicon.ico.dim_256x256.ico",
-          "frontend/public/favicon.png",
-          "frontend/public/favicon.ico"
+          "frontend/src/content/marketingSiteContent.ts",
+          "frontend/src/components/Hero.tsx",
+          "frontend/src/components/About.tsx",
+          "frontend/src/components/Faculty.tsx",
+          "frontend/src/components/Courses.tsx",
+          "frontend/src/components/Contact.tsx",
+          "frontend/src/components/Footer.tsx",
+          "frontend/src/components/Header.tsx",
+          "frontend/src/components/WhatsAppButton.tsx",
+          "frontend/src/static-export/renderStaticSite.ts",
+          "frontend/src/static-export/staticExportAssets.ts",
+          "frontend/src/static-export/styleSource.css"
         ],
         "matchedFiles": [
-          "frontend/public/assets/generated/favicon.png.dim_32x32.png",
-          "frontend/public/assets/generated/favicon.ico.dim_256x256.ico"
+          "frontend/src/content/marketingSiteContent.ts",
+          "frontend/src/components/Hero.tsx",
+          "frontend/src/components/About.tsx",
+          "frontend/src/components/Faculty.tsx",
+          "frontend/src/components/Courses.tsx",
+          "frontend/src/components/Contact.tsx",
+          "frontend/src/components/Footer.tsx",
+          "frontend/src/components/Header.tsx",
+          "frontend/src/components/WhatsAppButton.tsx",
+          "frontend/src/static-export/renderStaticSite.ts",
+          "frontend/src/static-export/staticExportAssets.ts"
         ]
       },
       {
         "id": "REQ-2",
-        "summary": "Update frontend/index.html to include correct favicon link tags in the <head>, including at minimum a PNG icon reference matching the user’s example (e.g., <link rel=\"icon\" href=\"/favicon.png\" type=\"image/png\">).",
+        "summary": "Add a clear user-facing button labeled exactly \"Download Website Code\" on the website UI that initiates download of the full website code as a ZIP file containing the static export structure (index.html, css/style.css, js/script.js, assets/images/).",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/index.html"
+          "frontend/src/components/DownloadWebsiteCodeButton.tsx",
+          "frontend/src/components/Header.tsx",
+          "frontend/src/pages/HomePage.tsx"
         ],
         "matchedFiles": [
-          "frontend/index.html"
+          "frontend/src/components/DownloadWebsiteCodeButton.tsx",
+          "frontend/src/components/Header.tsx"
         ]
       },
       {
         "id": "REQ-3",
-        "summary": "Update site metadata in frontend/index.html so Google can detect the site logo correctly by adding appropriate structured data (JSON-LD) for the website/organization and referencing an absolute logo URL on the canonical domain (https://sangharshclasses.in/...) that points to the published favicon/logo image.",
+        "summary": "Ensure the downloadable ZIP always matches the currently built website content/design (i.e., changes to homepage content/layout/styles in the app are reflected in the exported HTML/CSS/JS on the next build) and does not omit any current sections or text.",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/index.html"
+          "frontend/src/content/marketingSiteContent.ts",
+          "frontend/src/static-export/renderStaticSite.ts",
+          "frontend/src/static-export/scriptSource.ts",
+          "frontend/src/utils/contentSerialization.ts"
         ],
         "matchedFiles": [
-          "frontend/index.html"
+          "frontend/src/content/marketingSiteContent.ts",
+          "frontend/src/static-export/renderStaticSite.ts"
         ]
       },
       {
         "id": "REQ-4",
-        "summary": "Prevent caching/routing issues from blocking favicon updates by ensuring favicon files are excluded from SPA fallback rewriting and have appropriate hosting headers/caching rules for reliable retrieval on ICP hosting.",
+        "summary": "Make the ZIP file available as a static asset served by the deployed frontend (so the download works without requiring any backend changes) and ensure appropriate caching/headers so users can reliably download it.",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/public/_redirects",
+          "frontend/vite.config.ts",
+          "frontend/src/static-export/zipWriter.ts",
           "frontend/.ic-assets.json",
-          "frontend/public/_headers"
+          "frontend/public/_headers",
+          "frontend/public/_redirects",
+          "frontend/src/components/DownloadWebsiteCodeButton.tsx"
         ],
         "matchedFiles": [
-          "frontend/public/_redirects",
+          "frontend/vite.config.ts",
+          "frontend/src/static-export/zipWriter.ts",
           "frontend/.ic-assets.json",
-          "frontend/public/_headers"
-        ]
-      },
-      {
-        "id": "REQ-5",
-        "summary": "Redeploy the site after the favicon and metadata changes and verify in production that the favicon is reachable at the exact URLs requested and that no caching/routing misconfiguration prevents access.",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/DEPLOYMENT_CHECKLIST.md"
-        ],
-        "matchedFiles": [
-          "frontend/DEPLOYMENT_CHECKLIST.md"
+          "frontend/public/_headers",
+          "frontend/public/_redirects",
+          "frontend/src/components/DownloadWebsiteCodeButton.tsx"
         ]
       }
     ]
@@ -81,12 +100,22 @@
     "frontend-file-summaries.txt",
     "frontend-implementation-plan.json",
     "frontend/.ic-assets.json",
-    "frontend/DEPLOYMENT_CHECKLIST.md",
-    "frontend/index.html",
     "frontend/public/_headers",
     "frontend/public/_redirects",
-    "frontend/public/assets/generated/favicon.ico.dim_256x256.ico",
-    "frontend/public/assets/generated/favicon.png.dim_32x32.png",
+    "frontend/src/components/About.tsx",
+    "frontend/src/components/Contact.tsx",
+    "frontend/src/components/Courses.tsx",
+    "frontend/src/components/DownloadWebsiteCodeButton.tsx",
+    "frontend/src/components/Faculty.tsx",
+    "frontend/src/components/Footer.tsx",
+    "frontend/src/components/Header.tsx",
+    "frontend/src/components/Hero.tsx",
+    "frontend/src/components/WhatsAppButton.tsx",
+    "frontend/src/content/marketingSiteContent.ts",
+    "frontend/src/static-export/renderStaticSite.ts",
+    "frontend/src/static-export/staticExportAssets.ts",
+    "frontend/src/static-export/zipWriter.ts",
+    "frontend/vite.config.ts",
     "project_state.json",
     "scratch/component-selection.json",
     "spec.md",

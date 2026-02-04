@@ -13,43 +13,34 @@
     "match": "index.html",
     "cache": {
       "max_age": 0
-    },
-    "headers": {
-      "Cache-Control": "no-cache, no-store, must-revalidate"
-    }
-  },
-  {
-    "match": "sitemap.xml",
-    "headers": {
-      "Content-Type": "application/xml; charset=utf-8",
-      "Cache-Control": "public, max-age=3600"
-    }
-  },
-  {
-    "match": "robots.txt",
-    "headers": {
-      "Content-Type": "text/plain; charset=utf-8",
-      "Cache-Control": "public, max-age=3600"
     }
   },
   {
     "match": "favicon.png",
     "headers": {
-      "Content-Type": "image/png",
-      "Cache-Control": "public, max-age=86400"
+      "Content-Type": "image/png"
+    },
+    "cache": {
+      "max_age": 86400
     }
   },
   {
     "match": "favicon.ico",
     "headers": {
-      "Content-Type": "image/x-icon",
-      "Cache-Control": "public, max-age=86400"
+      "Content-Type": "image/x-icon"
+    },
+    "cache": {
+      "max_age": 86400
     }
   },
   {
-    "match": "404.html",
+    "match": "website-code.zip",
     "headers": {
-      "Cache-Control": "public, max-age=3600"
+      "Content-Type": "application/zip",
+      "Content-Disposition": "attachment; filename=\"sangharsh-classes-website.zip\""
+    },
+    "cache": {
+      "max_age": 3600
     }
   }
 ]

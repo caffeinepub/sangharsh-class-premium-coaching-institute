@@ -1,13 +1,10 @@
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Phone, Mail, MapPin, MessageCircle } from 'lucide-react';
+import { marketingSiteContent } from '@/content/marketingSiteContent';
 
 const Contact = () => {
-  const contact = {
-    phone: '9262647420',
-    email: 'govindofficial027@gmail.com',
-    location: 'Speaker Chowk, Mai Sthan Gali, Muzaffarpur',
-  };
+  const { contact } = marketingSiteContent;
 
   const handleWhatsApp = () => {
     window.open(`https://wa.me/91${contact.phone}`, '_blank');
@@ -120,7 +117,7 @@ const Contact = () => {
             {/* Map or Image */}
             <div className="relative h-[500px] rounded-3xl overflow-hidden shadow-2xl border-2 border-border">
               <img
-                src="/assets/generated/academic-success-bg.dim_800x400.jpg"
+                src={contact.backgroundImage}
                 alt="Academic Success"
                 className="w-full h-full object-cover"
               />

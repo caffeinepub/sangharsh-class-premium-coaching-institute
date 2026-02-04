@@ -98,9 +98,11 @@ Use this checklist before and after each deployment to prevent blank-screen regr
 
 ### 11. WWW Subdomain Test
 - [ ] Navigate to `https://www.sangharshclasses.in/`
-- [ ] Verify it resolves successfully (either redirects to apex or serves without SEO duplication)
-- [ ] If it redirects, verify HTTP 301 status
-- [ ] If it serves directly, verify canonical URL points to apex domain
+- [ ] **CRITICAL:** Verify it returns HTTP 301 redirect to `https://sangharshclasses.in/`
+- [ ] Test with curl: `curl -I https://www.sangharshclasses.in/`
+- [ ] Verify `Location:` header points to `https://sangharshclasses.in/`
+- [ ] Test deep path: `https://www.sangharshclasses.in/test?x=1`
+- [ ] Verify it redirects to `https://sangharshclasses.in/test?x=1` (path and query preserved)
 
 ### 12. Caffeine Subdomain Redirect Test
 - [ ] Navigate to `https://sangharsh-classes-coaching-9ew.caffeine.xyz/`
@@ -137,7 +139,7 @@ Use this checklist before and after each deployment to prevent blank-screen regr
 ### 16. Missing Token Test (Logged-In Without Admin Token)
 - [ ] Log in without `caffeineAdminToken` in URL hash
 - [ ] Verify homepage still renders (public UI not blocked)
-- [ ] Check Console: should see "[SafeActor] Skipping access control initialization (no token)"
+- [ ] Check Console: should see "[useActor] Skipping access control initialization (no token)"
 - [ ] No crash or blank screen
 
 ### 17. Mobile Verification
@@ -206,22 +208,46 @@ Use this checklist before and after each deployment to prevent blank-screen regr
   - Click "Request Indexing" to trigger re-crawl with new favicon/logo
   - Wait 1-2 weeks for Google to update search results with logo
 
+### 21. Google Search Console Verification File Test
+- [ ] Navigate to `https://sangharshclasses.in/google53082ab74af04c28.html` in production
+- [ ] **CRITICAL:** Verify file returns HTTP 200 with text content (NOT HTML redirect)
+- [ ] Verify response contains: `google-site-verification: google53082ab74af04c28.html`
+- [ ] Verify response does NOT contain HTML markers (`<!DOCTYPE html>`, `<html>`)
+- [ ] Check HTTP headers:
+  - `Content-Type: text/html` or `text/plain` (both acceptable)
+  - NOT a redirect (3xx status)
+- [ ] Test Google Search Console verification:
+  - Go to [Google Search Console](https://search.google.com/search-console)
+  - Add property for `https://sangharshclasses.in`
+  - Select "HTML file" verification method
+  - Click "Verify" - should succeed
+
+### 22. Domain Setup Documentation Cross-Reference
+- [ ] Review `DOMAIN_SETUP.md` for complete DNS and redirect configuration
+- [ ] Verify all DNS records are configured as documented
+- [ ] Confirm redirect behavior matches documented canonical host strategy:
+  - Apex domain (`sangharshclasses.in`) is the canonical host
+  - WWW subdomain redirects to apex with 301
+  - Caffeine subdomain redirects to apex with 301
+  - All redirects preserve path and query string
+- [ ] Verify SEO canonicalization is working as documented
+
 ## Clean Redeploy Procedure
 
 When deployment fails or you need to redeploy from scratch:
 
-### 21. Clear Deployment Cache and Rebuild
+### 23. Clear Deployment Cache and Rebuild
 - [ ] Delete local build artifacts: `rm -rf frontend/dist`
 - [ ] Clear any deployment platform cache (if applicable)
 - [ ] Run fresh production build: `cd frontend && npm run build`
 - [ ] Verify `dist/` folder contains:
   - `index.html` at root
   - `assets/` folder with hashed JS/CSS files
-  - All static files from `public/` (404.html, sitemap.xml, robots.txt, favicon.png, favicon.ico, etc.)
+  - All static files from `public/` (404.html, sitemap.xml, robots.txt, favicon.png, favicon.ico, google53082ab74af04c28.html, etc.)
 - [ ] Deploy ONLY the `frontend/dist/` folder contents
 - [ ] Verify deployment publishes `dist/` as the web root (not nested)
 
-### 22. Troubleshooting Build Errors
+### 24. Troubleshooting Build Errors
 If the build fails with TypeScript or Vite errors:
 - [ ] Check Console output for specific error messages
 - [ ] Verify all imports are correct and files exist
@@ -244,8 +270,10 @@ If any of the following occur, **IMMEDIATELY ROLL BACK**:
 - Sitemap.xml returns 404 or wrong Content-Type
 - Favicon files return HTML instead of image content
 - Favicon files return 404
+- Google verification file returns HTML redirect instead of verification content
 - Custom domain redirect loops
 - Caffeine subdomain does not redirect to custom domain
+- WWW subdomain does not redirect to apex domain
 
 ## Common Issues & Fixes
 
@@ -288,7 +316,8 @@ If any of the following occur, **IMMEDIATELY ROLL BACK**:
 
 ### Favicon Returns HTML Instead of Image
 - **Cause:** SPA fallback redirecting favicon files to index.html
-- **Fix:** Ensure `_redirects` file explicitly excludes `/favicon.png` and `/favicon.ico`
+- **Fix:** Ensure `404.html` excludes `/favicon.png` and `/favicon.ico` from redirect logic
+- **Fix:** Add `_redirects` file to explicitly exclude favicon files
 - **Fix:** Add `_headers` file to set correct Content-Type for favicon files
 - **Fix:** Verify `.ic-assets.json` has correct Content-Type for favicon.png and favicon.ico
 - **Fix:** Check that favicon files exist in `frontend/public/` and are copied to `dist/` during build
@@ -309,6 +338,13 @@ If any of the following occur, **IMMEDIATELY ROLL BACK**:
 - **Fix:** Wait 1-2 weeks for Google to re-crawl and update search results
 - **Fix:** Verify og:image meta tag includes logo URL
 
+### Google Verification File Returns HTML
+- **Cause:** SPA fallback redirecting verification file to index.html
+- **Fix:** Ensure `404.html` excludes `/google53082ab74af04c28.html` from redirect logic
+- **Fix:** Verify file exists in `frontend/public/` and is copied to `dist/` during build
+- **Fix:** Check that file contains correct verification content (not empty)
+- **Fix:** Add `_redirects` file to explicitly serve verification file as static file
+
 ### Custom Domain Not Resolving
 - **Cause:** DNS records not configured or not propagated
 - **Fix:** Verify DNS records in Hostinger (see DOMAIN_SETUP.md)
@@ -320,6 +356,12 @@ If any of the following occur, **IMMEDIATELY ROLL BACK**:
 - **Fix:** Configure 301 redirect in Caffeine project settings (see DOMAIN_SETUP.md)
 - **Fix:** Ensure path and query string preservation is enabled
 - **Fix:** Clear browser cache and test in incognito mode
+
+### WWW Subdomain Not Redirecting
+- **Cause:** Redirect rule not configured or DNS not pointing correctly
+- **Fix:** Configure 301 redirect from www to apex (see DOMAIN_SETUP.md)
+- **Fix:** Verify CNAME record for www subdomain points to correct target
+- **Fix:** Clear browser cache and test with curl
 
 ### SEO Tags Showing Wrong Domain
 - **Cause:** SEO guards not initialized or cached HTML
@@ -334,6 +376,13 @@ If any of the following occur, **IMMEDIATELY ROLL BACK**:
 - **Fix:** Clear deployment cache and redeploy from scratch
 - **Fix:** Verify `dist/` folder exists and contains all required files before deployment
 
+### Actor Initialization Crash (Missing Admin Token)
+- **Cause:** `_initializeAccessControlWithSecret` called without token, causing trap
+- **Fix:** Verify `useActor.ts` only calls initialization when `caffeineAdminToken` is present
+- **Fix:** Wrap initialization in try/catch to handle failures gracefully
+- **Fix:** Check Console for "[useActor] Skipping access control initialization (no token)" message
+- **Fix:** Ensure public pages render even when initialization fails
+
 ## Notes
 - Keep this checklist updated as new critical features are added
 - Document any deployment-specific configuration (environment variables, build flags, etc.)
@@ -343,3 +392,5 @@ If any of the following occur, **IMMEDIATELY ROLL BACK**:
 - Refer to `DOMAIN_SETUP.md` for detailed custom domain configuration instructions
 - Favicon files must be placed in `frontend/public/` to be copied to `dist/` during build
 - Google may take 1-2 weeks to update search results with new logo/favicon after re-crawling
+- Google Search Console verification file must be accessible as a static file (not redirected)
+- All static files (sitemap, robots.txt, favicon, verification file) must be excluded from SPA fallback

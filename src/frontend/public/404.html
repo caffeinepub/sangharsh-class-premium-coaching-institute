@@ -14,7 +14,13 @@
             
             // CRITICAL: Exclude static files from SPA fallback
             // These should be served directly, not redirected to the app
-            var staticFiles = ['/sitemap.xml', '/robots.txt', '/favicon.ico'];
+            var staticFiles = [
+                '/sitemap.xml',
+                '/robots.txt',
+                '/favicon.ico',
+                '/favicon.png',
+                '/google53082ab74af04c28.html'
+            ];
             if (staticFiles.indexOf(path) !== -1) {
                 return; // Do not redirect static files
             }

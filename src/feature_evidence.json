@@ -2,9 +2,21 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-add-a-favicon-generated-from-the-existing-sangharsh-classes-logo-and-ensure-it-is-published-at-the-site-root-so-it-is-accessible-at-https-sangharshclasses-in-favicon-png-and-or-https-sangharshclasses-in-favicon-ico-place-the-favicon-files-in-the-frontend-public-root-so-the-build-outputs-them-at-the-domain-root",
-      "featureTitle": "Add a favicon generated from the existing Sangharsh Classes logo and ensure it is published at the site root so it is accessible at https://sangharshclasses.in/favicon.png and/or https://sangharshclasses.in/favicon.ico. Place the favicon files in the frontend public root so the build outputs them at the domain root.",
-      "files": [],
+      "featureId": "feature-generate-a-complete-offline-capable-static-export-of-the-current-marketing-website-same-content-sections-text-and-layout-as-the-existing-react-site-in-the-following-exact-folder-structure-inside-the-downloadable-package-index-html-css-style-css-js-script-js-assets-images",
+      "featureTitle": "Generate a complete offline-capable static export of the current marketing website (same content, sections, text, and layout as the existing React site) in the following exact folder structure inside the downloadable package: index.html, css/style.css, js/script.js, assets/images/.",
+      "files": [
+        "frontend/src/components/About.tsx",
+        "frontend/src/components/Contact.tsx",
+        "frontend/src/components/Courses.tsx",
+        "frontend/src/components/Faculty.tsx",
+        "frontend/src/components/Footer.tsx",
+        "frontend/src/components/Header.tsx",
+        "frontend/src/components/Hero.tsx",
+        "frontend/src/components/WhatsAppButton.tsx",
+        "frontend/src/content/marketingSiteContent.ts",
+        "frontend/src/static-export/renderStaticSite.ts",
+        "frontend/src/static-export/staticExportAssets.ts"
+      ],
       "components": [
         "core-infrastructure@1.0.2",
         "shadcn-ui@1.0.0",
@@ -19,10 +31,11 @@
       "confidence": "high"
     },
     {
-      "featureId": "feature-update-frontend-index-html-to-include-correct-favicon-link-tags-in-the-head-including-at-minimum-a-png-icon-reference-matching-the-user-s-example-e-g-link-rel-icon-href-favicon-png-type-image-png",
-      "featureTitle": "Update frontend/index.html to include correct favicon link tags in the <head>, including at minimum a PNG icon reference matching the user’s example (e.g., <link rel=\"icon\" href=\"/favicon.png\" type=\"image/png\">).",
+      "featureId": "feature-add-a-clear-user-facing-button-labeled-exactly-download-website-code-on-the-website-ui-that-initiates-download-of-the-full-website-code-as-a-zip-file-containing-the-static-export-structure-index-html-css-style-css-js-script-js-assets-images",
+      "featureTitle": "Add a clear user-facing button labeled exactly \"Download Website Code\" on the website UI that initiates download of the full website code as a ZIP file containing the static export structure (index.html, css/style.css, js/script.js, assets/images/).",
       "files": [
-        "frontend/index.html"
+        "frontend/src/components/DownloadWebsiteCodeButton.tsx",
+        "frontend/src/components/Header.tsx"
       ],
       "components": [
         "core-infrastructure@1.0.2",
@@ -38,10 +51,11 @@
       "confidence": "high"
     },
     {
-      "featureId": "feature-update-site-metadata-in-frontend-index-html-so-google-can-detect-the-site-logo-correctly-by-adding-appropriate-structured-data-json-ld-for-the-website-organization-and-referencing-an-absolute-logo-url-on-the-canonical-domain-https-sangharshclasses-in-that-points-to-the-published-favicon-logo-image",
-      "featureTitle": "Update site metadata in frontend/index.html so Google can detect the site logo correctly by adding appropriate structured data (JSON-LD) for the website/organization and referencing an absolute logo URL on the canonical domain (https://sangharshclasses.in/...) that points to the published favicon/logo image.",
+      "featureId": "feature-ensure-the-downloadable-zip-always-matches-the-currently-built-website-content-design-i-e-changes-to-homepage-content-layout-styles-in-the-app-are-reflected-in-the-exported-html-css-js-on-the-next-build-and-does-not-omit-any-current-sections-or-text",
+      "featureTitle": "Ensure the downloadable ZIP always matches the currently built website content/design (i.e., changes to homepage content/layout/styles in the app are reflected in the exported HTML/CSS/JS on the next build) and does not omit any current sections or text.",
       "files": [
-        "frontend/index.html"
+        "frontend/src/content/marketingSiteContent.ts",
+        "frontend/src/static-export/renderStaticSite.ts"
       ],
       "components": [
         "core-infrastructure@1.0.2",
@@ -57,12 +71,15 @@
       "confidence": "high"
     },
     {
-      "featureId": "feature-prevent-caching-routing-issues-from-blocking-favicon-updates-by-ensuring-favicon-files-are-excluded-from-spa-fallback-rewriting-and-have-appropriate-hosting-headers-caching-rules-for-reliable-retrieval-on-icp-hosting",
-      "featureTitle": "Prevent caching/routing issues from blocking favicon updates by ensuring favicon files are excluded from SPA fallback rewriting and have appropriate hosting headers/caching rules for reliable retrieval on ICP hosting.",
+      "featureId": "feature-make-the-zip-file-available-as-a-static-asset-served-by-the-deployed-frontend-so-the-download-works-without-requiring-any-backend-changes-and-ensure-appropriate-caching-headers-so-users-can-reliably-download-it",
+      "featureTitle": "Make the ZIP file available as a static asset served by the deployed frontend (so the download works without requiring any backend changes) and ensure appropriate caching/headers so users can reliably download it.",
       "files": [
         "frontend/.ic-assets.json",
         "frontend/public/_headers",
-        "frontend/public/_redirects"
+        "frontend/public/_redirects",
+        "frontend/src/components/DownloadWebsiteCodeButton.tsx",
+        "frontend/src/static-export/zipWriter.ts",
+        "frontend/vite.config.ts"
       ],
       "components": [
         "core-infrastructure@1.0.2",
@@ -74,25 +91,6 @@
       ],
       "testIds": [
         "REQ-4"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-redeploy-the-site-after-the-favicon-and-metadata-changes-and-verify-in-production-that-the-favicon-is-reachable-at-the-exact-urls-requested-and-that-no-caching-routing-misconfiguration-prevents-access",
-      "featureTitle": "Redeploy the site after the favicon and metadata changes and verify in production that the favicon is reachable at the exact URLs requested and that no caching/routing misconfiguration prevents access.",
-      "files": [
-        "frontend/DEPLOYMENT_CHECKLIST.md"
-      ],
-      "components": [
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0",
-        "authorization@4.0.0"
-      ],
-      "testIds": [
-        "REQ-5"
       ],
       "confidence": "high"
     }

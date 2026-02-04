@@ -1,26 +1,10 @@
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { GraduationCap, Award } from 'lucide-react';
+import { marketingSiteContent } from '@/content/marketingSiteContent';
 
 const Faculty = () => {
-  const faculties = [
-    {
-      photoUrl: '362649410_827011885318636_8020958095991400208_n.jpg',
-      name: 'Sorav Sir',
-      subject: 'Physics',
-      experience: '4+ Years',
-      role: 'Physics Expert',
-      specialization: undefined,
-    },
-    {
-      photoUrl: '479492974_1291555798632827_4485357872493306414_n.jpg',
-      name: 'Dr Raju Raushan',
-      subject: 'Mathematics',
-      experience: '4+ Years',
-      role: 'Mathematics Expert',
-      specialization: 'Specialized in mathematics with proven teaching methodologies',
-    },
-  ];
+  const { faculty } = marketingSiteContent;
 
   return (
     <section id="faculty" className="py-20 bg-background">
@@ -39,7 +23,7 @@ const Faculty = () => {
 
           {/* Faculty Cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {faculties.map((faculty, index) => (
+            {faculty.map((member, index) => (
               <Card
                 key={index}
                 className="group overflow-hidden hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 border-2 hover:border-brand-primary/50 bg-card"
@@ -47,8 +31,8 @@ const Faculty = () => {
                 {/* Faculty Image */}
                 <div className="relative h-80 overflow-hidden bg-gradient-to-br from-brand-primary/20 to-brand-secondary/20">
                   <img
-                    src={`/assets/${faculty.photoUrl}`}
-                    alt={faculty.name}
+                    src={member.photoUrl}
+                    alt={member.name}
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -56,7 +40,7 @@ const Faculty = () => {
                   {/* Subject Badge */}
                   <div className="absolute top-4 right-4">
                     <Badge className="bg-brand-primary text-white font-bold px-4 py-2 text-sm shadow-lg">
-                      {faculty.subject}
+                      {member.subject}
                     </Badge>
                   </div>
                 </div>
@@ -64,24 +48,24 @@ const Faculty = () => {
                 {/* Faculty Info */}
                 <CardContent className="p-6 bg-card">
                   <h3 className="text-2xl font-bold text-foreground mb-2 group-hover:text-brand-primary transition-colors">
-                    {faculty.name}
+                    {member.name}
                   </h3>
 
                   <div className="flex items-center gap-2 mb-3">
                     <GraduationCap className="h-5 w-5 text-brand-primary flex-shrink-0" />
-                    <span className="text-muted-foreground font-medium">{faculty.role}</span>
+                    <span className="text-muted-foreground font-medium">{member.role}</span>
                   </div>
 
                   <div className="flex items-center gap-2 mb-4">
                     <Award className="h-5 w-5 text-brand-secondary flex-shrink-0" />
                     <span className="text-muted-foreground font-medium">
-                      Experience: {faculty.experience}
+                      Experience: {member.experience}
                     </span>
                   </div>
 
                   <div className="pt-4 border-t border-border">
                     <p className="text-sm text-muted-foreground">
-                      {faculty.specialization || `Specialized in ${faculty.subject} with proven teaching methodologies`}
+                      {member.specialization}
                     </p>
                   </div>
                 </CardContent>

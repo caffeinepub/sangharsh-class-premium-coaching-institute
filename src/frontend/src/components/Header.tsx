@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { Menu } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import { marketingSiteContent } from '@/content/marketingSiteContent';
+import DownloadWebsiteCodeButton from './DownloadWebsiteCodeButton';
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -23,13 +25,7 @@ const Header = () => {
     setIsOpen(false);
   };
 
-  const navItems = [
-    { label: 'Home', id: 'hero' },
-    { label: 'About', id: 'about' },
-    { label: 'Faculty', id: 'faculty' },
-    { label: 'Courses', id: 'courses' },
-    { label: 'Contact', id: 'contact' },
-  ];
+  const { site, navigation } = marketingSiteContent;
 
   return (
     <header
@@ -44,23 +40,23 @@ const Header = () => {
           {/* Logo */}
           <div className="flex items-center space-x-3 cursor-pointer" onClick={() => scrollToSection('hero')}>
             <img
-              src="/assets/IMG-20260201-WA0000.jpg"
-              alt="Sangharsh Class Logo"
+              src={site.logo}
+              alt={`${site.name} Logo`}
               className="h-14 w-14 object-contain"
             />
             <div className="flex flex-col">
               <span className="text-xl font-bold text-white leading-tight">
-                Sangharsh Class
+                {site.name}
               </span>
               <span className={`text-xs transition-colors ${isScrolled ? 'text-muted-foreground' : 'text-white/90'}`}>
-                From Struggle to Success
+                {site.tagline}
               </span>
             </div>
           </div>
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-1">
-            {navItems.map((item) => (
+            {navigation.map((item) => (
               <Button
                 key={item.id}
                 variant="ghost"
@@ -74,6 +70,7 @@ const Header = () => {
                 {item.label}
               </Button>
             ))}
+            <DownloadWebsiteCodeButton />
           </nav>
 
           {/* Mobile Menu */}
@@ -87,13 +84,13 @@ const Header = () => {
               <div className="flex flex-col space-y-4 mt-8">
                 <div className="flex items-center space-x-3 pb-4 border-b border-border">
                   <img
-                    src="/assets/IMG-20260201-WA0000.jpg"
-                    alt="Sangharsh Class"
+                    src={site.logo}
+                    alt={site.name}
                     className="h-12 w-12 object-contain"
                   />
-                  <span className="text-lg font-bold text-brand-primary">Sangharsh Class</span>
+                  <span className="text-lg font-bold text-brand-primary">{site.name}</span>
                 </div>
-                {navItems.map((item) => (
+                {navigation.map((item) => (
                   <Button
                     key={item.id}
                     variant="ghost"
@@ -103,6 +100,9 @@ const Header = () => {
                     {item.label}
                   </Button>
                 ))}
+                <div className="pt-4 border-t border-border">
+                  <DownloadWebsiteCodeButton />
+                </div>
               </div>
             </SheetContent>
           </Sheet>

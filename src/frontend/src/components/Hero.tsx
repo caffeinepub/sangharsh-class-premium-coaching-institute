@@ -1,5 +1,6 @@
 import { Award, TrendingUp, Users } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { marketingSiteContent } from '@/content/marketingSiteContent';
 
 const Hero = () => {
   const scrollToContact = () => {
@@ -7,6 +8,21 @@ const Hero = () => {
     if (element) {
       element.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
+  };
+
+  const scrollToCourses = () => {
+    const element = document.getElementById('courses');
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+
+  const { hero } = marketingSiteContent;
+
+  const iconMap = {
+    Users,
+    Award,
+    TrendingUp,
   };
 
   return (
@@ -17,7 +33,7 @@ const Hero = () => {
       {/* Background Image with Overlay */}
       <div className="absolute inset-0 z-0">
         <img
-          src="/assets/generated/hero-banner.dim_1200x600.jpg"
+          src={hero.backgroundImage}
           alt="Academic Success"
           className="w-full h-full object-cover"
         />
@@ -31,22 +47,22 @@ const Hero = () => {
           {/* Main Heading */}
           <div className="mb-6 animate-fade-in">
             <h1 className="text-5xl md:text-7xl font-extrabold text-white mb-4 leading-tight tracking-tight">
-              From Struggle to Success
+              {hero.heading}
             </h1>
             <p className="text-2xl md:text-3xl text-white/90 font-medium italic">
-              संघर्ष से सफलता तक
+              {hero.headingHindi}
             </p>
           </div>
 
           {/* Guarantee Badge */}
           <div className="inline-flex items-center gap-3 bg-white/95 backdrop-blur-sm px-8 py-4 rounded-full shadow-2xl mb-8 animate-bounce-slow">
             <Award className="h-8 w-8 text-brand-primary" />
-            <span className="text-2xl font-bold text-brand-primary">100% Result Guarantee</span>
+            <span className="text-2xl font-bold text-brand-primary">{hero.guaranteeBadge}</span>
           </div>
 
           {/* Description */}
           <p className="text-xl md:text-2xl text-white/95 mb-10 leading-relaxed max-w-3xl mx-auto font-medium">
-            Quality Education for Class 7th to 12th with Expert Faculty and Result-Oriented Teaching
+            {hero.description}
           </p>
 
           {/* CTA Buttons */}
@@ -56,38 +72,30 @@ const Hero = () => {
               onClick={scrollToContact}
               className="bg-white text-brand-primary hover:bg-white/90 text-lg px-8 py-6 rounded-full shadow-xl font-bold transition-all hover:scale-105"
             >
-              Enroll Now
+              {hero.ctaPrimary}
             </Button>
             <Button
               size="lg"
               variant="outline"
-              onClick={() => {
-                const element = document.getElementById('courses');
-                if (element) element.scrollIntoView({ behavior: 'smooth' });
-              }}
+              onClick={scrollToCourses}
               className="bg-transparent border-2 border-white text-white hover:bg-white hover:text-brand-primary text-lg px-8 py-6 rounded-full font-bold transition-all hover:scale-105"
             >
-              View Courses
+              {hero.ctaSecondary}
             </Button>
           </div>
 
           {/* Stats */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-3xl mx-auto">
-            <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20 hover:bg-white/20 transition-all">
-              <Users className="h-10 w-10 text-white mx-auto mb-3" />
-              <div className="text-3xl font-bold text-white mb-1">500+</div>
-              <div className="text-white/90 font-medium">Students Enrolled</div>
-            </div>
-            <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20 hover:bg-white/20 transition-all">
-              <Award className="h-10 w-10 text-white mx-auto mb-3" />
-              <div className="text-3xl font-bold text-white mb-1">4+ Years</div>
-              <div className="text-white/90 font-medium">Teaching Excellence</div>
-            </div>
-            <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20 hover:bg-white/20 transition-all">
-              <TrendingUp className="h-10 w-10 text-white mx-auto mb-3" />
-              <div className="text-3xl font-bold text-white mb-1">100%</div>
-              <div className="text-white/90 font-medium">Result Oriented</div>
-            </div>
+            {hero.stats.map((stat, index) => {
+              const IconComponent = iconMap[stat.icon as keyof typeof iconMap];
+              return (
+                <div key={index} className="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20 hover:bg-white/20 transition-all">
+                  <IconComponent className="h-10 w-10 text-white mx-auto mb-3" />
+                  <div className="text-3xl font-bold text-white mb-1">{stat.value}</div>
+                  <div className="text-white/90 font-medium">{stat.label}</div>
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>

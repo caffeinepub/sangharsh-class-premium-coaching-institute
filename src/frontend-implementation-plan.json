@@ -1,111 +1,173 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Fix favicon publishing, head tags, structured data, and ICP asset rules",
+  "title": "Offline static website export + ZIP download",
   "requirements": [
     {
       "id": "REQ-1",
-      "summary": "Publish favicon assets at the domain root as /favicon.png and /favicon.ico using files derived from the Sangharsh Classes logo.",
+      "summary": "Generate an offline-capable static export package (index.html, css/style.css, js/script.js, assets/images/) matching the current marketing homepage.",
       "acceptanceCriteria": [
-        "A favicon file exists at frontend/public/favicon.png and is included in the production build output at /favicon.png",
-        "A favicon file exists at frontend/public/favicon.ico (or a deliberate decision is documented to ship only PNG) and is included in the production build output at /favicon.ico",
-        "Fetching https://sangharshclasses.in/favicon.png returns HTTP 200 and serves an image response (not HTML) and is not rewritten to index.html",
-        "If /favicon.ico is provided, fetching https://sangharshclasses.in/favicon.ico returns HTTP 200 and serves an icon/image response (not HTML) and is not rewritten to index.html"
+        "A static export package exists that contains exactly: /index.html, /css/style.css, /js/script.js, /assets/images/ (may contain additional image files under assets/images only).",
+        "Opening index.html from disk (file://) renders a visually equivalent single-page website with the same sections and copy as the current deployed React homepage (Hero, About, Faculty, Courses, Contact, Footer, WhatsApp button).",
+        "The exported website loads all required styling and scripts locally (no required external CDN dependencies) and functions offline."
       ],
       "file_operations": [
         {
-          "path": "frontend/public/assets/generated/favicon.png.dim_32x32.png",
+          "path": "frontend/src/content/marketingSiteContent.ts",
           "operation": "create",
-          "description": "Add the generated square PNG favicon asset (32x32) derived from the existing Sangharsh Classes logo at frontend/public/assets/generated/favicon.png.dim_32x32.png so it is tracked in-repo and available as a source artifact for the root favicon."
+          "description": "Create a single canonical content module (hero text, about copy, faculty list, courses list, contact details, footer links, WhatsApp phone, image filenames) to be reused by both the React homepage and the static-export generator to prevent content drift."
         },
         {
-          "path": "frontend/public/assets/generated/favicon.ico.dim_256x256.ico",
-          "operation": "create",
-          "description": "Add the generated multi-size ICO favicon asset (up to 256x256) derived from the existing Sangharsh Classes logo at frontend/public/assets/generated/favicon.ico.dim_256x256.ico so it is tracked in-repo and available as a source artifact for the root favicon."
+          "path": "frontend/src/components/Hero.tsx",
+          "operation": "modify",
+          "description": "Refactor Hero section to read all copy/image references from the canonical content module so the live homepage and export share the same source-of-truth."
         },
         {
-          "path": "frontend/public/favicon.png",
-          "operation": "create",
-          "description": "Create the root-served PNG favicon at frontend/public/favicon.png (copied/exported from frontend/public/assets/generated/favicon.png.dim_32x32.png) so the build outputs it at /favicon.png on the domain root."
+          "path": "frontend/src/components/About.tsx",
+          "operation": "modify",
+          "description": "Refactor About section to read its full text/copy from the canonical content module so the live homepage and export share the same source-of-truth."
         },
         {
-          "path": "frontend/public/favicon.ico",
+          "path": "frontend/src/components/Faculty.tsx",
+          "operation": "modify",
+          "description": "Refactor Faculty section to read faculty cards (names/subjects/experience/photos) from the canonical content module so the live homepage and export share the same source-of-truth. Continue to use the shadcn-ui Card/Badge components to preserve design; verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/Courses.tsx",
+          "operation": "modify",
+          "description": "Refactor Courses section to read course items and supporting copy from the canonical content module so the live homepage and export share the same source-of-truth. Continue to use the shadcn-ui Card/Badge components to preserve design; verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/Contact.tsx",
+          "operation": "modify",
+          "description": "Refactor Contact section to read phone/email/location and WhatsApp behavior from the canonical content module so the live homepage and export share the same source-of-truth. Continue to use the shadcn-ui Button/Card components to preserve design; verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/Footer.tsx",
+          "operation": "modify",
+          "description": "Refactor Footer section to read branding/contact/social URLs and quick links from the canonical content module so the live homepage and export share the same source-of-truth."
+        },
+        {
+          "path": "frontend/src/components/Header.tsx",
+          "operation": "modify",
+          "description": "Refactor Header navigation items and logo references to read from the canonical content module so the live homepage and export share the same source-of-truth. Continue to use the shadcn-ui Sheet/Button components for consistent layout; verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/WhatsAppButton.tsx",
+          "operation": "modify",
+          "description": "Refactor WhatsApp button phone number and action to read from the canonical content module so the live homepage and export share the same source-of-truth. Continue to use the shadcn-ui Button component; verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/static-export/renderStaticSite.ts",
           "operation": "create",
-          "description": "Create the root-served ICO favicon at frontend/public/favicon.ico (copied/exported from frontend/public/assets/generated/favicon.ico.dim_256x256.ico) so the build outputs it at /favicon.ico on the domain root."
+          "description": "Implement a static-export renderer that generates the required offline folder structure content (index.html, css/style.css, js/script.js) using the canonical content module and preserving the same section order and IDs (hero/about/faculty/courses/contact/footer) as the live homepage."
+        },
+        {
+          "path": "frontend/src/static-export/staticExportAssets.ts",
+          "operation": "create",
+          "description": "Add a helper that enumerates which image files from the app must be included in the export under assets/images/ (logo, faculty photos, and generated background images used in Hero/Contact) to ensure offline completeness."
+        },
+        {
+          "path": "frontend/src/static-export/styleSource.css",
+          "operation": "create",
+          "description": "Create a dedicated CSS source for the static export that is compiled/bundled into css/style.css and includes all required styling locally (including the existing global theme tokens and animations used by the homepage)."
         }
       ]
     },
     {
       "id": "REQ-2",
-      "summary": "Add favicon <link> tags in frontend/index.html head referencing /favicon.png (and /favicon.ico if shipped).",
+      "summary": "Add a homepage UI button labeled exactly \"Download Website Code\" that downloads a ZIP containing the static export structure.",
       "acceptanceCriteria": [
-        "frontend/index.html includes a <link rel=\"icon\" href=\"/favicon.png\" type=\"image/png\"> tag inside <head>",
-        "If favicon.ico is shipped, frontend/index.html also includes a <link rel=\"icon\" href=\"/favicon.ico\" type=\"image/x-icon\"> (or equivalent) inside <head>",
-        "After build and deploy, the rendered page source (production) contains the favicon <link> tags and they resolve successfully"
+        "A visible button labeled exactly \"Download Website Code\" is present on the homepage (desktop and mobile).",
+        "Clicking the button downloads a .zip file.",
+        "The .zip file contains the exported site in the required folder structure and works offline when unzipped and opened."
       ],
       "file_operations": [
         {
-          "path": "frontend/index.html",
+          "path": "frontend/src/components/DownloadWebsiteCodeButton.tsx",
+          "operation": "create",
+          "description": "Create a reusable UI component that renders a button labeled exactly \"Download Website Code\" and triggers a direct download of the static ZIP asset from the frontend (no backend calls). Use the shadcn-ui Button component for consistent styling; verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/Header.tsx",
           "operation": "modify",
-          "description": "Add favicon link tags inside <head> referencing /favicon.png with type image/png and also /favicon.ico with an appropriate icon MIME type, without changing layout or non-favicon UI."
+          "description": "Wire the DownloadWebsiteCodeButton into the homepage UI so it is clearly visible on desktop and also reachable from the mobile header/menu. Keep existing navigation/scroll behavior intact and do not remove SEO guard behavior."
+        },
+        {
+          "path": "frontend/src/pages/HomePage.tsx",
+          "operation": "modify",
+          "description": "Ensure the download control is present within the homepage composition (directly or via Header/Footer integration) without introducing new routes/pages."
         }
       ]
     },
     {
       "id": "REQ-3",
-      "summary": "Add Organization/Website JSON-LD structured data in frontend/index.html referencing an absolute logo URL on https://sangharshclasses.in/.",
+      "summary": "Ensure the exported ZIP is generated from the same canonical source as the live homepage so it cannot drift from current content/design.",
       "acceptanceCriteria": [
-        "frontend/index.html contains a JSON-LD <script type=\"application/ld+json\"> block for Organization (or equivalent) that includes a logo URL on https://sangharshclasses.in/ referencing the deployed image",
-        "The structured data does not introduce new product features or marketing claims beyond identifying the site/organization and logo",
-        "The canonical URL remains https://sangharshclasses.in/ (existing canonical tag preserved)"
+        "The export is generated from the same canonical source content used by the live homepage so it cannot drift (no missing sections compared to the React homepage).",
+        "The exported page includes all visible homepage sections and key interactive elements present on the live site (e.g., navigation scroll links and WhatsApp contact action)."
       ],
       "file_operations": [
         {
-          "path": "frontend/index.html",
+          "path": "frontend/src/content/marketingSiteContent.ts",
           "operation": "modify",
-          "description": "Insert a JSON-LD script block (Organization and/or WebSite) in <head> that references an absolute logo URL such as https://sangharshclasses.in/favicon.png, while preserving the existing canonical tag and avoiding any new marketing claims."
+          "description": "Expand/structure the canonical content module so all homepage-visible copy, lists, contact actions, and image references are represented in one place and can be consumed consistently by both React and the export generator."
+        },
+        {
+          "path": "frontend/src/static-export/renderStaticSite.ts",
+          "operation": "modify",
+          "description": "Update the static-export renderer to consume only the canonical content module for all text/links/images and to preserve the same section IDs used for scroll navigation and WhatsApp action parity."
+        },
+        {
+          "path": "frontend/src/static-export/scriptSource.ts",
+          "operation": "create",
+          "description": "Implement the offline js/script.js source to support key interactivity without external dependencies: smooth scrolling for in-page navigation, WhatsApp action behavior, and any minimal UX needed to match the live homepage’s key interactive elements."
+        },
+        {
+          "path": "frontend/src/utils/contentSerialization.ts",
+          "operation": "modify",
+          "description": "Implement minimal utilities (currently empty) to serialize canonical content into the static export safely and deterministically (e.g., escaping text for HTML output) so exports remain consistent across builds."
         }
       ]
     },
     {
       "id": "REQ-4",
-      "summary": "Ensure favicon files bypass SPA fallback rewriting and are served with correct content-type and reasonable caching via ICP asset rules.",
+      "summary": "Serve the ZIP as a static frontend asset with reliable download behavior and appropriate caching/content-type headers.",
       "acceptanceCriteria": [
-        "frontend/public/_redirects explicitly excludes /favicon.png (and /favicon.ico if shipped) from SPA fallback rewriting, similar to existing sitemap.xml/robots.txt exclusions",
-        "frontend/.ic-assets.json includes explicit match rules for favicon.png (and favicon.ico if shipped) that set appropriate Content-Type and avoid excessively long cache max-age for these files (so updates propagate)",
-        "A request to /favicon.png and /favicon.ico (if present) is served as the actual file (not index.html) in production"
+        "The ZIP is served from the frontend as a static file and can be downloaded in production by unauthenticated users.",
+        "Downloading the ZIP does not require Internet Identity login and does not call the Motoko backend.",
+        "The file is delivered with a correct content type for ZIP downloads and a stable filename."
       ],
       "file_operations": [
         {
-          "path": "frontend/public/_redirects",
+          "path": "frontend/vite.config.ts",
           "operation": "modify",
-          "description": "Add explicit exclusions for /favicon.png and /favicon.ico so they are served directly (200) and are not rewritten by the SPA fallback rule."
+          "description": "Add a build-time step (as a Vite plugin executed after build output is produced) that generates the static export folder structure and produces a stable-named ZIP (e.g., website-code.zip) into the final built output so it is served as a static asset without backend changes."
+        },
+        {
+          "path": "frontend/src/static-export/zipWriter.ts",
+          "operation": "create",
+          "description": "Implement a lightweight ZIP writer utility (no external network/CDN dependency) used by the build-time export step to package index.html, css/style.css, js/script.js, and assets/images/* into a single ZIP with a stable filename."
         },
         {
           "path": "frontend/.ic-assets.json",
           "operation": "modify",
-          "description": "Add explicit asset match rules for favicon.png and favicon.ico to set correct Content-Type headers and a short/moderate cache max-age (avoiding the default long cache) so favicon updates propagate reliably on ICP hosting."
+          "description": "Add an explicit rule for the generated ZIP static file to set an appropriate Content-Type for ZIP downloads and caching behavior that allows reliable updates (avoid long-lived caching for the ZIP while keeping the rest of assets performant)."
         },
         {
           "path": "frontend/public/_headers",
           "operation": "modify",
-          "description": "Optionally add explicit Content-Type header rules for /favicon.png and /favicon.ico to reinforce correct MIME types for static hosting environments that respect _headers (keep existing sitemap.xml/robots.txt rules unchanged)."
-        }
-      ]
-    },
-    {
-      "id": "REQ-5",
-      "summary": "Document production verification steps for favicon reachability and confirm no routing/caching prevents access after redeploy.",
-      "acceptanceCriteria": [
-        "Production domain https://sangharshclasses.in/favicon.png returns 200 and correct image content",
-        "If shipped, production domain https://sangharshclasses.in/favicon.ico returns 200 and correct icon/image content",
-        "Production domain https://sangharshclasses.in/ renders without any redesign or layout changes (only favicon/metadata/hosting behavior changes)"
-      ],
-      "file_operations": [
+          "description": "Add a header rule for the ZIP download path to ensure the correct Content-Type for ZIP delivery in environments that use _headers for static hosting."
+        },
         {
-          "path": "frontend/DEPLOYMENT_CHECKLIST.md",
+          "path": "frontend/public/_redirects",
           "operation": "modify",
-          "description": "Add post-deploy verification steps to check /favicon.png and /favicon.ico return HTTP 200 with non-HTML image responses, confirm the page source contains the favicon <link> tags and JSON-LD, and confirm there are no layout changes."
+          "description": "Add a static-file exception so the ZIP download is served directly and not rewritten to index.html by the SPA fallback."
+        },
+        {
+          "path": "frontend/src/components/DownloadWebsiteCodeButton.tsx",
+          "operation": "modify",
+          "description": "Point the download action to the final static asset path (stable filename) and ensure it performs a plain unauthenticated file download without invoking Internet Identity or any backend actor calls."
         }
       ]
     }

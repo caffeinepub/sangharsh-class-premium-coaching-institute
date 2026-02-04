@@ -1,14 +1,14 @@
 {
   "schemaVersion": "1.0.0",
   "projectStateVersion": 3,
-  "summary": "Sangharsh Classes is a Vite + React + TailwindCSS single-page marketing website for a coaching institute (classes 7th–12th) with section-based content (Hero, About, Faculty, Courses, Contact, Footer) and WhatsApp/call/email CTAs. The repo also includes an Internet Computer (ICP) Motoko backend canister that implements role-based access control (admin/user/guest) bootstrapped via a canister environment secret and provides per-caller user profile storage. The frontend integrates Internet Identity authentication, creates identity-bound canister actors, and uses TanStack React Query for caching and data fetching. Additionally, the project includes SEO and static-hosting assets/config (canonical + OpenGraph tags, sitemap.xml, robots.txt, noindex guard for the non-canonical domain, SPA fallback rules, and asset-canister headers/caching config).",
+  "summary": "Sangharsh Classes is a Vite + React + TailwindCSS single-page marketing site for a coaching institute (classes 7th–12th) featuring section-based content (Hero, About, Faculty, Courses, Contact, Footer) and strong SEO/static-hosting hardening (canonical + OpenGraph tags, JSON-LD structured data, sitemap.xml, robots.txt, Google Search Console verification file, SPA 404 fallback exclusions, and explicit Content-Type headers for key static files). The repo also includes an Internet Computer (ICP) Motoko backend canister implementing role-based access control (admin/user/guest) bootstrapped via a canister environment secret and per-caller user profile storage. The frontend integrates Internet Identity authentication and uses TanStack React Query for caching and actor/query lifecycle management.",
   "existing_features": [
     {
       "id": "IF-1",
       "title": "Single-page public marketing homepage",
       "synonyms": [
-        "Marketing SPA",
-        "Landing page"
+        "Landing page",
+        "Marketing SPA"
       ],
       "description": "Renders a public homepage composed of Header, Hero, About, Faculty, Courses, Contact, and Footer sections, plus a floating WhatsApp CTA.",
       "reqIds": [],
@@ -21,7 +21,7 @@
         "Section navigation",
         "Mobile sheet menu"
       ],
-      "description": "Fixed header that changes style on scroll and provides desktop + mobile navigation buttons that smoothly scroll to section IDs via scrollIntoView.",
+      "description": "Fixed header that changes style on scroll and provides desktop + mobile navigation buttons that smoothly scroll to section anchors via scrollIntoView.",
       "reqIds": [],
       "version": 1
     },
@@ -42,7 +42,7 @@
       "synonyms": [
         "About Sangharsh Classes"
       ],
-      "description": "Displays hardcoded multi-paragraph about text (split into paragraphs) and a centered “Result Oriented” feature card.",
+      "description": "Displays hardcoded multi-paragraph about text and a centered “Result Oriented” feature card.",
       "reqIds": [],
       "version": 1
     },
@@ -59,12 +59,12 @@
     },
     {
       "id": "IF-6",
-      "title": "Courses section (classes 7th–12th)",
+      "title": "Courses section (static offerings for classes 7th–12th)",
       "synonyms": [
         "Programs grid",
         "Offerings"
       ],
-      "description": "Shows six hardcoded class offerings (7–12) with descriptions, feature bullets, and a promotional subject banner.",
+      "description": "Shows six hardcoded class offerings (7–12) with descriptions and feature bullets plus a promotional subject banner.",
       "reqIds": [],
       "version": 1
     },
@@ -127,7 +127,7 @@
       "title": "Runtime SEO guards (canonical/noindex enforcement)",
       "synonyms": [
         "SEO guard",
-        "Canonical domain enforcement"
+        "Canonical URL enforcement"
       ],
       "description": "At app startup, enforces canonical and og:url to the custom domain and applies robots noindex/nofollow when running on the Caffeine subdomain.",
       "reqIds": [],
@@ -135,12 +135,13 @@
     },
     {
       "id": "IF-13",
-      "title": "Homepage SEO markup in index.html",
+      "title": "Homepage SEO markup and structured data in index.html",
       "synonyms": [
         "Canonical tag",
-        "OpenGraph tags"
+        "OpenGraph tags",
+        "JSON-LD Organization/WebSite"
       ],
-      "description": "Defines title/meta description plus canonical and og:url tags pointing to https://sangharshclasses.in/ in the HTML entrypoint.",
+      "description": "Defines title/meta description, canonical + og tags, og:image, favicon link tags, and JSON-LD structured data referencing the site logo/favicon URL.",
       "reqIds": [],
       "version": 1
     },
@@ -157,50 +158,60 @@
     },
     {
       "id": "IF-15",
-      "title": "SPA fallback page with static-file exclusions",
+      "title": "Google Search Console verification file",
       "synonyms": [
-        "404.html fallback",
-        "Deep link support stub"
+        "google-site-verification HTML file"
       ],
-      "description": "404.html redirects unknown paths to the app root while excluding sitemap.xml/robots.txt/favicon.ico from redirects.",
+      "description": "Hosts a Google Search Console verification file at a fixed path so domain ownership verification can succeed.",
       "reqIds": [],
       "version": 1
     },
     {
       "id": "IF-16",
-      "title": "Static hosting rules for SPA fallback and MIME types",
+      "title": "Static hosting SPA fallback with static-file exclusions",
       "synonyms": [
-        "_redirects",
-        "_headers"
+        "404.html fallback",
+        "Deep-link support"
       ],
-      "description": "Netlify-style rules to serve sitemap.xml and robots.txt directly (200) while rewriting all other routes to /index.html, and to set correct Content-Type headers for sitemap/robots.",
+      "description": "Provides a SPA fallback (404.html) that redirects non-root paths to the app root while explicitly excluding key static files (sitemap.xml, robots.txt, favicon.ico, favicon.png, Google verification file) from being redirected.",
       "reqIds": [],
       "version": 1
     },
     {
       "id": "IF-17",
-      "title": "ICP asset-canister configuration for caching and headers",
+      "title": "Static hosting headers and redirects rules",
       "synonyms": [
-        ".ic-assets.json",
-        "Asset canister rules"
+        "_headers",
+        "_redirects"
       ],
-      "description": "Defines caching policies and security/MIME headers, including explicit Content-Type for sitemap.xml and robots.txt and no-cache for index.html.",
+      "description": "Defines Netlify-style headers (correct Content-Type for sitemap/robots/favicons) and redirects to ensure key static files are served directly rather than rewritten to index.html.",
       "reqIds": [],
       "version": 1
     },
     {
       "id": "IF-18",
-      "title": "Vite build and dev-server configuration for static/ICP hosting",
+      "title": "ICP asset-canister configuration for caching and headers",
       "synonyms": [
-        "Relative base configuration",
-        "Dev proxy"
+        ".ic-assets.json",
+        "Asset canister rules"
       ],
-      "description": "Configures Vite with base './', hashed asset output under assets/, clean builds (emptyOutDir), and a dev proxy for /api to a local ICP replica.",
+      "description": "Configures caching and security headers for ICP asset serving, with explicit Content-Type and cache rules for index.html, sitemap.xml, robots.txt, favicon.png, favicon.ico, and 404.html.",
       "reqIds": [],
       "version": 1
     },
     {
       "id": "IF-19",
+      "title": "Deployment and domain setup documentation",
+      "synonyms": [
+        "DEPLOYMENT_CHECKLIST",
+        "DOMAIN_SETUP"
+      ],
+      "description": "Includes operational docs for clean builds, publish-directory verification, deep-link/static-file testing, SEO validation, and custom-domain/DNS/redirect setup guidance.",
+      "reqIds": [],
+      "version": 1
+    },
+    {
+      "id": "IF-20",
       "title": "Internet Identity authentication provider (frontend)",
       "synonyms": [
         "AuthClient integration",
@@ -211,18 +222,18 @@
       "version": 1
     },
     {
-      "id": "IF-20",
+      "id": "IF-21",
       "title": "Backend canister actor creation and caching (frontend)",
       "synonyms": [
         "useActor",
         "Identity-bound actor"
       ],
-      "description": "Creates an anonymous actor when logged out and an identity-bound actor when logged in; actor is cached in React Query by principal and triggers invalidation/refetch of dependent queries when it changes.",
+      "description": "Creates an anonymous actor when logged out and an identity-bound actor when logged in; the actor is cached using a React Query key based on the principal and triggers invalidation/refetch of dependent queries when it changes.",
       "reqIds": [],
       "version": 1
     },
     {
-      "id": "IF-21",
+      "id": "IF-22",
       "title": "Safe backend actor initialization hook",
       "synonyms": [
         "useBackendActorSafe",
@@ -233,7 +244,7 @@
       "version": 1
     },
     {
-      "id": "IF-22",
+      "id": "IF-23",
       "title": "URL parameter utilities with secure hash-secret handling",
       "synonyms": [
         "urlParams",
@@ -244,7 +255,7 @@
       "version": 1
     },
     {
-      "id": "IF-23",
+      "id": "IF-24",
       "title": "Per-caller user profile hooks (frontend)",
       "synonyms": [
         "useGetCallerUserProfile",
@@ -255,7 +266,7 @@
       "version": 1
     },
     {
-      "id": "IF-24",
+      "id": "IF-25",
       "title": "Role-based access control (Motoko)",
       "synonyms": [
         "RBAC",
@@ -267,7 +278,7 @@
       "version": 1
     },
     {
-      "id": "IF-25",
+      "id": "IF-26",
       "title": "Per-user profile storage with authorization (Motoko)",
       "synonyms": [
         "UserProfile storage",
@@ -278,42 +289,34 @@
       "version": 1
     },
     {
-      "id": "feature-add-a-favicon-generated-from-the-existing-sangharsh-classes-logo-and-ensure-it-is-published-at-the-site-root-so-it-is-accessible-at-https-sangharshclasses-in-favicon-png-and-or-https-sangharshclasses-in-favicon-ico-place-the-favicon-files-in-the-frontend-public-root-so-the-build-outputs-them-at-the-domain-root",
-      "title": "Add a favicon generated from the existing Sangharsh Classes logo and ensure it is published at the site root so it is accessible at https://sangharshclasses.in/favicon.png and/or https://sangharshclasses.in/favicon.ico. Place the favicon files in the frontend public root so the build outputs them at the domain root.",
+      "id": "feature-generate-a-complete-offline-capable-static-export-of-the-current-marketing-website-same-content-sections-text-and-layout-as-the-existing-react-site-in-the-following-exact-folder-structure-inside-the-downloadable-package-index-html-css-style-css-js-script-js-assets-images",
+      "title": "Generate a complete offline-capable static export of the current marketing website (same content, sections, text, and layout as the existing React site) in the following exact folder structure inside the downloadable package: index.html, css/style.css, js/script.js, assets/images/.",
       "reqIds": [
         "REQ-1"
       ],
       "version": 1
     },
     {
-      "id": "feature-update-frontend-index-html-to-include-correct-favicon-link-tags-in-the-head-including-at-minimum-a-png-icon-reference-matching-the-user-s-example-e-g-link-rel-icon-href-favicon-png-type-image-png",
-      "title": "Update frontend/index.html to include correct favicon link tags in the <head>, including at minimum a PNG icon reference matching the user’s example (e.g., <link rel=\"icon\" href=\"/favicon.png\" type=\"image/png\">).",
+      "id": "feature-add-a-clear-user-facing-button-labeled-exactly-download-website-code-on-the-website-ui-that-initiates-download-of-the-full-website-code-as-a-zip-file-containing-the-static-export-structure-index-html-css-style-css-js-script-js-assets-images",
+      "title": "Add a clear user-facing button labeled exactly \"Download Website Code\" on the website UI that initiates download of the full website code as a ZIP file containing the static export structure (index.html, css/style.css, js/script.js, assets/images/).",
       "reqIds": [
         "REQ-2"
       ],
       "version": 1
     },
     {
-      "id": "feature-update-site-metadata-in-frontend-index-html-so-google-can-detect-the-site-logo-correctly-by-adding-appropriate-structured-data-json-ld-for-the-website-organization-and-referencing-an-absolute-logo-url-on-the-canonical-domain-https-sangharshclasses-in-that-points-to-the-published-favicon-logo-image",
-      "title": "Update site metadata in frontend/index.html so Google can detect the site logo correctly by adding appropriate structured data (JSON-LD) for the website/organization and referencing an absolute logo URL on the canonical domain (https://sangharshclasses.in/...) that points to the published favicon/logo image.",
+      "id": "feature-ensure-the-downloadable-zip-always-matches-the-currently-built-website-content-design-i-e-changes-to-homepage-content-layout-styles-in-the-app-are-reflected-in-the-exported-html-css-js-on-the-next-build-and-does-not-omit-any-current-sections-or-text",
+      "title": "Ensure the downloadable ZIP always matches the currently built website content/design (i.e., changes to homepage content/layout/styles in the app are reflected in the exported HTML/CSS/JS on the next build) and does not omit any current sections or text.",
       "reqIds": [
         "REQ-3"
       ],
       "version": 1
     },
     {
-      "id": "feature-prevent-caching-routing-issues-from-blocking-favicon-updates-by-ensuring-favicon-files-are-excluded-from-spa-fallback-rewriting-and-have-appropriate-hosting-headers-caching-rules-for-reliable-retrieval-on-icp-hosting",
-      "title": "Prevent caching/routing issues from blocking favicon updates by ensuring favicon files are excluded from SPA fallback rewriting and have appropriate hosting headers/caching rules for reliable retrieval on ICP hosting.",
+      "id": "feature-make-the-zip-file-available-as-a-static-asset-served-by-the-deployed-frontend-so-the-download-works-without-requiring-any-backend-changes-and-ensure-appropriate-caching-headers-so-users-can-reliably-download-it",
+      "title": "Make the ZIP file available as a static asset served by the deployed frontend (so the download works without requiring any backend changes) and ensure appropriate caching/headers so users can reliably download it.",
       "reqIds": [
         "REQ-4"
-      ],
-      "version": 1
-    },
-    {
-      "id": "feature-redeploy-the-site-after-the-favicon-and-metadata-changes-and-verify-in-production-that-the-favicon-is-reachable-at-the-exact-urls-requested-and-that-no-caching-routing-misconfiguration-prevents-access",
-      "title": "Redeploy the site after the favicon and metadata changes and verify in production that the favicon is reachable at the exact URLs requested and that no caching/routing misconfiguration prevents access.",
-      "reqIds": [
-        "REQ-5"
       ],
       "version": 1
     }
@@ -321,51 +324,34 @@
   "new_feature_requests": [
     {
       "id": "AR-1",
-      "summary": "Add proper favicon/logo for Google search results: include PNG/ICO favicon in site root, add <link rel=\"icon\"> tags in <head>, ensure correct Content-Type/caching and public accessibility at sangharshclasses.in/favicon.(png|ico), then redeploy.",
+      "summary": "Provide full static website source export (HTML/CSS/JS/assets) with structured folders and a 'Download Website Code' button that downloads a ZIP for offline/self-hostable use.",
       "reqIds": [],
       "status": "pending"
     }
   ],
   "architectural_notes": [
-    "Frontend is a Vite + React SPA composed of section components and smooth-scroll navigation (no router evident in the provided code).",
-    "Styling uses TailwindCSS with CSS variables (OKLCH tokens) and shadcn/ui-style primitives (Button/Card/Sheet).",
-    "Async state, caching, and actor lifecycle are managed with TanStack React Query.",
-    "Authentication is handled via Internet Identity using @dfinity/auth-client, exposed through a React Context provider.",
-    "ICP backend is written in Motoko with an AccessControl module; authorization endpoints are composed via a mixin (include MixinAuthorization(state)).",
-    "RBAC initialization depends on a canister env var (CAFFEINE_ADMIN_TOKEN) and a user-provided secret passed from the frontend.",
-    "SEO strategy combines static tags (index.html) and runtime guards to enforce canonical/og:url and apply noindex on the Caffeine subdomain.",
-    "Static hosting hardening is provided via 404.html SPA fallback plus Netlify-style _redirects/_headers, and ICP-specific .ic-assets.json headers/caching rules.",
-    "Vite is configured with base './' and deterministic hashed asset output to support canister/static hosting paths.",
-    "URL secret handling uses hash-fragment extraction + sessionStorage persistence and URL cleanup via history.replaceState."
+    "Frontend is a Vite-powered React SPA styled with TailwindCSS (OKLCH CSS variables) and shadcn/ui primitives.",
+    "Data fetching/caching uses @tanstack/react-query; backend actor instances are created via a query keyed by principal and used by downstream hooks.",
+    "Authentication is handled via Internet Identity using @dfinity/auth-client in a React Context provider with identity persistence across reloads.",
+    "ICP backend is written in Motoko and composes authorization functionality via an include/mixin pattern (MixinAuthorization + AccessControl).",
+    "RBAC bootstrapping uses an environment variable (CAFFEINE_ADMIN_TOKEN) on the canister plus a user-provided secret to assign the first admin.",
+    "SEO approach combines static index.html meta/JSON-LD with runtime guards that enforce canonical/og:url and apply noindex on the Caffeine subdomain.",
+    "Static hosting support includes 404.html SPA fallback logic plus Netlify-style _redirects/_headers and ICP asset-canister rules via .ic-assets.json.",
+    "Sensitive token handling on the frontend reads secrets from the URL hash and persists them in sessionStorage while removing them from the visible URL.",
+    "Backend authorization checks trap on unauthorized access; frontend uses a “safe actor” hook in some places to avoid fatal init failures."
   ],
   "known_issues": [
-    "frontend/src/admin/** and several admin-related hooks/components exist but are empty placeholders in this snapshot; an admin panel/CMS is not implemented here.",
-    "frontend/public/google53082ab74af04c28.html appears empty in the provided snapshot; Google Search Console verification may fail if the required verification content is missing.",
-    "useActor always calls _initializeAccessControlWithSecret (even when the token is empty), which can trap and break authenticated flows if CAFFEINE_ADMIN_TOKEN is not set in the canister environment.",
-    "useBackendActorSafe skips access-control initialization when no caffeineAdminToken is present, which can leave authenticated users unregistered and cause #user-gated backend calls to trap.",
-    "AccessControl.getUserRole traps with \"User is not registered\" for non-anonymous uninitialized principals; any permission check that calls getUserRole can therefore trap instead of returning a safe default.",
-    "Backend state (roles and userProfiles) is stored in in-memory Maps and is not persisted to stable memory; data will be lost on canister upgrade/reinstall.",
-    "frontend/public/404.html stores redirectPath in sessionStorage, but the app has no routing/deeplink restoration logic, so preserved deep paths are not restored.",
-    "There are two global CSS files (frontend/index.css and frontend/src/index.css); only the src version is imported, which can cause drift/confusion.",
-    "_redirects/_headers are Netlify-style configs and may not be honored by all hosting targets without equivalent platform configuration (ICP asset canister relies on .ic-assets.json instead).",
-    "frontend/DOMAIN_SETUP.md is truncated/incomplete in the provided snapshot (DNS record details are not fully present)."
+    "Many admin-related frontend files under frontend/src/admin/** and several hooks (useAdminStatus/useAdminUsers/useWebsiteContent/useSectionConfigs/contentSerialization) are empty placeholders in this snapshot; an admin CMS panel is not actually implemented.",
+    "frontend/src/hooks/useActor.ts always calls _initializeAccessControlWithSecret(adminToken) (adminToken may be empty). Backend traps if CAFFEINE_ADMIN_TOKEN is not set, which can break authenticated flows on misconfigured deployments.",
+    "AccessControl.getUserRole traps with \"User is not registered\" for non-anonymous principals that haven’t been initialized; callers may see traps instead of a safe default role.",
+    "Backend roles and userProfiles are stored only in in-memory Maps and are not persisted to stable memory; data will be lost on canister upgrade/reinstall.",
+    "The SPA 404 fallback stores redirectPath in sessionStorage, but no client router/restore logic is present in the provided code, so deep-link restoration is likely incomplete.",
+    "There are two global CSS files (frontend/index.css and frontend/src/index.css); only the src version is imported, which can cause confusion/drift.",
+    "frontend/index.html is the development entry (loads /src/main.tsx); if hosting accidentally serves source instead of dist output, production will break (docs warn about this but it remains a deployment footgun).",
+    "useBackendActorSafe skips access-control initialization when no caffeineAdminToken is present; #user-gated backend calls (e.g., getCallerUserProfile) can trap for authenticated-but-unregistered users.",
+    "User requires full static source code export (HTML/CSS/JS/assets) plus ZIP download/GitHub workflow; current platform/site setup may not support direct export without adding a dedicated static export build + packaging pipeline."
   ],
-  "isFixRequest": true,
-  "imageRequirements": "## Required Images\n- Square favicon derived from the existing Sangharsh Classes logo with clean padding and high contrast (favicon.png.dim_32x32.png)\n- Multi-size ICO favicon derived from the existing Sangharsh Classes logo (favicon.ico.dim_256x256.ico)",
-  "generatedImages": [
-    {
-      "filename": "favicon.png.dim_32x32.png",
-      "description": "Square favicon derived from the existing Sangharsh Classes logo with clean padding and high contrast",
-      "targetWidth": 32,
-      "targetHeight": 32
-    },
-    {
-      "filename": "favicon.ico.dim_256x256.ico",
-      "description": "Multi-size ICO favicon derived from the existing Sangharsh Classes logo",
-      "targetWidth": 256,
-      "targetHeight": 256
-    }
-  ],
+  "isFixRequest": false,
   "gameProjectType": "none",
   "projectName": "Sangharsh Classes",
   "clarification_mode": "instant",

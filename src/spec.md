@@ -1,13 +1,12 @@
 # Specification
 
 ## Summary
-**Goal:** Fix missing/incorrect favicon and ensure Google can detect the site logo by serving favicon files from the domain root, adding correct `<head>` tags, and providing minimal structured data.
+**Goal:** Provide an offline-capable static export of the current marketing homepage and a UI button to download the full website source code as a ZIP.
 
 **Planned changes:**
-- Add favicon assets generated from the existing Sangharsh Classes logo to `frontend/public/` so they are published at `/favicon.png` and optionally `/favicon.ico`.
-- Update `frontend/index.html` `<head>` to include favicon `<link>` tags (at minimum PNG; ICO if shipped).
-- Add minimal JSON-LD structured data in `frontend/index.html` for Organization (or equivalent) referencing an absolute logo URL on `https://sangharshclasses.in/`.
-- Update hosting/routing config to ensure `/favicon.png` (and `/favicon.ico` if present) are excluded from SPA fallback rewrites and are served with appropriate content-type and non-excessive caching rules.
-- Redeploy and verify in production that favicon URLs return HTTP 200 with image/icon content and the site renders unchanged.
+- Generate a static, offline-ready export of the current single-page marketing site with the exact package structure: `index.html`, `css/style.css`, `js/script.js`, `assets/images/`.
+- Ensure the exported HTML/CSS/JS matches the live React homepage content, sections, text, layout, and key interactions (navigation scroll links, WhatsApp action) without relying on external CDN dependencies.
+- Add a visible homepage button labeled exactly **"Download Website Code"** that downloads the ZIP containing the static export structure.
+- Serve the ZIP as a static frontend asset with a stable filename and appropriate download behavior (no backend calls, no auth required).
 
-**User-visible outcome:** The site shows the correct favicon (including in search/browser tabs), and `/favicon.png` (and `/favicon.ico` if provided) reliably load from `https://sangharshclasses.in/` without being rewritten to the SPA.
+**User-visible outcome:** Visitors can click **"Download Website Code"** to download a ZIP of the complete current website source that works offline when unzipped and opened via `index.html`.
