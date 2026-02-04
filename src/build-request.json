@@ -1,109 +1,118 @@
 {
   "kind": "build_request",
-  "title": "Fix sitemap.xml being served as text/html by ensuring correct static XML + headers",
+  "title": "Fix missing favicon/logo in Google search results",
   "priority": "high",
   "requirements": [
     {
       "id": "REQ-1",
-      "text": "Create/replace the production sitemap at `frontend/public/sitemap.xml` with a valid non-empty XML sitemap (raw XML only), so that the Vite build outputs `dist/sitemap.xml` as a standalone static file (not an HTML page).",
+      "text": "Add a favicon generated from the existing Sangharsh Classes logo and ensure it is published at the site root so it is accessible at https://sangharshclasses.in/favicon.png and/or https://sangharshclasses.in/favicon.ico. Place the favicon files in the frontend public root so the build outputs them at the domain root.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-6"
+          "msg-4"
         ],
         "quotes": [
-          "Ensure the sitemap is a valid XML file, not an HTML page.",
-          "Since this is a React/Vite website, serve sitemap.xml as a static file and exclude it from SPA routing."
+          "Add a proper favicon for the website using my logo.",
+          "Ensure the favicon is in supported formats (PNG or ICO).",
+          "Place the favicon in the root directory.",
+          "Ensure the favicon is accessible at:\n   https://sangharshclasses.in/favicon.png (or .ico)"
         ]
       },
       "acceptanceCriteria": [
-        "`frontend/public/sitemap.xml` contains a valid XML sitemap document (starts with XML declaration and a `<urlset>` root with the proper sitemap namespace).",
-        "After `npm run build`, `frontend/dist/sitemap.xml` exists at the root of the build output.",
-        "Requesting `/sitemap.xml` returns raw XML (no HTML content)."
+        "A favicon file exists at frontend/public/favicon.png and is included in the production build output at /favicon.png",
+        "A favicon file exists at frontend/public/favicon.ico (or a deliberate decision is documented to ship only PNG) and is included in the production build output at /favicon.ico",
+        "Fetching https://sangharshclasses.in/favicon.png returns HTTP 200 and serves an image response (not HTML) and is not rewritten to index.html",
+        "If /favicon.ico is provided, fetching https://sangharshclasses.in/favicon.ico returns HTTP 200 and serves an icon/image response (not HTML) and is not rewritten to index.html"
       ]
     },
     {
       "id": "REQ-2",
-      "text": "Fix static hosting / SPA fallback behavior so `/sitemap.xml` is never served by the SPA fallback (e.g., `index.html` or `404.html`) and never redirects; it must be publicly accessible as a static asset at exactly `/sitemap.xml`.",
+      "text": "Update frontend/index.html to include correct favicon link tags in the <head>, including at minimum a PNG icon reference matching the user’s example (e.g., <link rel=\"icon\" href=\"/favicon.png\" type=\"image/png\">).",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-6"
+          "msg-4"
         ],
         "quotes": [
-          "Make sure the sitemap URL returns raw XML only (no HTML, redirect, or error page).",
-          "Fix any routing, SPA fallback, or hosting configuration that is serving sitemap.xml as text/html.",
-          "Make sure the sitemap file name is correct (sitemap.xml) and publicly accessible."
+          "Add the correct favicon link tags inside the <head> section, for example:\n   <link rel=\"icon\" href=\"/favicon.png\" type=\"image/png\">"
         ]
       },
       "acceptanceCriteria": [
-        "A direct request to `/sitemap.xml` returns HTTP 200 (not a 3xx redirect and not a 404 fallback).",
-        "The response body for `/sitemap.xml` is the XML sitemap content and does not contain `<!DOCTYPE html>` or `<html>`.",
-        "If the hosting configuration includes SPA rewrite rules / fallback behavior, those rules explicitly exclude `/sitemap.xml` (and do not rewrite it to `/index.html`)."
+        "frontend/index.html includes a <link rel=\"icon\" href=\"/favicon.png\" type=\"image/png\"> tag inside <head>",
+        "If favicon.ico is shipped, frontend/index.html also includes a <link rel=\"icon\" href=\"/favicon.ico\" type=\"image/x-icon\"> (or equivalent) inside <head>",
+        "After build and deploy, the rendered page source (production) contains the favicon <link> tags and they resolve successfully"
       ]
     },
     {
       "id": "REQ-3",
-      "text": "Ensure `/sitemap.xml` is served with the HTTP response header `Content-Type: application/xml` (or an equivalent XML MIME type accepted by Google), and is not served as `text/html`.",
+      "text": "Update site metadata in frontend/index.html so Google can detect the site logo correctly by adding appropriate structured data (JSON-LD) for the website/organization and referencing an absolute logo URL on the canonical domain (https://sangharshclasses.in/...) that points to the published favicon/logo image.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-6"
+          "msg-4"
         ],
         "quotes": [
-          "Set the correct HTTP response header: Content-Type: application/xml",
-          "Incorrect HTTP header content-type: text/html (expected: application/xml)"
+          "Update the site metadata so Google can detect the logo correctly."
         ]
       },
       "acceptanceCriteria": [
-        "A `curl -I https://<production-origin>/sitemap.xml` (or equivalent header inspection) shows `Content-Type: application/xml` (or `application/xml; charset=utf-8`).",
-        "Google Search Console sitemap fetch no longer reports `Incorrect HTTP header content-type: text/html (expected: application/xml)` after deployment."
+        "frontend/index.html contains a JSON-LD <script type=\"application/ld+json\"> block for Organization (or equivalent) that includes a logo URL on https://sangharshclasses.in/ referencing the deployed image",
+        "The structured data does not introduce new product features or marketing claims beyond identifying the site/organization and logo",
+        "The canonical URL remains https://sangharshclasses.in/ (existing canonical tag preserved)"
       ]
     },
     {
       "id": "REQ-4",
-      "text": "Populate `frontend/public/robots.txt` to publicly reference the sitemap at `/sitemap.xml` and ensure it is also emitted as a static file in `dist/robots.txt`.",
+      "text": "Prevent caching/routing issues from blocking favicon updates by ensuring favicon files are excluded from SPA fallback rewriting and have appropriate hosting headers/caching rules for reliable retrieval on ICP hosting.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-6"
+          "msg-4"
         ],
         "quotes": [
-          "Ensure the sitemap file name is correct (sitemap.xml) and publicly accessible."
+          "Redeploy the website and ensure no caching or routing issue blocks the favicon."
         ]
       },
       "acceptanceCriteria": [
-        "`frontend/public/robots.txt` is non-empty and includes a `Sitemap: https://<production-origin>/sitemap.xml` directive (using the correct production origin for the deployed site).",
-        "After `npm run build`, `frontend/dist/robots.txt` exists and matches the intended contents."
+        "frontend/public/_redirects explicitly excludes /favicon.png (and /favicon.ico if shipped) from SPA fallback rewriting, similar to existing sitemap.xml/robots.txt exclusions",
+        "frontend/.ic-assets.json includes explicit match rules for favicon.png (and favicon.ico if shipped) that set appropriate Content-Type and avoid excessively long cache max-age for these files (so updates propagate)",
+        "A request to /favicon.png and /favicon.ico (if present) is served as the actual file (not index.html) in production"
       ]
     },
     {
       "id": "REQ-5",
-      "text": "Add/update deployment verification documentation to include explicit sitemap checks: verifying `dist/sitemap.xml` exists, requesting `/sitemap.xml` returns HTTP 200 with `Content-Type: application/xml`, and confirming the URL is not being served by SPA fallback HTML.",
-      "target": "frontend",
+      "text": "Redeploy the site after the favicon and metadata changes and verify in production that the favicon is reachable at the exact URLs requested and that no caching/routing misconfiguration prevents access.",
+      "target": "unknown",
       "source": {
         "messageIds": [
-          "msg-6"
+          "msg-4"
         ],
         "quotes": [
-          "Test the sitemap URL and confirm it works correctly in Google Search Console."
+          "Redeploy the website and ensure no caching or routing issue blocks the favicon."
         ]
       },
       "acceptanceCriteria": [
-        "`frontend/DEPLOYMENT_CHECKLIST.md` includes a new checklist section specifically for validating `/sitemap.xml` response status, body (raw XML), and `Content-Type` header in production."
+        "Production domain https://sangharshclasses.in/favicon.png returns 200 and correct image content",
+        "If shipped, production domain https://sangharshclasses.in/favicon.ico returns 200 and correct icon/image content",
+        "Production domain https://sangharshclasses.in/ renders without any redesign or layout changes (only favicon/metadata/hosting behavior changes)"
       ]
     }
   ],
   "constraints": [
-    "Do not redesign the website. Only fix the sitemap and HTTP header issue.",
-    "Do not modify files under `frontend/src/components/ui` or any other `frontend.immutablePaths` entries."
+    "Do not redesign the website; only change favicon/logo-related assets, <head> tags/metadata, and hosting rules needed to serve the favicon correctly.",
+    "Frontend files under frontend/src/components/ui and the immutable paths listed in SYSTEM_CONTEXT must not be edited.",
+    "Keep the app as a single-page application with existing routing/fallback behavior, only adding explicit exclusions for favicon files."
   ],
   "nonGoals": [
-    "Adding new website pages, routes, or redesigning layout/content.",
-    "Implementing a dynamic sitemap generated by the backend canister."
+    "Implementing new pages, new UI sections, or changing the site’s visual theme/layout.",
+    "Adding third-party SEO tools or external services.",
+    "Changing backend (Motoko) logic or user/auth features."
   ],
   "imageRequirements": {
-    "required": [],
+    "required": [
+      "Square favicon derived from the existing Sangharsh Classes logo with clean padding and high contrast (favicon.png.dim_32x32.png)",
+      "Multi-size ICO favicon derived from the existing Sangharsh Classes logo (favicon.ico.dim_256x256.ico)"
+    ],
     "edits": []
   }
 }

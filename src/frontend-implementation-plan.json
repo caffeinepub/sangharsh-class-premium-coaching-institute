@@ -1,86 +1,111 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Fix static sitemap.xml output, SPA fallback exclusions, and XML Content-Type",
+  "title": "Fix favicon publishing, head tags, structured data, and ICP asset rules",
   "requirements": [
     {
       "id": "REQ-1",
-      "summary": "Ship a valid non-empty static XML sitemap at frontend/public/sitemap.xml so Vite emits dist/sitemap.xml as a standalone file.",
+      "summary": "Publish favicon assets at the domain root as /favicon.png and /favicon.ico using files derived from the Sangharsh Classes logo.",
       "acceptanceCriteria": [
-        "`frontend/public/sitemap.xml` contains a valid XML sitemap document (starts with XML declaration and a `<urlset>` root with the proper sitemap namespace).",
-        "After `npm run build`, `frontend/dist/sitemap.xml` exists at the root of the build output.",
-        "Requesting `/sitemap.xml` returns raw XML (no HTML content)."
+        "A favicon file exists at frontend/public/favicon.png and is included in the production build output at /favicon.png",
+        "A favicon file exists at frontend/public/favicon.ico (or a deliberate decision is documented to ship only PNG) and is included in the production build output at /favicon.ico",
+        "Fetching https://sangharshclasses.in/favicon.png returns HTTP 200 and serves an image response (not HTML) and is not rewritten to index.html",
+        "If /favicon.ico is provided, fetching https://sangharshclasses.in/favicon.ico returns HTTP 200 and serves an icon/image response (not HTML) and is not rewritten to index.html"
       ],
       "file_operations": [
         {
-          "path": "frontend/public/sitemap.xml",
-          "operation": "modify",
-          "description": "Replace the current empty file with a valid, non-empty XML sitemap document (raw XML only). Ensure it includes the XML declaration and a `<urlset>` root using the standard sitemap namespace, with at least the site root URL listed."
+          "path": "frontend/public/assets/generated/favicon.png.dim_32x32.png",
+          "operation": "create",
+          "description": "Add the generated square PNG favicon asset (32x32) derived from the existing Sangharsh Classes logo at frontend/public/assets/generated/favicon.png.dim_32x32.png so it is tracked in-repo and available as a source artifact for the root favicon."
+        },
+        {
+          "path": "frontend/public/assets/generated/favicon.ico.dim_256x256.ico",
+          "operation": "create",
+          "description": "Add the generated multi-size ICO favicon asset (up to 256x256) derived from the existing Sangharsh Classes logo at frontend/public/assets/generated/favicon.ico.dim_256x256.ico so it is tracked in-repo and available as a source artifact for the root favicon."
+        },
+        {
+          "path": "frontend/public/favicon.png",
+          "operation": "create",
+          "description": "Create the root-served PNG favicon at frontend/public/favicon.png (copied/exported from frontend/public/assets/generated/favicon.png.dim_32x32.png) so the build outputs it at /favicon.png on the domain root."
+        },
+        {
+          "path": "frontend/public/favicon.ico",
+          "operation": "create",
+          "description": "Create the root-served ICO favicon at frontend/public/favicon.ico (copied/exported from frontend/public/assets/generated/favicon.ico.dim_256x256.ico) so the build outputs it at /favicon.ico on the domain root."
         }
       ]
     },
     {
       "id": "REQ-2",
-      "summary": "Ensure SPA fallback/redirect behavior never rewrites or redirects /sitemap.xml and it remains directly accessible as a static file.",
+      "summary": "Add favicon <link> tags in frontend/index.html head referencing /favicon.png (and /favicon.ico if shipped).",
       "acceptanceCriteria": [
-        "A direct request to `/sitemap.xml` returns HTTP 200 (not a 3xx redirect and not a 404 fallback).",
-        "The response body for `/sitemap.xml` is the XML sitemap content and does not contain `<!DOCTYPE html>` or `<html>`.",
-        "If the hosting configuration includes SPA rewrite rules / fallback behavior, those rules explicitly exclude `/sitemap.xml` (and do not rewrite it to `/index.html`)."
+        "frontend/index.html includes a <link rel=\"icon\" href=\"/favicon.png\" type=\"image/png\"> tag inside <head>",
+        "If favicon.ico is shipped, frontend/index.html also includes a <link rel=\"icon\" href=\"/favicon.ico\" type=\"image/x-icon\"> (or equivalent) inside <head>",
+        "After build and deploy, the rendered page source (production) contains the favicon <link> tags and they resolve successfully"
       ],
       "file_operations": [
         {
-          "path": "frontend/public/404.html",
+          "path": "frontend/index.html",
           "operation": "modify",
-          "description": "Update the SPA fallback redirect script to explicitly bypass redirection for `/sitemap.xml` so that static hosting does not serve the SPA fallback HTML for that path. Keep existing fallback behavior for typical client-side routes."
-        },
-        {
-          "path": "frontend/public/_redirects",
-          "operation": "create",
-          "description": "Add a static hosting redirects/rewrite configuration file that explicitly excludes `/sitemap.xml` from SPA fallback rules (so it is served as-is), while retaining SPA fallback for other routes where applicable."
+          "description": "Add favicon link tags inside <head> referencing /favicon.png with type image/png and also /favicon.ico with an appropriate icon MIME type, without changing layout or non-favicon UI."
         }
       ]
     },
     {
       "id": "REQ-3",
-      "summary": "Ensure /sitemap.xml is served with an XML MIME type (application/xml) rather than text/html.",
+      "summary": "Add Organization/Website JSON-LD structured data in frontend/index.html referencing an absolute logo URL on https://sangharshclasses.in/.",
       "acceptanceCriteria": [
-        "A `curl -I https://<production-origin>/sitemap.xml` (or equivalent header inspection) shows `Content-Type: application/xml` (or `application/xml; charset=utf-8`).",
-        "Google Search Console sitemap fetch no longer reports `Incorrect HTTP header content-type: text/html (expected: application/xml)` after deployment."
+        "frontend/index.html contains a JSON-LD <script type=\"application/ld+json\"> block for Organization (or equivalent) that includes a logo URL on https://sangharshclasses.in/ referencing the deployed image",
+        "The structured data does not introduce new product features or marketing claims beyond identifying the site/organization and logo",
+        "The canonical URL remains https://sangharshclasses.in/ (existing canonical tag preserved)"
       ],
       "file_operations": [
         {
-          "path": "frontend/public/_headers",
-          "operation": "create",
-          "description": "Add a static hosting headers configuration file that sets `Content-Type: application/xml` (or an equivalent XML MIME type) specifically for `/sitemap.xml` to prevent it being served as `text/html`."
+          "path": "frontend/index.html",
+          "operation": "modify",
+          "description": "Insert a JSON-LD script block (Organization and/or WebSite) in <head> that references an absolute logo URL such as https://sangharshclasses.in/favicon.png, while preserving the existing canonical tag and avoiding any new marketing claims."
         }
       ]
     },
     {
       "id": "REQ-4",
-      "summary": "Populate robots.txt to reference /sitemap.xml and ensure it is emitted into dist/robots.txt.",
+      "summary": "Ensure favicon files bypass SPA fallback rewriting and are served with correct content-type and reasonable caching via ICP asset rules.",
       "acceptanceCriteria": [
-        "`frontend/public/robots.txt` is non-empty and includes a `Sitemap: https://<production-origin>/sitemap.xml` directive (using the correct production origin for the deployed site).",
-        "After `npm run build`, `frontend/dist/robots.txt` exists and matches the intended contents."
+        "frontend/public/_redirects explicitly excludes /favicon.png (and /favicon.ico if shipped) from SPA fallback rewriting, similar to existing sitemap.xml/robots.txt exclusions",
+        "frontend/.ic-assets.json includes explicit match rules for favicon.png (and favicon.ico if shipped) that set appropriate Content-Type and avoid excessively long cache max-age for these files (so updates propagate)",
+        "A request to /favicon.png and /favicon.ico (if present) is served as the actual file (not index.html) in production"
       ],
       "file_operations": [
         {
-          "path": "frontend/public/robots.txt",
+          "path": "frontend/public/_redirects",
           "operation": "modify",
-          "description": "Replace the current empty file with a non-empty robots.txt that publicly references the sitemap at `/sitemap.xml`, including a `Sitemap: https://<production-origin>/sitemap.xml` directive using the intended production origin."
+          "description": "Add explicit exclusions for /favicon.png and /favicon.ico so they are served directly (200) and are not rewritten by the SPA fallback rule."
+        },
+        {
+          "path": "frontend/.ic-assets.json",
+          "operation": "modify",
+          "description": "Add explicit asset match rules for favicon.png and favicon.ico to set correct Content-Type headers and a short/moderate cache max-age (avoiding the default long cache) so favicon updates propagate reliably on ICP hosting."
+        },
+        {
+          "path": "frontend/public/_headers",
+          "operation": "modify",
+          "description": "Optionally add explicit Content-Type header rules for /favicon.png and /favicon.ico to reinforce correct MIME types for static hosting environments that respect _headers (keep existing sitemap.xml/robots.txt rules unchanged)."
         }
       ]
     },
     {
       "id": "REQ-5",
-      "summary": "Document explicit production verification steps for sitemap.xml (dist presence, 200 status, XML body, and Content-Type header).",
+      "summary": "Document production verification steps for favicon reachability and confirm no routing/caching prevents access after redeploy.",
       "acceptanceCriteria": [
-        "`frontend/DEPLOYMENT_CHECKLIST.md` includes a new checklist section specifically for validating `/sitemap.xml` response status, body (raw XML), and `Content-Type` header in production."
+        "Production domain https://sangharshclasses.in/favicon.png returns 200 and correct image content",
+        "If shipped, production domain https://sangharshclasses.in/favicon.ico returns 200 and correct icon/image content",
+        "Production domain https://sangharshclasses.in/ renders without any redesign or layout changes (only favicon/metadata/hosting behavior changes)"
       ],
       "file_operations": [
         {
           "path": "frontend/DEPLOYMENT_CHECKLIST.md",
           "operation": "modify",
-          "description": "Add a dedicated sitemap verification section covering: confirming `frontend/dist/sitemap.xml` exists after build, checking production `/sitemap.xml` returns HTTP 200 with no redirect, validating the response is raw XML (no HTML markers), and verifying `Content-Type` is `application/xml` via header inspection."
+          "description": "Add post-deploy verification steps to check /favicon.png and /favicon.ico return HTTP 200 with non-HTML image responses, confirm the page source contains the favicon <link> tags and JSON-LD, and confirm there are no layout changes."
         }
       ]
     }

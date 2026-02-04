@@ -1,28 +1,75 @@
 {
   "kind": "spec_vs_diff_report",
   "version": "1.0",
-  "generatedAt": "2026-02-04T05:54:04.289Z",
-  "summary": "Implemented static sitemap.xml and robots.txt in frontend/public, plus added hosting config files (_headers, _redirects) and updated 404.html logic to avoid SPA fallback for /sitemap.xml and /robots.txt. Deployment checklist changes shown do not include the requested explicit sitemap validation section.",
+  "generatedAt": "2026-02-04T13:31:02.926Z",
+  "summary": "Implemented favicon link tags, JSON-LD structured data, SPA fallback exclusions, and ICP asset header/cache rules for favicon requests. However, the diff does not show the actual favicon image/icon files being added to frontend/public, and several unrelated UI/SEO/verification and app-behavior changes were made beyond the favicon-only scope. Production redeploy/verification cannot be confirmed from code changes alone.",
   "missing_requirements": [
     {
-      "id": "REQ-5",
-      "requirement": "Add/update deployment verification documentation to include explicit sitemap checks: verifying dist/sitemap.xml exists, requesting /sitemap.xml returns HTTP 200 with Content-Type: application/xml, and confirming the URL is not being served by SPA fallback HTML.",
-      "reason": "The provided DEPLOYMENT_CHECKLIST.md excerpt includes build, SPA fallback, and other production checks, but does not show a dedicated section/checklist items for /sitemap.xml status/body/content-type verification.",
+      "id": "REQ-1",
+      "requirement": "Add favicon assets derived from the existing Sangharsh Classes logo and publish them at the site root via frontend/public/favicon.png and frontend/public/favicon.ico (or document shipping only PNG).",
+      "reason": "The diff shows references and hosting rules for favicon.png/favicon.ico, but does not show the favicon files themselves being added under frontend/public/. No added files are listed, and no file content for favicon assets is shown.",
       "evidence": [
-        "frontend/DEPLOYMENT_CHECKLIST.md (truncated excerpt shows no sitemap-specific checks)"
+        "File diff summary: \"Added: 0\"",
+        "frontend/public/_redirects",
+        "frontend/.ic-assets.json",
+        "frontend/index.html"
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "requirement": "Structured data must not introduce new product features or marketing claims beyond identifying the site/organization and logo.",
+      "reason": "The Organization JSON-LD includes a promotional/marketing description (\"Expert coaching... 100% result-oriented approach\"), which appears to go beyond pure identification + logo reference as constrained by the requirement.",
+      "evidence": [
+        "frontend/index.html"
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "requirement": "Redeploy the site and verify in production that favicon URLs return 200 with correct image/icon content and are not rewritten/cached incorrectly.",
+      "reason": "Redeploying and production verification are operational steps; no evidence of a production check (HTTP 200/image content validation) can be confirmed from the diff summary.",
+      "evidence": [
+        "File diff summary (no deployment/prod verification output included)"
       ]
     }
   ],
-  "hallucinated_features": [],
-  "confidence": 0.72,
+  "hallucinated_features": [
+    {
+      "description": "Major redesign/content changes to multiple frontend sections (Header/Hero/About/Faculty/Courses/Contact/Footer), adding new marketing copy, layouts, animations, and static content unrelated to favicon/logo fix.",
+      "reason": "BuildRequest explicitly restricts changes to favicon/logo assets, <head> tags/metadata, and hosting rules; UI/theme/layout changes are non-goals.",
+      "evidence": [
+        "frontend-file-summaries.txt (entries for frontend/src/components/Header.tsx, Hero.tsx, About.tsx, Faculty.tsx, Courses.tsx, Contact.tsx, Footer.tsx, WhatsAppButton.tsx, frontend/src/pages/HomePage.tsx, frontend/src/index.css, frontend/tailwind.config.js)"
+      ]
+    },
+    {
+      "description": "Added/modified app runtime behavior such as runtime diagnostics, SEO guards for domain canonicalization, error boundary wrapping, and React Query/actor recovery logic changes.",
+      "reason": "Not requested; BuildRequest non-goals include changing backend logic/user/auth features and constraints focus only on favicon/metadata/hosting rules.",
+      "evidence": [
+        "frontend-file-summaries.txt (entries for frontend/src/App.tsx, frontend/src/hooks/useQueries.ts, frontend/src/hooks/useWebsiteContent.ts)"
+      ]
+    },
+    {
+      "description": "Added Google Search Console verification file (google53082ab74af04c28.html).",
+      "reason": "Not requested in the favicon/logo fix requirements and goes beyond favicon/head/hosting rules needed specifically to serve the favicon correctly.",
+      "evidence": [
+        "frontend-file-summaries.txt (entry for frontend/public/google53082ab74af04c28.html)"
+      ]
+    },
+    {
+      "description": "Added a deployment checklist document focused on blank-screen regressions and general deployment validation.",
+      "reason": "Not requested; while tangentially related to deployment, REQ-5 asks to redeploy/verify production behavior, not to add new documentation.",
+      "evidence": [
+        "frontend/DEPLOYMENT_CHECKLIST.md"
+      ]
+    }
+  ],
+  "confidence": 0.74,
   "changed_files": [
     "frontend-file-summaries.txt",
+    "frontend/.ic-assets.json",
     "frontend/DEPLOYMENT_CHECKLIST.md",
-    "frontend/public/404.html",
+    "frontend/index.html",
     "frontend/public/_headers",
     "frontend/public/_redirects",
-    "frontend/public/robots.txt",
-    "frontend/public/sitemap.xml",
     "project_state.json"
   ]
 }

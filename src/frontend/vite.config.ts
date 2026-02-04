@@ -20,6 +20,8 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     assetsDir: 'assets',
+    emptyOutDir: true, // Clean dist folder before each build
+    sourcemap: false, // Disable sourcemaps for production
     rollupOptions: {
       output: {
         // Ensure consistent asset naming

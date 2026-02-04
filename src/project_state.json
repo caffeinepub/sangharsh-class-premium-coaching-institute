@@ -1,16 +1,16 @@
 {
   "schemaVersion": "1.0.0",
   "projectStateVersion": 3,
-  "summary": "Sangharsh Class is a Vite + React + TailwindCSS single-page marketing website for a coaching institute (classes 7th–12th). It includes a Motoko canister backend for Internet Identity authentication, role-based access control (admin/user/guest), and per-caller user profile storage. The frontend is primarily static (hardcoded section content) and includes production-hardening for static hosting (relative asset paths, SPA 404 fallback, and a deployment verification checklist) to prevent blank-screen regressions on deployment (e.g., ICP/custom domain hosting).",
+  "summary": "Sangharsh Classes is a Vite + React + TailwindCSS single-page marketing website for a coaching institute (classes 7th–12th) with section-based content (Hero, About, Faculty, Courses, Contact, Footer) and WhatsApp/call/email CTAs. The repo also includes an Internet Computer (ICP) Motoko backend canister that implements role-based access control (admin/user/guest) bootstrapped via a canister environment secret and provides per-caller user profile storage. The frontend integrates Internet Identity authentication, creates identity-bound canister actors, and uses TanStack React Query for caching and data fetching. Additionally, the project includes SEO and static-hosting assets/config (canonical + OpenGraph tags, sitemap.xml, robots.txt, noindex guard for the non-canonical domain, SPA fallback rules, and asset-canister headers/caching config).",
   "existing_features": [
     {
       "id": "IF-1",
       "title": "Single-page public marketing homepage",
       "synonyms": [
         "Marketing SPA",
-        "Public landing page"
+        "Landing page"
       ],
-      "description": "Renders a static homepage composed of Header, Hero, About, Faculty, Courses, Contact, and Footer sections plus a floating WhatsApp button. Content is currently hardcoded in React components.",
+      "description": "Renders a public homepage composed of Header, Hero, About, Faculty, Courses, Contact, and Footer sections, plus a floating WhatsApp CTA.",
       "reqIds": [],
       "version": 1
     },
@@ -18,10 +18,10 @@
       "id": "IF-2",
       "title": "Responsive header with smooth-scroll section navigation",
       "synonyms": [
-        "Section anchor navigation",
+        "Section navigation",
         "Mobile sheet menu"
       ],
-      "description": "Fixed header that changes styling on scroll and provides desktop + mobile navigation; clicking items smoothly scrolls to section IDs using scrollIntoView.",
+      "description": "Fixed header that changes style on scroll and provides desktop + mobile navigation buttons that smoothly scroll to section IDs via scrollIntoView.",
       "reqIds": [],
       "version": 1
     },
@@ -29,20 +29,20 @@
       "id": "IF-3",
       "title": "Hero section with CTAs and stats",
       "synonyms": [
-        "Landing hero",
-        "Top banner"
+        "Top banner",
+        "Hero block"
       ],
-      "description": "Hero banner with background image overlay, bilingual tagline, “100% Result Guarantee” badge, CTA buttons that scroll to contact/courses, and stat cards.",
+      "description": "Hero banner with background image overlay, bilingual tagline, “100% Result Guarantee” badge, CTA buttons (enroll/view courses), and stat cards.",
       "reqIds": [],
       "version": 1
     },
     {
       "id": "IF-4",
-      "title": "About section (static)",
+      "title": "About section (static content)",
       "synonyms": [
         "About Sangharsh Classes"
       ],
-      "description": "Displays hardcoded multi-paragraph description text and a single “Result Oriented” feature card.",
+      "description": "Displays hardcoded multi-paragraph about text (split into paragraphs) and a centered “Result Oriented” feature card.",
       "reqIds": [],
       "version": 1
     },
@@ -53,7 +53,7 @@
         "Teacher listing",
         "Faculty grid"
       ],
-      "description": "Renders a responsive grid of faculty cards with photos, subject badges, roles, experience, and specialization text.",
+      "description": "Renders a responsive grid of hardcoded faculty cards with photos, subject badges, role, experience, and specialization fallback text.",
       "reqIds": [],
       "version": 1
     },
@@ -64,7 +64,7 @@
         "Programs grid",
         "Offerings"
       ],
-      "description": "Displays hardcoded course cards for classes 7–12 plus a promotional banner for board-preparation subjects.",
+      "description": "Shows six hardcoded class offerings (7–12) with descriptions, feature bullets, and a promotional subject banner.",
       "reqIds": [],
       "version": 1
     },
@@ -74,7 +74,7 @@
       "synonyms": [
         "Call/email/WhatsApp actions"
       ],
-      "description": "Shows phone/email/location and provides one-click actions using tel:, mailto:, and wa.me links/buttons, including a “Schedule a Visit” WhatsApp CTA.",
+      "description": "Displays phone/email/location and provides one-click actions using tel:, mailto:, and wa.me links/buttons plus a “Schedule a Visit” WhatsApp CTA.",
       "reqIds": [],
       "version": 1
     },
@@ -85,7 +85,7 @@
         "Site footer",
         "Social icons"
       ],
-      "description": "Footer includes branding, quick links to section anchors, contact details, and outbound social links (Facebook/Instagram/YouTube) with current-year copyright.",
+      "description": "Footer includes branding/about text, section anchor quick links, contact info, outbound social links (Facebook/Instagram/YouTube), and a built-with attribution line.",
       "reqIds": [],
       "version": 1
     },
@@ -93,7 +93,8 @@
       "id": "IF-9",
       "title": "Floating WhatsApp contact button",
       "synonyms": [
-        "WhatsApp FAB"
+        "WhatsApp FAB",
+        "Sticky WhatsApp CTA"
       ],
       "description": "Fixed-position WhatsApp button that opens a chat to the configured phone number in a new tab.",
       "reqIds": [],
@@ -104,180 +105,213 @@
       "title": "Top-level React error boundary with fallback UI",
       "synonyms": [
         "AppErrorBoundary",
-        "Blank-screen prevention"
+        "Runtime fallback screen"
       ],
-      "description": "Wraps the app in a React error boundary that catches render/lifecycle errors, logs details to console, and displays a user-friendly fallback UI with refresh/home actions.",
+      "description": "Wraps the app in an error boundary and displays a user-friendly error card with refresh/home actions to prevent a blank screen on runtime errors.",
       "reqIds": [],
       "version": 1
     },
     {
       "id": "IF-11",
-      "title": "Runtime diagnostics for production debugging",
+      "title": "Runtime diagnostics logging",
       "synonyms": [
         "Global error logging",
         "Unhandled rejection capture"
       ],
-      "description": "Registers window error and unhandledrejection listeners and logs initialization/render markers to help diagnose production failures.",
+      "description": "Registers window error and unhandledrejection listeners and logs initialization markers to aid production debugging.",
       "reqIds": [],
       "version": 1
     },
     {
       "id": "IF-12",
-      "title": "Internet Identity authentication provider (frontend)",
+      "title": "Runtime SEO guards (canonical/noindex enforcement)",
       "synonyms": [
-        "AuthClient integration",
-        "InternetIdentityProvider"
+        "SEO guard",
+        "Canonical domain enforcement"
       ],
-      "description": "Provides a React context that initializes @dfinity/auth-client, restores identity on mount, supports login/logout, and exposes status flags and error state.",
+      "description": "At app startup, enforces canonical and og:url to the custom domain and applies robots noindex/nofollow when running on the Caffeine subdomain.",
       "reqIds": [],
       "version": 1
     },
     {
       "id": "IF-13",
-      "title": "Backend canister actor creation & caching hook",
+      "title": "Homepage SEO markup in index.html",
       "synonyms": [
-        "useActor",
-        "Identity-bound actor"
+        "Canonical tag",
+        "OpenGraph tags"
       ],
-      "description": "Creates an anonymous actor when logged out and an identity-bound actor when logged in; caches actor by principal in React Query and invalidates/refetches other queries when the actor changes. Attempts RBAC initialization via _initializeAccessControlWithSecret.",
+      "description": "Defines title/meta description plus canonical and og:url tags pointing to https://sangharshclasses.in/ in the HTML entrypoint.",
       "reqIds": [],
       "version": 1
     },
     {
       "id": "IF-14",
-      "title": "Safe backend actor initialization (non-fatal RBAC init)",
+      "title": "SEO static assets (sitemap.xml and robots.txt)",
       "synonyms": [
-        "useBackendActorSafe",
-        "Graceful actor init"
+        "Sitemap",
+        "Robots"
       ],
-      "description": "Creates an identity-bound actor but only attempts RBAC initialization when a caffeineAdminToken secret is present; initialization failures are caught and logged as warnings rather than breaking UI.",
+      "description": "Provides a root sitemap.xml listing the canonical homepage URL and a robots.txt that allows crawling and references the sitemap.",
       "reqIds": [],
       "version": 1
     },
     {
       "id": "IF-15",
-      "title": "Secure secret extraction from URL hash with session persistence",
+      "title": "SPA fallback page with static-file exclusions",
       "synonyms": [
-        "getSecretParameter",
-        "Hash token cleanup"
+        "404.html fallback",
+        "Deep link support stub"
       ],
-      "description": "Utilities to read parameters from query/hash, persist to sessionStorage, and extract sensitive secrets from the URL hash while removing them from the address bar via history.replaceState.",
+      "description": "404.html redirects unknown paths to the app root while excluding sitemap.xml/robots.txt/favicon.ico from redirects.",
       "reqIds": [],
       "version": 1
     },
     {
       "id": "IF-16",
-      "title": "Per-caller user profile hooks (frontend)",
+      "title": "Static hosting rules for SPA fallback and MIME types",
       "synonyms": [
-        "useGetCallerUserProfile",
-        "useSaveCallerUserProfile"
+        "_redirects",
+        "_headers"
       ],
-      "description": "React Query hook to fetch the current caller’s profile and an async helper to save it via the backend actor; combines actor-fetching and query loading states.",
+      "description": "Netlify-style rules to serve sitemap.xml and robots.txt directly (200) while rewriting all other routes to /index.html, and to set correct Content-Type headers for sitemap/robots.",
       "reqIds": [],
       "version": 1
     },
     {
       "id": "IF-17",
+      "title": "ICP asset-canister configuration for caching and headers",
+      "synonyms": [
+        ".ic-assets.json",
+        "Asset canister rules"
+      ],
+      "description": "Defines caching policies and security/MIME headers, including explicit Content-Type for sitemap.xml and robots.txt and no-cache for index.html.",
+      "reqIds": [],
+      "version": 1
+    },
+    {
+      "id": "IF-18",
+      "title": "Vite build and dev-server configuration for static/ICP hosting",
+      "synonyms": [
+        "Relative base configuration",
+        "Dev proxy"
+      ],
+      "description": "Configures Vite with base './', hashed asset output under assets/, clean builds (emptyOutDir), and a dev proxy for /api to a local ICP replica.",
+      "reqIds": [],
+      "version": 1
+    },
+    {
+      "id": "IF-19",
+      "title": "Internet Identity authentication provider (frontend)",
+      "synonyms": [
+        "AuthClient integration",
+        "InternetIdentityProvider"
+      ],
+      "description": "React context provider that initializes @dfinity/auth-client, restores identity on mount, supports login/logout, and exposes status flags and errors.",
+      "reqIds": [],
+      "version": 1
+    },
+    {
+      "id": "IF-20",
+      "title": "Backend canister actor creation and caching (frontend)",
+      "synonyms": [
+        "useActor",
+        "Identity-bound actor"
+      ],
+      "description": "Creates an anonymous actor when logged out and an identity-bound actor when logged in; actor is cached in React Query by principal and triggers invalidation/refetch of dependent queries when it changes.",
+      "reqIds": [],
+      "version": 1
+    },
+    {
+      "id": "IF-21",
+      "title": "Safe backend actor initialization hook",
+      "synonyms": [
+        "useBackendActorSafe",
+        "Non-fatal RBAC init"
+      ],
+      "description": "Creates an identity-bound actor and conditionally attempts RBAC initialization only when a caffeineAdminToken secret is present; initialization failures are logged and treated as non-fatal.",
+      "reqIds": [],
+      "version": 1
+    },
+    {
+      "id": "IF-22",
+      "title": "URL parameter utilities with secure hash-secret handling",
+      "synonyms": [
+        "urlParams",
+        "Hash secret extraction"
+      ],
+      "description": "Utilities to read URL parameters from query/hash, persist values in sessionStorage, and extract sensitive secrets from the URL hash while removing them from the address bar via history.replaceState.",
+      "reqIds": [],
+      "version": 1
+    },
+    {
+      "id": "IF-23",
+      "title": "Per-caller user profile hooks (frontend)",
+      "synonyms": [
+        "useGetCallerUserProfile",
+        "useSaveCallerUserProfile"
+      ],
+      "description": "React Query hook to fetch the current caller’s profile and an async helper to save it via the backend actor, combining actor-fetching and query loading states.",
+      "reqIds": [],
+      "version": 1
+    },
+    {
+      "id": "IF-24",
       "title": "Role-based access control (Motoko)",
       "synonyms": [
         "RBAC",
         "AccessControl",
         "admin/user/guest roles"
       ],
-      "description": "Implements RBAC with roles #admin/#user/#guest; supports initialization using an environment admin token + user-provided secret, querying caller role/admin status, and admin-only role assignment.",
+      "description": "Implements roles (#admin/#user/#guest); supports initialization using a canister env admin token + user-provided secret, querying caller role/admin status, and admin-only role assignment.",
       "reqIds": [],
       "version": 1
     },
     {
-      "id": "IF-18",
+      "id": "IF-25",
       "title": "Per-user profile storage with authorization (Motoko)",
       "synonyms": [
         "UserProfile storage",
         "getCallerUserProfile/saveCallerUserProfile"
       ],
-      "description": "Stores a per-principal UserProfile (currently { name : Text }) in a canister map. Read/write is gated to #user permission; admins can query other users via getUserProfile.",
+      "description": "Stores per-principal UserProfile records in an in-memory Map; read/write is gated to #user permission, while admins can query another principal’s profile via getUserProfile.",
       "reqIds": [],
       "version": 1
     },
     {
-      "id": "IF-19",
-      "title": "Production build configuration for correct static hosting asset paths",
-      "synonyms": [
-        "Vite base configuration",
-        "Hashed assets output"
-      ],
-      "description": "Vite config sets base to './' for relative asset paths and configures Rollup output naming (assets/[name]-[hash]) to produce stable, cache-friendly build artifacts in dist/ for static/IC hosting.",
-      "reqIds": [],
-      "version": 1
-    },
-    {
-      "id": "IF-20",
-      "title": "SPA deep-link fallback for static hosting",
-      "synonyms": [
-        "404.html fallback",
-        "Static host deep links"
-      ],
-      "description": "Adds frontend/public/404.html that redirects unknown routes back to root for static hosting environments that serve 404.html, enabling deep-link compatibility patterns.",
-      "reqIds": [],
-      "version": 1
-    },
-    {
-      "id": "IF-21",
-      "title": "Deployment verification checklist documentation",
-      "synonyms": [
-        "Deployment checklist",
-        "Release smoke tests"
-      ],
-      "description": "Provides frontend/DEPLOYMENT_CHECKLIST.md with explicit pre/post-deploy validation steps (clean build, verify dist/index.html asset refs, publish directory correctness, SPA fallback testing, and console/network audits) to prevent blank-screen regressions.",
-      "reqIds": [],
-      "version": 1
-    },
-    {
-      "id": "IF-22",
-      "title": "Local development proxy to ICP backend",
-      "synonyms": [
-        "Vite dev proxy",
-        "/api proxy"
-      ],
-      "description": "Vite dev server proxies /api requests to a local ICP replica (127.0.0.1:4943) for frontend-backend development.",
-      "reqIds": [],
-      "version": 1
-    },
-    {
-      "id": "feature-create-replace-the-production-sitemap-at-frontend-public-sitemap-xml-with-a-valid-non-empty-xml-sitemap-raw-xml-only-so-that-the-vite-build-outputs-dist-sitemap-xml-as-a-standalone-static-file-not-an-html-page",
-      "title": "Create/replace the production sitemap at `frontend/public/sitemap.xml` with a valid non-empty XML sitemap (raw XML only), so that the Vite build outputs `dist/sitemap.xml` as a standalone static file (not an HTML page).",
+      "id": "feature-add-a-favicon-generated-from-the-existing-sangharsh-classes-logo-and-ensure-it-is-published-at-the-site-root-so-it-is-accessible-at-https-sangharshclasses-in-favicon-png-and-or-https-sangharshclasses-in-favicon-ico-place-the-favicon-files-in-the-frontend-public-root-so-the-build-outputs-them-at-the-domain-root",
+      "title": "Add a favicon generated from the existing Sangharsh Classes logo and ensure it is published at the site root so it is accessible at https://sangharshclasses.in/favicon.png and/or https://sangharshclasses.in/favicon.ico. Place the favicon files in the frontend public root so the build outputs them at the domain root.",
       "reqIds": [
         "REQ-1"
       ],
       "version": 1
     },
     {
-      "id": "feature-fix-static-hosting-spa-fallback-behavior-so-sitemap-xml-is-never-served-by-the-spa-fallback-e-g-index-html-or-404-html-and-never-redirects-it-must-be-publicly-accessible-as-a-static-asset-at-exactly-sitemap-xml",
-      "title": "Fix static hosting / SPA fallback behavior so `/sitemap.xml` is never served by the SPA fallback (e.g., `index.html` or `404.html`) and never redirects; it must be publicly accessible as a static asset at exactly `/sitemap.xml`.",
+      "id": "feature-update-frontend-index-html-to-include-correct-favicon-link-tags-in-the-head-including-at-minimum-a-png-icon-reference-matching-the-user-s-example-e-g-link-rel-icon-href-favicon-png-type-image-png",
+      "title": "Update frontend/index.html to include correct favicon link tags in the <head>, including at minimum a PNG icon reference matching the user’s example (e.g., <link rel=\"icon\" href=\"/favicon.png\" type=\"image/png\">).",
       "reqIds": [
         "REQ-2"
       ],
       "version": 1
     },
     {
-      "id": "feature-ensure-sitemap-xml-is-served-with-the-http-response-header-content-type-application-xml-or-an-equivalent-xml-mime-type-accepted-by-google-and-is-not-served-as-text-html",
-      "title": "Ensure `/sitemap.xml` is served with the HTTP response header `Content-Type: application/xml` (or an equivalent XML MIME type accepted by Google), and is not served as `text/html`.",
+      "id": "feature-update-site-metadata-in-frontend-index-html-so-google-can-detect-the-site-logo-correctly-by-adding-appropriate-structured-data-json-ld-for-the-website-organization-and-referencing-an-absolute-logo-url-on-the-canonical-domain-https-sangharshclasses-in-that-points-to-the-published-favicon-logo-image",
+      "title": "Update site metadata in frontend/index.html so Google can detect the site logo correctly by adding appropriate structured data (JSON-LD) for the website/organization and referencing an absolute logo URL on the canonical domain (https://sangharshclasses.in/...) that points to the published favicon/logo image.",
       "reqIds": [
         "REQ-3"
       ],
       "version": 1
     },
     {
-      "id": "feature-populate-frontend-public-robots-txt-to-publicly-reference-the-sitemap-at-sitemap-xml-and-ensure-it-is-also-emitted-as-a-static-file-in-dist-robots-txt",
-      "title": "Populate `frontend/public/robots.txt` to publicly reference the sitemap at `/sitemap.xml` and ensure it is also emitted as a static file in `dist/robots.txt`.",
+      "id": "feature-prevent-caching-routing-issues-from-blocking-favicon-updates-by-ensuring-favicon-files-are-excluded-from-spa-fallback-rewriting-and-have-appropriate-hosting-headers-caching-rules-for-reliable-retrieval-on-icp-hosting",
+      "title": "Prevent caching/routing issues from blocking favicon updates by ensuring favicon files are excluded from SPA fallback rewriting and have appropriate hosting headers/caching rules for reliable retrieval on ICP hosting.",
       "reqIds": [
         "REQ-4"
       ],
       "version": 1
     },
     {
-      "id": "feature-add-update-deployment-verification-documentation-to-include-explicit-sitemap-checks-verifying-dist-sitemap-xml-exists-requesting-sitemap-xml-returns-http-200-with-content-type-application-xml-and-confirming-the-url-is-not-being-served-by-spa-fallback-html",
-      "title": "Add/update deployment verification documentation to include explicit sitemap checks: verifying `dist/sitemap.xml` exists, requesting `/sitemap.xml` returns HTTP 200 with `Content-Type: application/xml`, and confirming the URL is not being served by SPA fallback HTML.",
+      "id": "feature-redeploy-the-site-after-the-favicon-and-metadata-changes-and-verify-in-production-that-the-favicon-is-reachable-at-the-exact-urls-requested-and-that-no-caching-routing-misconfiguration-prevents-access",
+      "title": "Redeploy the site after the favicon and metadata changes and verify in production that the favicon is reachable at the exact URLs requested and that no caching/routing misconfiguration prevents access.",
       "reqIds": [
         "REQ-5"
       ],
@@ -287,37 +321,53 @@
   "new_feature_requests": [
     {
       "id": "AR-1",
-      "summary": "Fix sitemap.xml being served as text/html: ensure valid static XML at /sitemap.xml with Content-Type application/xml, exclude from SPA fallback/routing, and verify Google Search Console can fetch it",
+      "summary": "Add proper favicon/logo for Google search results: include PNG/ICO favicon in site root, add <link rel=\"icon\"> tags in <head>, ensure correct Content-Type/caching and public accessibility at sangharshclasses.in/favicon.(png|ico), then redeploy.",
       "reqIds": [],
       "status": "pending"
     }
   ],
   "architectural_notes": [
-    "Frontend is a Vite + React SPA composed of section components (Header/Hero/About/Faculty/Courses/Contact/Footer) and uses smooth scrolling to element IDs rather than a router.",
-    "Styling uses TailwindCSS with CSS-variable design tokens (OKLCH) and shadcn/ui-style primitives (e.g., Button, Card, Sheet).",
-    "Async state management uses TanStack React Query; backend actors are created via a query keyed by principal (identity) and reused with infinite staleTime.",
-    "Authentication is integrated via an Internet Identity React context built on @dfinity/auth-client; it restores persisted identity, supports login/logout, and exposes status flags.",
-    "Backend is an ICP Motoko canister; authorization is composed using a mixin pattern (MixinAuthorization) over an AccessControl state module.",
-    "RBAC bootstrap uses an environment variable (CAFFEINE_ADMIN_TOKEN) combined with a user-provided secret to assign the first admin and subsequent users.",
-    "Frontend includes a “safe actor” hook that avoids breaking public rendering by skipping/catching RBAC initialization failures when an admin token is missing/invalid.",
-    "URL/session utilities support reading parameters from query or hash, persisting to sessionStorage, and clearing sensitive hash parameters via history.replaceState.",
-    "Vite build configuration is tuned for static/IC hosting: base set to './' and Rollup output naming set for hashed assets; dev server proxies /api to a local ICP replica.",
-    "Ensure SEO static assets (sitemap.xml, robots.txt, Google verification HTML) are served as true static files from the host root and explicitly excluded from SPA fallback/redirect rules so they return correct content-types (e.g., sitemap.xml -> application/xml) and do not get rewritten to index.html."
+    "Frontend is a Vite + React SPA composed of section components and smooth-scroll navigation (no router evident in the provided code).",
+    "Styling uses TailwindCSS with CSS variables (OKLCH tokens) and shadcn/ui-style primitives (Button/Card/Sheet).",
+    "Async state, caching, and actor lifecycle are managed with TanStack React Query.",
+    "Authentication is handled via Internet Identity using @dfinity/auth-client, exposed through a React Context provider.",
+    "ICP backend is written in Motoko with an AccessControl module; authorization endpoints are composed via a mixin (include MixinAuthorization(state)).",
+    "RBAC initialization depends on a canister env var (CAFFEINE_ADMIN_TOKEN) and a user-provided secret passed from the frontend.",
+    "SEO strategy combines static tags (index.html) and runtime guards to enforce canonical/og:url and apply noindex on the Caffeine subdomain.",
+    "Static hosting hardening is provided via 404.html SPA fallback plus Netlify-style _redirects/_headers, and ICP-specific .ic-assets.json headers/caching rules.",
+    "Vite is configured with base './' and deterministic hashed asset output to support canister/static hosting paths.",
+    "URL secret handling uses hash-fragment extraction + sessionStorage persistence and URL cleanup via history.replaceState."
   ],
   "known_issues": [
-    "Many admin-related UI files under frontend/src/admin/** are empty placeholders in this snapshot (AdminShell, AdminGate, AdminAuthPanel, editor/manager pages); there is no functional admin CMS implemented.",
-    "Several hooks/utilities are empty placeholders (useWebsiteContent.ts, useSectionConfigs.ts, useAdminStatus.ts, useAdminUsers.ts, contentSerialization.ts, DomainSetupDialog.tsx).",
-    "SEO/static indexing assets appear empty in this snapshot (frontend/public/robots.txt, frontend/public/sitemap.xml, frontend/public/google53082ab74af04c28.html), so crawler guidance and Google verification likely won’t work until populated correctly.",
-    "The “unsafe” actor hook (useActor) always calls _initializeAccessControlWithSecret (even if token is empty). The backend init method traps if CAFFEINE_ADMIN_TOKEN is not set; this can crash authenticated flows in misconfigured environments. (The safe hook mitigates this by skipping/catching init.)",
-    "AccessControl.getUserRole traps for non-anonymous principals that have not been registered via initialization; any backend method that checks permissions will trap until initialization is performed at least once for that principal.",
-    "Backend state (roles and userProfiles) uses in-memory Maps only; there is no stable memory persistence/migration, so data will be lost on canister upgrade.",
-    "frontend/public/404.html stores redirectPath in sessionStorage for deep links, but the app does not implement any restoration/handling of redirectPath (and there is no router), limiting the usefulness of this mechanism.",
-    "There are two global CSS files (frontend/index.css and frontend/src/index.css) with different token sets; only the src version is imported, but the duplicate file can cause confusion/drift.",
-    "Google Search Console reports sitemap.xml served with Content-Type text/html (likely due to SPA fallback/hosting rewrite serving index.html for /sitemap.xml); sitemap must be served as a static XML file with application/xml and no redirects."
+    "frontend/src/admin/** and several admin-related hooks/components exist but are empty placeholders in this snapshot; an admin panel/CMS is not implemented here.",
+    "frontend/public/google53082ab74af04c28.html appears empty in the provided snapshot; Google Search Console verification may fail if the required verification content is missing.",
+    "useActor always calls _initializeAccessControlWithSecret (even when the token is empty), which can trap and break authenticated flows if CAFFEINE_ADMIN_TOKEN is not set in the canister environment.",
+    "useBackendActorSafe skips access-control initialization when no caffeineAdminToken is present, which can leave authenticated users unregistered and cause #user-gated backend calls to trap.",
+    "AccessControl.getUserRole traps with \"User is not registered\" for non-anonymous uninitialized principals; any permission check that calls getUserRole can therefore trap instead of returning a safe default.",
+    "Backend state (roles and userProfiles) is stored in in-memory Maps and is not persisted to stable memory; data will be lost on canister upgrade/reinstall.",
+    "frontend/public/404.html stores redirectPath in sessionStorage, but the app has no routing/deeplink restoration logic, so preserved deep paths are not restored.",
+    "There are two global CSS files (frontend/index.css and frontend/src/index.css); only the src version is imported, which can cause drift/confusion.",
+    "_redirects/_headers are Netlify-style configs and may not be honored by all hosting targets without equivalent platform configuration (ICP asset canister relies on .ic-assets.json instead).",
+    "frontend/DOMAIN_SETUP.md is truncated/incomplete in the provided snapshot (DNS record details are not fully present)."
   ],
   "isFixRequest": true,
+  "imageRequirements": "## Required Images\n- Square favicon derived from the existing Sangharsh Classes logo with clean padding and high contrast (favicon.png.dim_32x32.png)\n- Multi-size ICO favicon derived from the existing Sangharsh Classes logo (favicon.ico.dim_256x256.ico)",
+  "generatedImages": [
+    {
+      "filename": "favicon.png.dim_32x32.png",
+      "description": "Square favicon derived from the existing Sangharsh Classes logo with clean padding and high contrast",
+      "targetWidth": 32,
+      "targetHeight": 32
+    },
+    {
+      "filename": "favicon.ico.dim_256x256.ico",
+      "description": "Multi-size ICO favicon derived from the existing Sangharsh Classes logo",
+      "targetWidth": 256,
+      "targetHeight": 256
+    }
+  ],
   "gameProjectType": "none",
-  "projectName": "Sangharsh Class - Premium Coaching Institute",
+  "projectName": "Sangharsh Classes",
   "clarification_mode": "instant",
   "clarification_rounds": 0
 }

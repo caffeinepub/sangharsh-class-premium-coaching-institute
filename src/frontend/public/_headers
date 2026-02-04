@@ -5,3 +5,10 @@
 # Set correct Content-Type for robots.txt
 /robots.txt
   Content-Type: text/plain; charset=utf-8
+
+# Set correct Content-Type for favicon files
+/favicon.png
+  Content-Type: image/png
+
+/favicon.ico
+  Content-Type: image/x-icon

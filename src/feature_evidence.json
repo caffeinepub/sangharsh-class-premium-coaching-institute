@@ -2,11 +2,9 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-create-replace-the-production-sitemap-at-frontend-public-sitemap-xml-with-a-valid-non-empty-xml-sitemap-raw-xml-only-so-that-the-vite-build-outputs-dist-sitemap-xml-as-a-standalone-static-file-not-an-html-page",
-      "featureTitle": "Create/replace the production sitemap at `frontend/public/sitemap.xml` with a valid non-empty XML sitemap (raw XML only), so that the Vite build outputs `dist/sitemap.xml` as a standalone static file (not an HTML page).",
-      "files": [
-        "frontend/public/sitemap.xml"
-      ],
+      "featureId": "feature-add-a-favicon-generated-from-the-existing-sangharsh-classes-logo-and-ensure-it-is-published-at-the-site-root-so-it-is-accessible-at-https-sangharshclasses-in-favicon-png-and-or-https-sangharshclasses-in-favicon-ico-place-the-favicon-files-in-the-frontend-public-root-so-the-build-outputs-them-at-the-domain-root",
+      "featureTitle": "Add a favicon generated from the existing Sangharsh Classes logo and ensure it is published at the site root so it is accessible at https://sangharshclasses.in/favicon.png and/or https://sangharshclasses.in/favicon.ico. Place the favicon files in the frontend public root so the build outputs them at the domain root.",
+      "files": [],
       "components": [
         "core-infrastructure@1.0.2",
         "shadcn-ui@1.0.0",
@@ -21,11 +19,10 @@
       "confidence": "high"
     },
     {
-      "featureId": "feature-fix-static-hosting-spa-fallback-behavior-so-sitemap-xml-is-never-served-by-the-spa-fallback-e-g-index-html-or-404-html-and-never-redirects-it-must-be-publicly-accessible-as-a-static-asset-at-exactly-sitemap-xml",
-      "featureTitle": "Fix static hosting / SPA fallback behavior so `/sitemap.xml` is never served by the SPA fallback (e.g., `index.html` or `404.html`) and never redirects; it must be publicly accessible as a static asset at exactly `/sitemap.xml`.",
+      "featureId": "feature-update-frontend-index-html-to-include-correct-favicon-link-tags-in-the-head-including-at-minimum-a-png-icon-reference-matching-the-user-s-example-e-g-link-rel-icon-href-favicon-png-type-image-png",
+      "featureTitle": "Update frontend/index.html to include correct favicon link tags in the <head>, including at minimum a PNG icon reference matching the user’s example (e.g., <link rel=\"icon\" href=\"/favicon.png\" type=\"image/png\">).",
       "files": [
-        "frontend/public/404.html",
-        "frontend/public/_redirects"
+        "frontend/index.html"
       ],
       "components": [
         "core-infrastructure@1.0.2",
@@ -41,10 +38,10 @@
       "confidence": "high"
     },
     {
-      "featureId": "feature-ensure-sitemap-xml-is-served-with-the-http-response-header-content-type-application-xml-or-an-equivalent-xml-mime-type-accepted-by-google-and-is-not-served-as-text-html",
-      "featureTitle": "Ensure `/sitemap.xml` is served with the HTTP response header `Content-Type: application/xml` (or an equivalent XML MIME type accepted by Google), and is not served as `text/html`.",
+      "featureId": "feature-update-site-metadata-in-frontend-index-html-so-google-can-detect-the-site-logo-correctly-by-adding-appropriate-structured-data-json-ld-for-the-website-organization-and-referencing-an-absolute-logo-url-on-the-canonical-domain-https-sangharshclasses-in-that-points-to-the-published-favicon-logo-image",
+      "featureTitle": "Update site metadata in frontend/index.html so Google can detect the site logo correctly by adding appropriate structured data (JSON-LD) for the website/organization and referencing an absolute logo URL on the canonical domain (https://sangharshclasses.in/...) that points to the published favicon/logo image.",
       "files": [
-        "frontend/public/_headers"
+        "frontend/index.html"
       ],
       "components": [
         "core-infrastructure@1.0.2",
@@ -60,10 +57,12 @@
       "confidence": "high"
     },
     {
-      "featureId": "feature-populate-frontend-public-robots-txt-to-publicly-reference-the-sitemap-at-sitemap-xml-and-ensure-it-is-also-emitted-as-a-static-file-in-dist-robots-txt",
-      "featureTitle": "Populate `frontend/public/robots.txt` to publicly reference the sitemap at `/sitemap.xml` and ensure it is also emitted as a static file in `dist/robots.txt`.",
+      "featureId": "feature-prevent-caching-routing-issues-from-blocking-favicon-updates-by-ensuring-favicon-files-are-excluded-from-spa-fallback-rewriting-and-have-appropriate-hosting-headers-caching-rules-for-reliable-retrieval-on-icp-hosting",
+      "featureTitle": "Prevent caching/routing issues from blocking favicon updates by ensuring favicon files are excluded from SPA fallback rewriting and have appropriate hosting headers/caching rules for reliable retrieval on ICP hosting.",
       "files": [
-        "frontend/public/robots.txt"
+        "frontend/.ic-assets.json",
+        "frontend/public/_headers",
+        "frontend/public/_redirects"
       ],
       "components": [
         "core-infrastructure@1.0.2",
@@ -79,8 +78,8 @@
       "confidence": "high"
     },
     {
-      "featureId": "feature-add-update-deployment-verification-documentation-to-include-explicit-sitemap-checks-verifying-dist-sitemap-xml-exists-requesting-sitemap-xml-returns-http-200-with-content-type-application-xml-and-confirming-the-url-is-not-being-served-by-spa-fallback-html",
-      "featureTitle": "Add/update deployment verification documentation to include explicit sitemap checks: verifying `dist/sitemap.xml` exists, requesting `/sitemap.xml` returns HTTP 200 with `Content-Type: application/xml`, and confirming the URL is not being served by SPA fallback HTML.",
+      "featureId": "feature-redeploy-the-site-after-the-favicon-and-metadata-changes-and-verify-in-production-that-the-favicon-is-reachable-at-the-exact-urls-requested-and-that-no-caching-routing-misconfiguration-prevents-access",
+      "featureTitle": "Redeploy the site after the favicon and metadata changes and verify in production that the favicon is reachable at the exact URLs requested and that no caching/routing misconfiguration prevents access.",
       "files": [
         "frontend/DEPLOYMENT_CHECKLIST.md"
       ],
