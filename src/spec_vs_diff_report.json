@@ -1,66 +1,49 @@
 {
   "kind": "spec_vs_diff_report",
   "version": "1.0",
-  "generatedAt": "2026-02-04T13:56:23.004Z",
-  "summary": "Diff adds a build-time static-export ZIP generator (via Vite plugin), a new \"Download Website Code\" UI button that downloads /website-code.zip, and caching/headers rules to serve the ZIP as a static asset. Some acceptance-criteria items are not fully evidenced in the diff (mobile placement of the button, completeness/visual equivalence of the exported page, and correct inclusion of image assets due to path-joining).",
+  "generatedAt": "2026-02-05T07:53:48.910Z",
+  "summary": "The diff modifies four files, including backend/main.mo and project_state.json, which violates the constraint to change only frontend/public/sitemap.xml. The sitemap.xml file appears valid and uses the correct absolute domain, but additional unrequested changes were made and REQ-3 (chat output) cannot be verified from the diff.",
   "missing_requirements": [
     {
       "id": "REQ-2",
-      "requirement": "A visible button labeled exactly \"Download Website Code\" is present on the homepage (desktop and mobile).",
-      "reason": "The diff shows the button added to the desktop navigation, but the truncated mobile Sheet menu section does not show the DownloadWebsiteCodeButton being rendered in the mobile menu, so mobile visibility is not evidenced.",
+      "requirement": "Do not modify any design, layout, content, or any files other than the sitemap.xml file required in this request.",
+      "reason": "The diff shows modifications to multiple files beyond frontend/public/sitemap.xml.",
       "evidence": [
-        "frontend/src/components/Header.tsx",
-        "frontend/src/components/DownloadWebsiteCodeButton.tsx"
+        "backend/main.mo",
+        "frontend-file-summaries.txt",
+        "project_state.json",
+        "frontend/public/sitemap.xml"
       ]
     },
     {
-      "id": "REQ-1",
-      "requirement": "The exported ZIP includes assets/images populated so opening index.html from disk renders a visually equivalent site (incl. images/favicon) and works offline.",
-      "reason": "The build plugin copies assets from `publicDir` using `path.join(publicDir, asset.source)` while `asset.source` values in `staticExportAssets` begin with a leading '/', which makes `path.join` treat them as absolute paths and can bypass `publicDir`. This risks images not being copied into the export, breaking offline visual equivalence.",
-      "evidence": [
-        "frontend/vite.config.ts",
-        "frontend/src/static-export/staticExportAssets.ts"
-      ]
-    },
-    {
-      "id": "REQ-1",
-      "requirement": "Opening exported index.html from disk (file://) renders a visually equivalent single-page website with the same sections/copy as the current React homepage (Hero, About, Faculty, Courses, Contact, Footer, WhatsApp button).",
-      "reason": "A static HTML generator is added, but the provided diff content for the generator is truncated before showing all sections (notably Contact/Footer/WhatsApp button). The diff summary alone does not fully evidence that all required sections and the WhatsApp action are included in the generated static HTML/JS.",
-      "evidence": [
-        "frontend/src/static-export/renderStaticSite.ts"
-      ]
+      "id": "REQ-3",
+      "requirement": "After generating the sitemap.xml, output the public sitemap URL exactly as: https://sangharshclasses.in/sitemap.xml",
+      "reason": "Chat/output text is not part of the file diff summary, so this acceptance criterion cannot be verified from the provided evidence.",
+      "evidence": []
     }
   ],
   "hallucinated_features": [
     {
-      "description": "Introduced a custom in-repo ZipWriter placeholder utility that logs intended ZIP contents and returns an empty Uint8Array.",
-      "reason": "The BuildRequest explicitly requires a downloadable ZIP served as a static asset and does not request adding a ZIP-writing abstraction/placeholder in the runtime/source tree. The actual ZIP creation is implemented via `archiver` in the Vite build plugin instead.",
+      "description": "Added/changed Motoko backend logic including access control state initialization, user profile APIs, and a getPublicSitemap method returning the sitemap URL.",
+      "reason": "The request explicitly disallowed changing any files other than frontend/public/sitemap.xml and was limited to generating the sitemap; backend changes were not requested.",
       "evidence": [
-        "frontend/src/static-export/zipWriter.ts",
-        "frontend/vite.config.ts"
+        "backend/main.mo"
+      ]
+    },
+    {
+      "description": "Updated repository metadata/state files (project_state.json) and a frontend file summary listing numerous features.",
+      "reason": "The request prohibited modifying any files besides sitemap.xml; these metadata/documentation changes were not requested.",
+      "evidence": [
+        "project_state.json",
+        "frontend-file-summaries.txt"
       ]
     }
   ],
-  "confidence": 0.62,
+  "confidence": 0.84,
   "changed_files": [
+    "backend/main.mo",
     "frontend-file-summaries.txt",
-    "frontend/.ic-assets.json",
-    "frontend/public/_headers",
-    "frontend/public/_redirects",
-    "frontend/src/components/About.tsx",
-    "frontend/src/components/Contact.tsx",
-    "frontend/src/components/Courses.tsx",
-    "frontend/src/components/DownloadWebsiteCodeButton.tsx",
-    "frontend/src/components/Faculty.tsx",
-    "frontend/src/components/Footer.tsx",
-    "frontend/src/components/Header.tsx",
-    "frontend/src/components/Hero.tsx",
-    "frontend/src/components/WhatsAppButton.tsx",
-    "frontend/src/content/marketingSiteContent.ts",
-    "frontend/src/static-export/renderStaticSite.ts",
-    "frontend/src/static-export/staticExportAssets.ts",
-    "frontend/src/static-export/zipWriter.ts",
-    "frontend/vite.config.ts",
+    "frontend/public/sitemap.xml",
     "project_state.json"
   ]
 }

@@ -1,173 +1,50 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Offline static website export + ZIP download",
+  "title": "Generate sitemap.xml for sangharshclasses.in (frontend-only, no other changes)",
   "requirements": [
     {
       "id": "REQ-1",
-      "summary": "Generate an offline-capable static export package (index.html, css/style.css, js/script.js, assets/images/) matching the current marketing homepage.",
+      "summary": "Generate/overwrite a valid XML sitemap.xml using absolute URLs for only existing frontend routes.",
       "acceptanceCriteria": [
-        "A static export package exists that contains exactly: /index.html, /css/style.css, /js/script.js, /assets/images/ (may contain additional image files under assets/images only).",
-        "Opening index.html from disk (file://) renders a visually equivalent single-page website with the same sections and copy as the current deployed React homepage (Hero, About, Faculty, Courses, Contact, Footer, WhatsApp button).",
-        "The exported website loads all required styling and scripts locally (no required external CDN dependencies) and functions offline."
+        "A file exists at frontend/public/sitemap.xml",
+        "The file is valid XML and conforms to the sitemap protocol (<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\"> ... )",
+        "All <loc> values use absolute URLs starting with https://sangharshclasses.in",
+        "The sitemap includes only existing frontend page URLs (no invented routes and no # fragments)"
       ],
       "file_operations": [
         {
-          "path": "frontend/src/content/marketingSiteContent.ts",
-          "operation": "create",
-          "description": "Create a single canonical content module (hero text, about copy, faculty list, courses list, contact details, footer links, WhatsApp phone, image filenames) to be reused by both the React homepage and the static-export generator to prevent content drift."
-        },
-        {
-          "path": "frontend/src/components/Hero.tsx",
+          "path": "frontend/public/sitemap.xml",
           "operation": "modify",
-          "description": "Refactor Hero section to read all copy/image references from the canonical content module so the live homepage and export share the same source-of-truth."
-        },
-        {
-          "path": "frontend/src/components/About.tsx",
-          "operation": "modify",
-          "description": "Refactor About section to read its full text/copy from the canonical content module so the live homepage and export share the same source-of-truth."
-        },
-        {
-          "path": "frontend/src/components/Faculty.tsx",
-          "operation": "modify",
-          "description": "Refactor Faculty section to read faculty cards (names/subjects/experience/photos) from the canonical content module so the live homepage and export share the same source-of-truth. Continue to use the shadcn-ui Card/Badge components to preserve design; verify the component's usage instructions before implementing."
-        },
-        {
-          "path": "frontend/src/components/Courses.tsx",
-          "operation": "modify",
-          "description": "Refactor Courses section to read course items and supporting copy from the canonical content module so the live homepage and export share the same source-of-truth. Continue to use the shadcn-ui Card/Badge components to preserve design; verify the component's usage instructions before implementing."
-        },
-        {
-          "path": "frontend/src/components/Contact.tsx",
-          "operation": "modify",
-          "description": "Refactor Contact section to read phone/email/location and WhatsApp behavior from the canonical content module so the live homepage and export share the same source-of-truth. Continue to use the shadcn-ui Button/Card components to preserve design; verify the component's usage instructions before implementing."
-        },
-        {
-          "path": "frontend/src/components/Footer.tsx",
-          "operation": "modify",
-          "description": "Refactor Footer section to read branding/contact/social URLs and quick links from the canonical content module so the live homepage and export share the same source-of-truth."
-        },
-        {
-          "path": "frontend/src/components/Header.tsx",
-          "operation": "modify",
-          "description": "Refactor Header navigation items and logo references to read from the canonical content module so the live homepage and export share the same source-of-truth. Continue to use the shadcn-ui Sheet/Button components for consistent layout; verify the component's usage instructions before implementing."
-        },
-        {
-          "path": "frontend/src/components/WhatsAppButton.tsx",
-          "operation": "modify",
-          "description": "Refactor WhatsApp button phone number and action to read from the canonical content module so the live homepage and export share the same source-of-truth. Continue to use the shadcn-ui Button component; verify the component's usage instructions before implementing."
-        },
-        {
-          "path": "frontend/src/static-export/renderStaticSite.ts",
-          "operation": "create",
-          "description": "Implement a static-export renderer that generates the required offline folder structure content (index.html, css/style.css, js/script.js) using the canonical content module and preserving the same section order and IDs (hero/about/faculty/courses/contact/footer) as the live homepage."
-        },
-        {
-          "path": "frontend/src/static-export/staticExportAssets.ts",
-          "operation": "create",
-          "description": "Add a helper that enumerates which image files from the app must be included in the export under assets/images/ (logo, faculty photos, and generated background images used in Hero/Contact) to ensure offline completeness."
-        },
-        {
-          "path": "frontend/src/static-export/styleSource.css",
-          "operation": "create",
-          "description": "Create a dedicated CSS source for the static export that is compiled/bundled into css/style.css and includes all required styling locally (including the existing global theme tokens and animations used by the homepage)."
+          "description": "Overwrite sitemap.xml to include ONLY the existing frontend route(s) detected from the current app (currently the SPA Home route at https://sangharshclasses.in/), using sitemap protocol XML with absolute <loc> URLs rooted at https://sangharshclasses.in and no URL fragments."
         }
       ]
     },
     {
       "id": "REQ-2",
-      "summary": "Add a homepage UI button labeled exactly \"Download Website Code\" that downloads a ZIP containing the static export structure.",
+      "summary": "Ensure no repository changes occur except the sitemap.xml update.",
       "acceptanceCriteria": [
-        "A visible button labeled exactly \"Download Website Code\" is present on the homepage (desktop and mobile).",
-        "Clicking the button downloads a .zip file.",
-        "The .zip file contains the exported site in the required folder structure and works offline when unzipped and opened."
+        "The only repository file change is to sitemap.xml (no other files added, removed, or modified)"
       ],
       "file_operations": [
         {
-          "path": "frontend/src/components/DownloadWebsiteCodeButton.tsx",
-          "operation": "create",
-          "description": "Create a reusable UI component that renders a button labeled exactly \"Download Website Code\" and triggers a direct download of the static ZIP asset from the frontend (no backend calls). Use the shadcn-ui Button component for consistent styling; verify the component's usage instructions before implementing."
-        },
-        {
-          "path": "frontend/src/components/Header.tsx",
+          "path": "frontend/public/sitemap.xml",
           "operation": "modify",
-          "description": "Wire the DownloadWebsiteCodeButton into the homepage UI so it is clearly visible on desktop and also reachable from the mobile header/menu. Keep existing navigation/scroll behavior intact and do not remove SEO guard behavior."
-        },
-        {
-          "path": "frontend/src/pages/HomePage.tsx",
-          "operation": "modify",
-          "description": "Ensure the download control is present within the homepage composition (directly or via Header/Footer integration) without introducing new routes/pages."
+          "description": "Limit all work strictly to frontend/public/sitemap.xml; do not edit, add, delete, or rename any other files (including robots.txt, redirects, HTML, CSS, and source code)."
         }
       ]
     },
     {
       "id": "REQ-3",
-      "summary": "Ensure the exported ZIP is generated from the same canonical source as the live homepage so it cannot drift from current content/design.",
+      "summary": "Provide the public sitemap URL after generation.",
       "acceptanceCriteria": [
-        "The export is generated from the same canonical source content used by the live homepage so it cannot drift (no missing sections compared to the React homepage).",
-        "The exported page includes all visible homepage sections and key interactive elements present on the live site (e.g., navigation scroll links and WhatsApp contact action)."
+        "Chat output includes exactly: https://sangharshclasses.in/sitemap.xml"
       ],
       "file_operations": [
         {
-          "path": "frontend/src/content/marketingSiteContent.ts",
+          "path": "frontend/public/sitemap.xml",
           "operation": "modify",
-          "description": "Expand/structure the canonical content module so all homepage-visible copy, lists, contact actions, and image references are represented in one place and can be consumed consistently by both React and the export generator."
-        },
-        {
-          "path": "frontend/src/static-export/renderStaticSite.ts",
-          "operation": "modify",
-          "description": "Update the static-export renderer to consume only the canonical content module for all text/links/images and to preserve the same section IDs used for scroll navigation and WhatsApp action parity."
-        },
-        {
-          "path": "frontend/src/static-export/scriptSource.ts",
-          "operation": "create",
-          "description": "Implement the offline js/script.js source to support key interactivity without external dependencies: smooth scrolling for in-page navigation, WhatsApp action behavior, and any minimal UX needed to match the live homepage’s key interactive elements."
-        },
-        {
-          "path": "frontend/src/utils/contentSerialization.ts",
-          "operation": "modify",
-          "description": "Implement minimal utilities (currently empty) to serialize canonical content into the static export safely and deterministically (e.g., escaping text for HTML output) so exports remain consistent across builds."
-        }
-      ]
-    },
-    {
-      "id": "REQ-4",
-      "summary": "Serve the ZIP as a static frontend asset with reliable download behavior and appropriate caching/content-type headers.",
-      "acceptanceCriteria": [
-        "The ZIP is served from the frontend as a static file and can be downloaded in production by unauthenticated users.",
-        "Downloading the ZIP does not require Internet Identity login and does not call the Motoko backend.",
-        "The file is delivered with a correct content type for ZIP downloads and a stable filename."
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/vite.config.ts",
-          "operation": "modify",
-          "description": "Add a build-time step (as a Vite plugin executed after build output is produced) that generates the static export folder structure and produces a stable-named ZIP (e.g., website-code.zip) into the final built output so it is served as a static asset without backend changes."
-        },
-        {
-          "path": "frontend/src/static-export/zipWriter.ts",
-          "operation": "create",
-          "description": "Implement a lightweight ZIP writer utility (no external network/CDN dependency) used by the build-time export step to package index.html, css/style.css, js/script.js, and assets/images/* into a single ZIP with a stable filename."
-        },
-        {
-          "path": "frontend/.ic-assets.json",
-          "operation": "modify",
-          "description": "Add an explicit rule for the generated ZIP static file to set an appropriate Content-Type for ZIP downloads and caching behavior that allows reliable updates (avoid long-lived caching for the ZIP while keeping the rest of assets performant)."
-        },
-        {
-          "path": "frontend/public/_headers",
-          "operation": "modify",
-          "description": "Add a header rule for the ZIP download path to ensure the correct Content-Type for ZIP delivery in environments that use _headers for static hosting."
-        },
-        {
-          "path": "frontend/public/_redirects",
-          "operation": "modify",
-          "description": "Add a static-file exception so the ZIP download is served directly and not rewritten to index.html by the SPA fallback."
-        },
-        {
-          "path": "frontend/src/components/DownloadWebsiteCodeButton.tsx",
-          "operation": "modify",
-          "description": "Point the download action to the final static asset path (stable filename) and ensure it performs a plain unauthenticated file download without invoking Internet Identity or any backend actor calls."
+          "description": "Finalize the sitemap.xml update so the public URL can be shared exactly as https://sangharshclasses.in/sitemap.xml."
         }
       ]
     }

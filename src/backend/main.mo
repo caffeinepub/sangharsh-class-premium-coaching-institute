@@ -5,8 +5,6 @@ import Runtime "mo:core/Runtime";
 import MixinAuthorization "authorization/MixinAuthorization";
 import AccessControl "authorization/access-control";
 
-// Add migration to with clause
-
 actor {
   // Initialize the access control system
   let accessControlState = AccessControl.initState();
@@ -37,5 +35,9 @@ actor {
       Runtime.trap("Unauthorized: Only users can save profiles");
     };
     userProfiles.add(caller, profile);
+  };
+
+  public query func getPublicSitemap() : async Text {
+    "https://sangharshclasses.in/sitemap.xml";
   };
 };

@@ -1,11 +1,11 @@
 {
   "schemaVersion": "1.0.0",
   "projectStateVersion": 3,
-  "summary": "Sangharsh Classes is a Vite + React + TailwindCSS single-page marketing site for a coaching institute (classes 7th–12th) featuring section-based content (Hero, About, Faculty, Courses, Contact, Footer) and strong SEO/static-hosting hardening (canonical + OpenGraph tags, JSON-LD structured data, sitemap.xml, robots.txt, Google Search Console verification file, SPA 404 fallback exclusions, and explicit Content-Type headers for key static files). The repo also includes an Internet Computer (ICP) Motoko backend canister implementing role-based access control (admin/user/guest) bootstrapped via a canister environment secret and per-caller user profile storage. The frontend integrates Internet Identity authentication and uses TanStack React Query for caching and actor/query lifecycle management.",
+  "summary": "Sangharsh Classes is a Vite + React + TailwindCSS single-page marketing website for a coaching institute (classes 7th–12th). The public homepage is section-based (Header, Hero, About, Faculty, Courses, Contact, Footer) and is driven by a centralized canonical content object used by both the React UI and a build-time static-export generator. The build pipeline includes a Vite closeBundle plugin that generates a fully offline-capable static HTML/CSS/JS version of the site and packages it as a downloadable ZIP served from /website-code.zip. The repo also contains an Internet Computer (ICP) Motoko backend canister providing role-based access control (admin/user/guest) bootstrapped via an environment secret and a caller-provided token, plus simple per-principal user profile storage. The frontend integrates Internet Identity authentication, actor creation, and data fetching via TanStack React Query, along with deployment hardening assets (404 SPA fallback, _redirects/_headers, sitemap.xml, robots.txt, Google verification file, and IC asset-canister header rules).",
   "existing_features": [
     {
       "id": "IF-1",
-      "title": "Single-page public marketing homepage",
+      "title": "Single-page marketing homepage composition",
       "synonyms": [
         "Landing page",
         "Marketing SPA"
@@ -16,307 +16,310 @@
     },
     {
       "id": "IF-2",
-      "title": "Responsive header with smooth-scroll section navigation",
+      "title": "Centralized canonical marketing content module",
       "synonyms": [
-        "Section navigation",
-        "Mobile sheet menu"
+        "Single source of truth",
+        "marketingSiteContent"
       ],
-      "description": "Fixed header that changes style on scroll and provides desktop + mobile navigation buttons that smoothly scroll to section anchors via scrollIntoView.",
+      "description": "Defines site metadata, navigation, section copy, and image paths in a single module used by both the React UI and the static-export generator.",
       "reqIds": [],
       "version": 1
     },
     {
       "id": "IF-3",
-      "title": "Hero section with CTAs and stats",
+      "title": "Responsive header with smooth-scroll navigation and mobile menu",
       "synonyms": [
-        "Top banner",
-        "Hero block"
+        "Sticky header",
+        "Mobile sheet menu"
       ],
-      "description": "Hero banner with background image overlay, bilingual tagline, “100% Result Guarantee” badge, CTA buttons (enroll/view courses), and stat cards.",
+      "description": "Fixed header that changes style on scroll, provides desktop navigation, and a mobile Sheet menu; clicks scroll smoothly to section anchors.",
       "reqIds": [],
       "version": 1
     },
     {
       "id": "IF-4",
-      "title": "About section (static content)",
+      "title": "Hero section with CTAs and stats",
       "synonyms": [
-        "About Sangharsh Classes"
+        "Top banner",
+        "Hero block"
       ],
-      "description": "Displays hardcoded multi-paragraph about text and a centered “Result Oriented” feature card.",
+      "description": "Hero banner with background overlay, bilingual heading, guarantee badge, CTA buttons, and icon-based stat cards.",
       "reqIds": [],
       "version": 1
     },
     {
       "id": "IF-5",
-      "title": "Faculty section (static cards)",
+      "title": "About section (content-driven)",
       "synonyms": [
-        "Teacher listing",
-        "Faculty grid"
+        "About Sangharsh Classes"
       ],
-      "description": "Renders a responsive grid of hardcoded faculty cards with photos, subject badges, role, experience, and specialization fallback text.",
+      "description": "Displays multi-paragraph about copy and a focused feature card sourced from canonical content.",
       "reqIds": [],
       "version": 1
     },
     {
       "id": "IF-6",
-      "title": "Courses section (static offerings for classes 7th–12th)",
+      "title": "Faculty section (content-driven cards)",
       "synonyms": [
-        "Programs grid",
-        "Offerings"
+        "Teacher listing",
+        "Faculty grid"
       ],
-      "description": "Shows six hardcoded class offerings (7–12) with descriptions and feature bullets plus a promotional subject banner.",
+      "description": "Renders a responsive grid of faculty cards with photos, subject badges, role, experience, and specialization from canonical content.",
       "reqIds": [],
       "version": 1
     },
     {
       "id": "IF-7",
-      "title": "Contact section with deep-link actions",
+      "title": "Courses section (classes 7th–12th)",
       "synonyms": [
-        "Call/email/WhatsApp actions"
+        "Programs grid",
+        "Offerings"
       ],
-      "description": "Displays phone/email/location and provides one-click actions using tel:, mailto:, and wa.me links/buttons plus a “Schedule a Visit” WhatsApp CTA.",
+      "description": "Displays course offerings (classes 7–12) with descriptions and feature bullets, plus an extra promotional banner listing subjects.",
       "reqIds": [],
       "version": 1
     },
     {
       "id": "IF-8",
-      "title": "Footer with quick links and social links",
+      "title": "Contact section with deep-link actions",
       "synonyms": [
-        "Site footer",
-        "Social icons"
+        "Call/email/WhatsApp actions"
       ],
-      "description": "Footer includes branding/about text, section anchor quick links, contact info, outbound social links (Facebook/Instagram/YouTube), and a built-with attribution line.",
+      "description": "Shows phone/email/location and provides one-click actions using tel:, mailto:, and wa.me links/buttons.",
       "reqIds": [],
       "version": 1
     },
     {
       "id": "IF-9",
-      "title": "Floating WhatsApp contact button",
+      "title": "Footer with quick links and social media links",
       "synonyms": [
-        "WhatsApp FAB",
-        "Sticky WhatsApp CTA"
+        "Site footer",
+        "Social icons"
       ],
-      "description": "Fixed-position WhatsApp button that opens a chat to the configured phone number in a new tab.",
+      "description": "Footer includes branding/about text, section quick links, contact information, social outbound links (Facebook/Instagram/YouTube), and attribution.",
       "reqIds": [],
       "version": 1
     },
     {
       "id": "IF-10",
-      "title": "Top-level React error boundary with fallback UI",
+      "title": "Floating WhatsApp contact button",
       "synonyms": [
-        "AppErrorBoundary",
-        "Runtime fallback screen"
+        "WhatsApp FAB",
+        "Sticky WhatsApp CTA"
       ],
-      "description": "Wraps the app in an error boundary and displays a user-friendly error card with refresh/home actions to prevent a blank screen on runtime errors.",
+      "description": "Fixed-position button that opens WhatsApp chat to the configured institute phone number in a new tab.",
       "reqIds": [],
       "version": 1
     },
     {
       "id": "IF-11",
-      "title": "Runtime diagnostics logging",
+      "title": "User-facing website-code ZIP download button",
       "synonyms": [
-        "Global error logging",
-        "Unhandled rejection capture"
+        "Download Website Code",
+        "Static export download"
       ],
-      "description": "Registers window error and unhandledrejection listeners and logs initialization markers to aid production debugging.",
+      "description": "Provides a UI button that downloads /website-code.zip as sangharsh-classes-website.zip from static assets.",
       "reqIds": [],
       "version": 1
     },
     {
       "id": "IF-12",
-      "title": "Runtime SEO guards (canonical/noindex enforcement)",
+      "title": "Static site renderer (HTML/CSS/JS generator)",
       "synonyms": [
-        "SEO guard",
-        "Canonical URL enforcement"
+        "Offline export renderer",
+        "renderStaticSite"
       ],
-      "description": "At app startup, enforces canonical and og:url to the custom domain and applies robots noindex/nofollow when running on the Caffeine subdomain.",
+      "description": "Generates a standalone static site (index.html, css/style.css, js/script.js) from canonical content with basic HTML escaping and built-in navigation behaviors.",
       "reqIds": [],
       "version": 1
     },
     {
       "id": "IF-13",
-      "title": "Homepage SEO markup and structured data in index.html",
+      "title": "Static export asset manifest",
       "synonyms": [
-        "Canonical tag",
-        "OpenGraph tags",
-        "JSON-LD Organization/WebSite"
+        "staticExportAssets",
+        "Export asset list"
       ],
-      "description": "Defines title/meta description, canonical + og tags, og:image, favicon link tags, and JSON-LD structured data referencing the site logo/favicon URL.",
+      "description": "Defines which public images should be copied into the static export under assets/images/ with consistent destination names.",
       "reqIds": [],
       "version": 1
     },
     {
       "id": "IF-14",
-      "title": "SEO static assets (sitemap.xml and robots.txt)",
+      "title": "Build-time ZIP packaging of static export (Vite plugin)",
       "synonyms": [
-        "Sitemap",
-        "Robots"
+        "staticExportPlugin",
+        "Archiver ZIP build"
       ],
-      "description": "Provides a root sitemap.xml listing the canonical homepage URL and a robots.txt that allows crawling and references the sitemap.",
+      "description": "On Vite build completion, creates dist/static-export, writes generated HTML/CSS/JS, copies assets, zips it to dist/website-code.zip, verifies size, and cleans up the temp folder.",
       "reqIds": [],
       "version": 1
     },
     {
       "id": "IF-15",
-      "title": "Google Search Console verification file",
+      "title": "Build output verification logging",
       "synonyms": [
-        "google-site-verification HTML file"
+        "Build verification checks",
+        "Dist sanity checks"
       ],
-      "description": "Hosts a Google Search Console verification file at a fixed path so domain ownership verification can succeed.",
+      "description": "After build, logs checks to detect accidental deployment of source index.html (references /src/main.tsx) and verifies required static files exist in dist/.",
       "reqIds": [],
       "version": 1
     },
     {
       "id": "IF-16",
-      "title": "Static hosting SPA fallback with static-file exclusions",
+      "title": "Static hosting hardening assets",
       "synonyms": [
-        "404.html fallback",
-        "Deep-link support"
+        "SPA fallback + headers/redirects",
+        "Static SEO file serving"
       ],
-      "description": "Provides a SPA fallback (404.html) that redirects non-root paths to the app root while explicitly excluding key static files (sitemap.xml, robots.txt, favicon.ico, favicon.png, Google verification file) from being redirected.",
+      "description": "Includes public/404.html SPA fallback with static-file exclusions, public/_redirects for SPA routing, public/_headers for correct Content-Type (and ZIP download headers), sitemap.xml, robots.txt, and Google verification file; also includes frontend/.ic-assets.json rules for ICP deployments.",
       "reqIds": [],
       "version": 1
     },
     {
       "id": "IF-17",
-      "title": "Static hosting headers and redirects rules",
+      "title": "SEO metadata and JSON-LD structured data in HTML entry",
       "synonyms": [
-        "_headers",
-        "_redirects"
+        "OpenGraph tags",
+        "Structured data"
       ],
-      "description": "Defines Netlify-style headers (correct Content-Type for sitemap/robots/favicons) and redirects to ensure key static files are served directly rather than rewritten to index.html.",
+      "description": "Source index.html defines title/description, canonical, OG meta tags, favicon tags, and JSON-LD schemas (Organization, WebSite).",
       "reqIds": [],
       "version": 1
     },
     {
       "id": "IF-18",
-      "title": "ICP asset-canister configuration for caching and headers",
+      "title": "Runtime SEO guards for canonical/noindex enforcement",
       "synonyms": [
-        ".ic-assets.json",
-        "Asset canister rules"
+        "SEO guard",
+        "Noindex on non-canonical domain"
       ],
-      "description": "Configures caching and security headers for ICP asset serving, with explicit Content-Type and cache rules for index.html, sitemap.xml, robots.txt, favicon.png, favicon.ico, and 404.html.",
+      "description": "At runtime, enforces canonical and og:url to the custom domain and applies robots noindex/nofollow on the configured Caffeine subdomain.",
       "reqIds": [],
       "version": 1
     },
     {
       "id": "IF-19",
-      "title": "Deployment and domain setup documentation",
+      "title": "Runtime diagnostics logging",
       "synonyms": [
-        "DEPLOYMENT_CHECKLIST",
-        "DOMAIN_SETUP"
+        "Global error logging",
+        "Unhandled rejection capture"
       ],
-      "description": "Includes operational docs for clean builds, publish-directory verification, deep-link/static-file testing, SEO validation, and custom-domain/DNS/redirect setup guidance.",
+      "description": "Registers window error and unhandledrejection listeners and logs initialization markers for production debugging.",
       "reqIds": [],
       "version": 1
     },
     {
       "id": "IF-20",
-      "title": "Internet Identity authentication provider (frontend)",
+      "title": "Top-level React error boundary and fallback UI",
       "synonyms": [
-        "AuthClient integration",
-        "InternetIdentityProvider"
+        "AppErrorBoundary",
+        "Runtime error fallback"
       ],
-      "description": "React context provider that initializes @dfinity/auth-client, restores identity on mount, supports login/logout, and exposes status flags and errors.",
+      "description": "Catches render/lifecycle errors and displays a user-facing fallback with refresh/home actions to avoid blank-screen failures.",
       "reqIds": [],
       "version": 1
     },
     {
       "id": "IF-21",
-      "title": "Backend canister actor creation and caching (frontend)",
+      "title": "Internet Identity authentication provider",
       "synonyms": [
-        "useActor",
-        "Identity-bound actor"
+        "AuthClient integration",
+        "InternetIdentityProvider"
       ],
-      "description": "Creates an anonymous actor when logged out and an identity-bound actor when logged in; the actor is cached using a React Query key based on the principal and triggers invalidation/refetch of dependent queries when it changes.",
+      "description": "React context provider that initializes @dfinity/auth-client, restores identity on mount, and exposes login/logout and status flags.",
       "reqIds": [],
       "version": 1
     },
     {
       "id": "IF-22",
-      "title": "Safe backend actor initialization hook",
+      "title": "Backend actor creation and caching tied to identity",
       "synonyms": [
-        "useBackendActorSafe",
-        "Non-fatal RBAC init"
+        "useActor",
+        "Identity-bound actor"
       ],
-      "description": "Creates an identity-bound actor and conditionally attempts RBAC initialization only when a caffeineAdminToken secret is present; initialization failures are logged and treated as non-fatal.",
+      "description": "Creates an anonymous actor when logged out and an identity-bound actor when logged in; cached via React Query and triggers invalidation/refetch of dependent queries when the actor changes.",
       "reqIds": [],
       "version": 1
     },
     {
       "id": "IF-23",
-      "title": "URL parameter utilities with secure hash-secret handling",
+      "title": "Safe backend actor initialization hook",
       "synonyms": [
-        "urlParams",
-        "Hash secret extraction"
+        "useBackendActorSafe",
+        "Non-fatal RBAC init"
       ],
-      "description": "Utilities to read URL parameters from query/hash, persist values in sessionStorage, and extract sensitive secrets from the URL hash while removing them from the address bar via history.replaceState.",
+      "description": "Creates an identity-bound actor and only attempts RBAC initialization when a caffeineAdminToken secret is present; initialization failures are logged and treated as non-fatal.",
       "reqIds": [],
       "version": 1
     },
     {
       "id": "IF-24",
-      "title": "Per-caller user profile hooks (frontend)",
+      "title": "URL parameter utilities with hash-secret handling",
       "synonyms": [
-        "useGetCallerUserProfile",
-        "useSaveCallerUserProfile"
+        "urlParams utilities",
+        "Admin token extraction"
       ],
-      "description": "React Query hook to fetch the current caller’s profile and an async helper to save it via the backend actor, combining actor-fetching and query loading states.",
+      "description": "Utilities to read URL parameters from query/hash, persist values in sessionStorage, extract sensitive secrets from the URL hash, and remove them from the address bar via history.replaceState.",
       "reqIds": [],
       "version": 1
     },
     {
       "id": "IF-25",
+      "title": "Per-caller user profile hooks (frontend)",
+      "synonyms": [
+        "useGetCallerUserProfile",
+        "useSaveCallerUserProfile"
+      ],
+      "description": "React Query hook to fetch the current caller’s profile and an async helper to save it via the backend actor, integrating actor-fetching state into loading flags.",
+      "reqIds": [],
+      "version": 1
+    },
+    {
+      "id": "IF-26",
       "title": "Role-based access control (Motoko)",
       "synonyms": [
         "RBAC",
         "AccessControl",
         "admin/user/guest roles"
       ],
-      "description": "Implements roles (#admin/#user/#guest); supports initialization using a canister env admin token + user-provided secret, querying caller role/admin status, and admin-only role assignment.",
+      "description": "Implements roles (#admin/#user/#guest); supports initialization using a canister env admin token plus a caller-provided token, querying caller role/admin status, and admin-only role assignment.",
       "reqIds": [],
       "version": 1
     },
     {
-      "id": "IF-26",
+      "id": "IF-27",
       "title": "Per-user profile storage with authorization (Motoko)",
       "synonyms": [
         "UserProfile storage",
         "getCallerUserProfile/saveCallerUserProfile"
       ],
-      "description": "Stores per-principal UserProfile records in an in-memory Map; read/write is gated to #user permission, while admins can query another principal’s profile via getUserProfile.",
+      "description": "Stores per-principal UserProfile records in a Map; read/write is gated to #user permission, while admins can query another principal’s profile via getUserProfile.",
       "reqIds": [],
       "version": 1
     },
     {
-      "id": "feature-generate-a-complete-offline-capable-static-export-of-the-current-marketing-website-same-content-sections-text-and-layout-as-the-existing-react-site-in-the-following-exact-folder-structure-inside-the-downloadable-package-index-html-css-style-css-js-script-js-assets-images",
-      "title": "Generate a complete offline-capable static export of the current marketing website (same content, sections, text, and layout as the existing React site) in the following exact folder structure inside the downloadable package: index.html, css/style.css, js/script.js, assets/images/.",
+      "id": "feature-generate-overwrite-a-valid-xml-sitemap-at-frontend-public-sitemap-xml-using-absolute-urls-rooted-at-https-sangharshclasses-in-including-only-urls-that-correspond-to-existing-frontend-pages-routes-no-url-fragments-like-about-and-no-new-pages",
+      "title": "Generate/overwrite a valid XML sitemap at frontend/public/sitemap.xml using absolute URLs rooted at https://sangharshclasses.in, including ONLY URLs that correspond to existing frontend pages/routes (no URL fragments like #about, and no new pages).",
       "reqIds": [
         "REQ-1"
       ],
       "version": 1
     },
     {
-      "id": "feature-add-a-clear-user-facing-button-labeled-exactly-download-website-code-on-the-website-ui-that-initiates-download-of-the-full-website-code-as-a-zip-file-containing-the-static-export-structure-index-html-css-style-css-js-script-js-assets-images",
-      "title": "Add a clear user-facing button labeled exactly \"Download Website Code\" on the website UI that initiates download of the full website code as a ZIP file containing the static export structure (index.html, css/style.css, js/script.js, assets/images/).",
+      "id": "feature-do-not-modify-any-design-layout-content-or-any-files-other-than-the-sitemap-xml-file-required-in-this-request",
+      "title": "Do not modify any design, layout, content, or any files other than the sitemap.xml file required in this request.",
       "reqIds": [
         "REQ-2"
       ],
       "version": 1
     },
     {
-      "id": "feature-ensure-the-downloadable-zip-always-matches-the-currently-built-website-content-design-i-e-changes-to-homepage-content-layout-styles-in-the-app-are-reflected-in-the-exported-html-css-js-on-the-next-build-and-does-not-omit-any-current-sections-or-text",
-      "title": "Ensure the downloadable ZIP always matches the currently built website content/design (i.e., changes to homepage content/layout/styles in the app are reflected in the exported HTML/CSS/JS on the next build) and does not omit any current sections or text.",
+      "id": "feature-after-generating-the-sitemap-xml-output-the-public-sitemap-url-exactly-as-https-sangharshclasses-in-sitemap-xml",
+      "title": "After generating the sitemap.xml, output the public sitemap URL exactly as: https://sangharshclasses.in/sitemap.xml",
       "reqIds": [
         "REQ-3"
-      ],
-      "version": 1
-    },
-    {
-      "id": "feature-make-the-zip-file-available-as-a-static-asset-served-by-the-deployed-frontend-so-the-download-works-without-requiring-any-backend-changes-and-ensure-appropriate-caching-headers-so-users-can-reliably-download-it",
-      "title": "Make the ZIP file available as a static asset served by the deployed frontend (so the download works without requiring any backend changes) and ensure appropriate caching/headers so users can reliably download it.",
-      "reqIds": [
-        "REQ-4"
       ],
       "version": 1
     }
@@ -324,32 +327,34 @@
   "new_feature_requests": [
     {
       "id": "AR-1",
-      "summary": "Provide full static website source export (HTML/CSS/JS/assets) with structured folders and a 'Download Website Code' button that downloads a ZIP for offline/self-hostable use.",
+      "summary": "Generate and add a static sitemap.xml at the site root using absolute URLs for https://sangharshclasses.in, without changing any other files/content/layout, and provide the public link https://sangharshclasses.in/sitemap.xml",
       "reqIds": [],
       "status": "pending"
     }
   ],
   "architectural_notes": [
-    "Frontend is a Vite-powered React SPA styled with TailwindCSS (OKLCH CSS variables) and shadcn/ui primitives.",
-    "Data fetching/caching uses @tanstack/react-query; backend actor instances are created via a query keyed by principal and used by downstream hooks.",
-    "Authentication is handled via Internet Identity using @dfinity/auth-client in a React Context provider with identity persistence across reloads.",
-    "ICP backend is written in Motoko and composes authorization functionality via an include/mixin pattern (MixinAuthorization + AccessControl).",
-    "RBAC bootstrapping uses an environment variable (CAFFEINE_ADMIN_TOKEN) on the canister plus a user-provided secret to assign the first admin.",
-    "SEO approach combines static index.html meta/JSON-LD with runtime guards that enforce canonical/og:url and apply noindex on the Caffeine subdomain.",
-    "Static hosting support includes 404.html SPA fallback logic plus Netlify-style _redirects/_headers and ICP asset-canister rules via .ic-assets.json.",
-    "Sensitive token handling on the frontend reads secrets from the URL hash and persists them in sessionStorage while removing them from the visible URL.",
-    "Backend authorization checks trap on unauthorized access; frontend uses a “safe actor” hook in some places to avoid fatal init failures."
+    "Frontend is a Vite-powered React SPA styled with TailwindCSS (OKLCH design tokens) and shadcn/ui primitives (Button, Card, Sheet, Badge).",
+    "Marketing content is centralized in a single module (marketingSiteContent) consumed by both React components and the static-export renderer to keep content consistent.",
+    "TanStack React Query is used for async state (actor creation and backend queries/mutations) with query keys tied to the authenticated principal.",
+    "Authentication uses Internet Identity via @dfinity/auth-client, exposed through a React context provider that restores identity on reload.",
+    "ICP backend is written in Motoko and composes authorization via an include/mixin pattern (MixinAuthorization + AccessControl).",
+    "RBAC bootstrapping uses a canister environment variable (CAFFEINE_ADMIN_TOKEN) compared against a caller-provided token to assign the first admin.",
+    "A custom Vite closeBundle plugin generates a static-export directory (index.html/css/js + assets) and creates website-code.zip using archiver with stream event handling.",
+    "Static hosting behavior is hardened using public/404.html SPA fallback plus Netlify-style _redirects/_headers, and ICP asset configuration via frontend/.ic-assets.json.",
+    "Runtime utilities include SEO guards for canonical/noindex enforcement and global runtime diagnostics logging for production debugging.",
+    "Sitemap generation/update must be the only change: create a valid static sitemap.xml in the frontend root with absolute URLs for https://sangharshclasses.in and avoid modifying any other files."
   ],
   "known_issues": [
-    "Many admin-related frontend files under frontend/src/admin/** and several hooks (useAdminStatus/useAdminUsers/useWebsiteContent/useSectionConfigs/contentSerialization) are empty placeholders in this snapshot; an admin CMS panel is not actually implemented.",
-    "frontend/src/hooks/useActor.ts always calls _initializeAccessControlWithSecret(adminToken) (adminToken may be empty). Backend traps if CAFFEINE_ADMIN_TOKEN is not set, which can break authenticated flows on misconfigured deployments.",
-    "AccessControl.getUserRole traps with \"User is not registered\" for non-anonymous principals that haven’t been initialized; callers may see traps instead of a safe default role.",
-    "Backend roles and userProfiles are stored only in in-memory Maps and are not persisted to stable memory; data will be lost on canister upgrade/reinstall.",
-    "The SPA 404 fallback stores redirectPath in sessionStorage, but no client router/restore logic is present in the provided code, so deep-link restoration is likely incomplete.",
-    "There are two global CSS files (frontend/index.css and frontend/src/index.css); only the src version is imported, which can cause confusion/drift.",
-    "frontend/index.html is the development entry (loads /src/main.tsx); if hosting accidentally serves source instead of dist output, production will break (docs warn about this but it remains a deployment footgun).",
-    "useBackendActorSafe skips access-control initialization when no caffeineAdminToken is present; #user-gated backend calls (e.g., getCallerUserProfile) can trap for authenticated-but-unregistered users.",
-    "User requires full static source code export (HTML/CSS/JS/assets) plus ZIP download/GitHub workflow; current platform/site setup may not support direct export without adding a dedicated static export build + packaging pipeline."
+    "Many admin-panel files under frontend/src/admin/** and several admin-related hooks (useAdminStatus, useAdminUsers, useWebsiteContent, useSectionConfigs) are empty placeholders in this snapshot, so an admin/CMS UI is not actually implemented here.",
+    "staticExportAssets entries use source paths starting with a leading '/' (e.g. '/assets/...'); path.join(publicDir, asset.source) will ignore publicDir on POSIX, causing asset copy to fail and the exported ZIP to miss images.",
+    "frontend/src/hooks/useActor.ts always calls _initializeAccessControlWithSecret(adminToken) even when the token is empty, which can permanently register the first authenticated caller as #user and prevent later admin bootstrapping for that principal (because initialize() is no-op for already-registered users).",
+    "backend/authorization/access-control.mo traps with \"User is not registered\" when an authenticated principal has not been initialized; if initialization is skipped (e.g., safe actor without token) user-gated methods can trap.",
+    "MixinAuthorization._initializeAccessControlWithSecret traps if CAFFEINE_ADMIN_TOKEN is not set on the canister, which can break initialization in misconfigured environments.",
+    "Backend userRoles and userProfiles are stored only in in-memory Maps (no stable memory), so state can be lost across upgrades/reinstalls.",
+    "InternetIdentityProvider sets loginStatus to 'loginError' on init failure, but the effect's finally block unconditionally sets it back to 'idle', potentially masking initialization errors.",
+    "Branding is inconsistent: marketingSiteContent.site.name is \"Sangharsh Class\" (singular) while SEO/title and other copy use \"Sangharsh Classes\" (plural).",
+    "There are two Tailwind CSS entry files (frontend/index.css and frontend/src/index.css); the app imports the src version, leaving the root one potentially stale/confusing.",
+    "frontend/public/404.html excludes several static files from redirect, but does not list /website-code.zip; correctness currently depends on _redirects ensuring it is served as a static 200."
   ],
   "isFixRequest": false,
   "gameProjectType": "none",

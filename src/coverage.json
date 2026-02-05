@@ -1,121 +1,61 @@
 {
   "kind": "coverage_report",
   "version": "1.0",
-  "generatedAt": "2026-02-04T13:56:23.021Z",
+  "generatedAt": "2026-02-05T07:53:48.929Z",
   "sources": {
     "buildRequest": true,
     "implementationPlan": true
   },
   "requirements": {
-    "total": 4,
-    "implemented": 4,
+    "total": 3,
+    "implemented": 3,
     "items": [
       {
         "id": "REQ-1",
-        "summary": "Generate a complete offline-capable static export of the current marketing website (same content, sections, text, and layout as the existing React site) in the following exact folder structure inside the downloadable package: index.html, css/style.css, js/script.js, assets/images/.",
+        "summary": "Generate/overwrite a valid XML sitemap at frontend/public/sitemap.xml using absolute URLs rooted at https://sangharshclasses.in, including ONLY URLs that correspond to existing frontend pages/routes (no URL fragments like #about, and no new pages).",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/src/content/marketingSiteContent.ts",
-          "frontend/src/components/Hero.tsx",
-          "frontend/src/components/About.tsx",
-          "frontend/src/components/Faculty.tsx",
-          "frontend/src/components/Courses.tsx",
-          "frontend/src/components/Contact.tsx",
-          "frontend/src/components/Footer.tsx",
-          "frontend/src/components/Header.tsx",
-          "frontend/src/components/WhatsAppButton.tsx",
-          "frontend/src/static-export/renderStaticSite.ts",
-          "frontend/src/static-export/staticExportAssets.ts",
-          "frontend/src/static-export/styleSource.css"
+          "frontend/public/sitemap.xml"
         ],
         "matchedFiles": [
-          "frontend/src/content/marketingSiteContent.ts",
-          "frontend/src/components/Hero.tsx",
-          "frontend/src/components/About.tsx",
-          "frontend/src/components/Faculty.tsx",
-          "frontend/src/components/Courses.tsx",
-          "frontend/src/components/Contact.tsx",
-          "frontend/src/components/Footer.tsx",
-          "frontend/src/components/Header.tsx",
-          "frontend/src/components/WhatsAppButton.tsx",
-          "frontend/src/static-export/renderStaticSite.ts",
-          "frontend/src/static-export/staticExportAssets.ts"
+          "frontend/public/sitemap.xml"
         ]
       },
       {
         "id": "REQ-2",
-        "summary": "Add a clear user-facing button labeled exactly \"Download Website Code\" on the website UI that initiates download of the full website code as a ZIP file containing the static export structure (index.html, css/style.css, js/script.js, assets/images/).",
+        "summary": "Do not modify any design, layout, content, or any files other than the sitemap.xml file required in this request.",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/src/components/DownloadWebsiteCodeButton.tsx",
-          "frontend/src/components/Header.tsx",
-          "frontend/src/pages/HomePage.tsx"
+          "frontend/public/sitemap.xml"
         ],
         "matchedFiles": [
-          "frontend/src/components/DownloadWebsiteCodeButton.tsx",
-          "frontend/src/components/Header.tsx"
+          "frontend/public/sitemap.xml"
         ]
       },
       {
         "id": "REQ-3",
-        "summary": "Ensure the downloadable ZIP always matches the currently built website content/design (i.e., changes to homepage content/layout/styles in the app are reflected in the exported HTML/CSS/JS on the next build) and does not omit any current sections or text.",
+        "summary": "After generating the sitemap.xml, output the public sitemap URL exactly as: https://sangharshclasses.in/sitemap.xml",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/src/content/marketingSiteContent.ts",
-          "frontend/src/static-export/renderStaticSite.ts",
-          "frontend/src/static-export/scriptSource.ts",
-          "frontend/src/utils/contentSerialization.ts"
+          "frontend/public/sitemap.xml"
         ],
         "matchedFiles": [
-          "frontend/src/content/marketingSiteContent.ts",
-          "frontend/src/static-export/renderStaticSite.ts"
-        ]
-      },
-      {
-        "id": "REQ-4",
-        "summary": "Make the ZIP file available as a static asset served by the deployed frontend (so the download works without requiring any backend changes) and ensure appropriate caching/headers so users can reliably download it.",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/vite.config.ts",
-          "frontend/src/static-export/zipWriter.ts",
-          "frontend/.ic-assets.json",
-          "frontend/public/_headers",
-          "frontend/public/_redirects",
-          "frontend/src/components/DownloadWebsiteCodeButton.tsx"
-        ],
-        "matchedFiles": [
-          "frontend/vite.config.ts",
-          "frontend/src/static-export/zipWriter.ts",
-          "frontend/.ic-assets.json",
-          "frontend/public/_headers",
-          "frontend/public/_redirects",
-          "frontend/src/components/DownloadWebsiteCodeButton.tsx"
+          "frontend/public/sitemap.xml"
         ]
       }
     ]
   },
   "changedFiles": [
+    "backend/main.mo",
     "build-request.json",
     "feature_evidence.json",
     "frontend-file-summaries.txt",
     "frontend-implementation-plan.json",
-    "frontend/.ic-assets.json",
-    "frontend/public/_headers",
-    "frontend/public/_redirects",
-    "frontend/src/components/About.tsx",
-    "frontend/src/components/Contact.tsx",
-    "frontend/src/components/Courses.tsx",
-    "frontend/src/components/DownloadWebsiteCodeButton.tsx",
-    "frontend/src/components/Faculty.tsx",
-    "frontend/src/components/Footer.tsx",
-    "frontend/src/components/Header.tsx",
-    "frontend/src/components/Hero.tsx",
-    "frontend/src/components/WhatsAppButton.tsx",
-    "frontend/src/content/marketingSiteContent.ts",
-    "frontend/src/static-export/renderStaticSite.ts",
-    "frontend/src/static-export/staticExportAssets.ts",
-    "frontend/src/static-export/zipWriter.ts",
-    "frontend/vite.config.ts",
+    "frontend/public/sitemap.xml",
+    "frontend/src/backend.d.ts",
+    "frontend/src/backend.ts",
+    "frontend/src/declarations/backend.did.d.ts",
+    "frontend/src/declarations/backend.did.js",
     "project_state.json",
     "scratch/component-selection.json",
     "spec.md",

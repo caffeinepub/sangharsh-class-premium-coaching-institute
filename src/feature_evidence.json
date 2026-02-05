@@ -2,20 +2,10 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-generate-a-complete-offline-capable-static-export-of-the-current-marketing-website-same-content-sections-text-and-layout-as-the-existing-react-site-in-the-following-exact-folder-structure-inside-the-downloadable-package-index-html-css-style-css-js-script-js-assets-images",
-      "featureTitle": "Generate a complete offline-capable static export of the current marketing website (same content, sections, text, and layout as the existing React site) in the following exact folder structure inside the downloadable package: index.html, css/style.css, js/script.js, assets/images/.",
+      "featureId": "feature-generate-overwrite-a-valid-xml-sitemap-at-frontend-public-sitemap-xml-using-absolute-urls-rooted-at-https-sangharshclasses-in-including-only-urls-that-correspond-to-existing-frontend-pages-routes-no-url-fragments-like-about-and-no-new-pages",
+      "featureTitle": "Generate/overwrite a valid XML sitemap at frontend/public/sitemap.xml using absolute URLs rooted at https://sangharshclasses.in, including ONLY URLs that correspond to existing frontend pages/routes (no URL fragments like #about, and no new pages).",
       "files": [
-        "frontend/src/components/About.tsx",
-        "frontend/src/components/Contact.tsx",
-        "frontend/src/components/Courses.tsx",
-        "frontend/src/components/Faculty.tsx",
-        "frontend/src/components/Footer.tsx",
-        "frontend/src/components/Header.tsx",
-        "frontend/src/components/Hero.tsx",
-        "frontend/src/components/WhatsAppButton.tsx",
-        "frontend/src/content/marketingSiteContent.ts",
-        "frontend/src/static-export/renderStaticSite.ts",
-        "frontend/src/static-export/staticExportAssets.ts"
+        "frontend/public/sitemap.xml"
       ],
       "components": [
         "core-infrastructure@1.0.2",
@@ -31,11 +21,10 @@
       "confidence": "high"
     },
     {
-      "featureId": "feature-add-a-clear-user-facing-button-labeled-exactly-download-website-code-on-the-website-ui-that-initiates-download-of-the-full-website-code-as-a-zip-file-containing-the-static-export-structure-index-html-css-style-css-js-script-js-assets-images",
-      "featureTitle": "Add a clear user-facing button labeled exactly \"Download Website Code\" on the website UI that initiates download of the full website code as a ZIP file containing the static export structure (index.html, css/style.css, js/script.js, assets/images/).",
+      "featureId": "feature-do-not-modify-any-design-layout-content-or-any-files-other-than-the-sitemap-xml-file-required-in-this-request",
+      "featureTitle": "Do not modify any design, layout, content, or any files other than the sitemap.xml file required in this request.",
       "files": [
-        "frontend/src/components/DownloadWebsiteCodeButton.tsx",
-        "frontend/src/components/Header.tsx"
+        "frontend/public/sitemap.xml"
       ],
       "components": [
         "core-infrastructure@1.0.2",
@@ -51,11 +40,10 @@
       "confidence": "high"
     },
     {
-      "featureId": "feature-ensure-the-downloadable-zip-always-matches-the-currently-built-website-content-design-i-e-changes-to-homepage-content-layout-styles-in-the-app-are-reflected-in-the-exported-html-css-js-on-the-next-build-and-does-not-omit-any-current-sections-or-text",
-      "featureTitle": "Ensure the downloadable ZIP always matches the currently built website content/design (i.e., changes to homepage content/layout/styles in the app are reflected in the exported HTML/CSS/JS on the next build) and does not omit any current sections or text.",
+      "featureId": "feature-after-generating-the-sitemap-xml-output-the-public-sitemap-url-exactly-as-https-sangharshclasses-in-sitemap-xml",
+      "featureTitle": "After generating the sitemap.xml, output the public sitemap URL exactly as: https://sangharshclasses.in/sitemap.xml",
       "files": [
-        "frontend/src/content/marketingSiteContent.ts",
-        "frontend/src/static-export/renderStaticSite.ts"
+        "frontend/public/sitemap.xml"
       ],
       "components": [
         "core-infrastructure@1.0.2",
@@ -67,30 +55,6 @@
       ],
       "testIds": [
         "REQ-3"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-make-the-zip-file-available-as-a-static-asset-served-by-the-deployed-frontend-so-the-download-works-without-requiring-any-backend-changes-and-ensure-appropriate-caching-headers-so-users-can-reliably-download-it",
-      "featureTitle": "Make the ZIP file available as a static asset served by the deployed frontend (so the download works without requiring any backend changes) and ensure appropriate caching/headers so users can reliably download it.",
-      "files": [
-        "frontend/.ic-assets.json",
-        "frontend/public/_headers",
-        "frontend/public/_redirects",
-        "frontend/src/components/DownloadWebsiteCodeButton.tsx",
-        "frontend/src/static-export/zipWriter.ts",
-        "frontend/vite.config.ts"
-      ],
-      "components": [
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0",
-        "authorization@4.0.0"
-      ],
-      "testIds": [
-        "REQ-4"
       ],
       "confidence": "high"
     }
