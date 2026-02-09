@@ -110,11 +110,7 @@ export const marketingSiteContent = {
       { platform: 'Instagram', url: 'https://www.instagram.com/rajooraushan?igsh=cmUycTB5ZmZ6MjRi', icon: 'SiInstagram' },
       { platform: 'YouTube', url: 'https://youtube.com/@sangharshclassesmuzaffarpur?si=qZaASH_gn1aY5Y8I', icon: 'SiYoutube' },
     ],
-    attribution: {
-      text: 'Built with love using',
-      link: 'https://caffeine.ai',
-      linkText: 'caffeine.ai',
-    },
+    copyright: '© 2026 Govind Kumar | Web Developer',
   },
   navigation: [
     { label: 'Home', id: 'hero' },

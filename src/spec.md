@@ -1,10 +1,9 @@
 # Specification
 
 ## Summary
-**Goal:** Generate/overwrite a valid XML sitemap for sangharshclasses.in using only existing frontend routes.
+**Goal:** No specific application changes requested in the provided BuildRequest.
 
 **Planned changes:**
-- Create/overwrite `frontend/public/sitemap.xml` in valid sitemap protocol XML format.
-- Populate the sitemap with absolute `<loc>` URLs rooted at `https://sangharshclasses.in` for existing frontend pages/routes only (no invented routes and no `#` fragments).
+- None
 
-**User-visible outcome:** The site has a publicly accessible sitemap at `https://sangharshclasses.in/sitemap.xml`.
+**User-visible outcome:** No user-visible changes.

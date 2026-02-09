@@ -222,7 +222,7 @@ export function generateStaticHTML(): string {
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>© ${new Date().getFullYear()}. ${escapeHtml(footer.attribution.text)} ❤️ using <a href="${footer.attribution.link}" target="_blank" rel="noopener noreferrer">${escapeHtml(footer.attribution.linkText)}</a></p>
+                <p>${escapeHtml(footer.copyright)}</p>
             </div>
         </div>
     </footer>

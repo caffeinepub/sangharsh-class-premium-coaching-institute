@@ -1,52 +1,6 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Generate sitemap.xml for sangharshclasses.in (frontend-only, no other changes)",
-  "requirements": [
-    {
-      "id": "REQ-1",
-      "summary": "Generate/overwrite a valid XML sitemap.xml using absolute URLs for only existing frontend routes.",
-      "acceptanceCriteria": [
-        "A file exists at frontend/public/sitemap.xml",
-        "The file is valid XML and conforms to the sitemap protocol (<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\"> ... )",
-        "All <loc> values use absolute URLs starting with https://sangharshclasses.in",
-        "The sitemap includes only existing frontend page URLs (no invented routes and no # fragments)"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/public/sitemap.xml",
-          "operation": "modify",
-          "description": "Overwrite sitemap.xml to include ONLY the existing frontend route(s) detected from the current app (currently the SPA Home route at https://sangharshclasses.in/), using sitemap protocol XML with absolute <loc> URLs rooted at https://sangharshclasses.in and no URL fragments."
-        }
-      ]
-    },
-    {
-      "id": "REQ-2",
-      "summary": "Ensure no repository changes occur except the sitemap.xml update.",
-      "acceptanceCriteria": [
-        "The only repository file change is to sitemap.xml (no other files added, removed, or modified)"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/public/sitemap.xml",
-          "operation": "modify",
-          "description": "Limit all work strictly to frontend/public/sitemap.xml; do not edit, add, delete, or rename any other files (including robots.txt, redirects, HTML, CSS, and source code)."
-        }
-      ]
-    },
-    {
-      "id": "REQ-3",
-      "summary": "Provide the public sitemap URL after generation.",
-      "acceptanceCriteria": [
-        "Chat output includes exactly: https://sangharshclasses.in/sitemap.xml"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/public/sitemap.xml",
-          "operation": "modify",
-          "description": "Finalize the sitemap.xml update so the public URL can be shared exactly as https://sangharshclasses.in/sitemap.xml."
-        }
-      ]
-    }
-  ]
+  "title": "Untitled request",
+  "requirements": []
 }

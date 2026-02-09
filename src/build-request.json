@@ -1,78 +1,10 @@
 {
   "kind": "build_request",
-  "title": "Generate sitemap.xml for sangharshclasses.in (no other changes)",
+  "title": "Untitled request",
   "priority": "normal",
-  "requirements": [
-    {
-      "id": "REQ-1",
-      "text": "Generate/overwrite a valid XML sitemap at frontend/public/sitemap.xml using absolute URLs rooted at https://sangharshclasses.in, including ONLY URLs that correspond to existing frontend pages/routes (no URL fragments like #about, and no new pages).",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-6"
-        ],
-        "quotes": [
-          "Generate ONLY a sitemap.xml file for my website using my custom domain: https://sangharshclasses.in",
-          "Only scan existing pages from the frontend",
-          "Generate a valid sitemap.xml (XML format only)",
-          "Place sitemap.xml in the root of the frontend directory",
-          "Use correct absolute URLs with https://sangharshclasses.in"
-        ]
-      },
-      "acceptanceCriteria": [
-        "A file exists at frontend/public/sitemap.xml",
-        "The file is valid XML and conforms to the sitemap protocol (<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\"> ... )",
-        "All <loc> values use absolute URLs starting with https://sangharshclasses.in",
-        "The sitemap includes only existing frontend page URLs (no invented routes and no # fragments)"
-      ]
-    },
-    {
-      "id": "REQ-2",
-      "text": "Do not modify any design, layout, content, or any files other than the sitemap.xml file required in this request.",
-      "target": "both",
-      "source": {
-        "messageIds": [
-          "msg-6"
-        ],
-        "quotes": [
-          "Do NOT change any design, layout, content, or files except sitemap.",
-          "Do not redesign or modify any page",
-          "Do not add or remove content"
-        ]
-      },
-      "acceptanceCriteria": [
-        "The only repository file change is to sitemap.xml (no other files added, removed, or modified)"
-      ]
-    },
-    {
-      "id": "REQ-3",
-      "text": "After generating the sitemap.xml, output the public sitemap URL exactly as: https://sangharshclasses.in/sitemap.xml",
-      "target": "unknown",
-      "source": {
-        "messageIds": [
-          "msg-6"
-        ],
-        "quotes": [
-          "After generating, provide the public sitemap link in chat",
-          "Sitemap URL shown in chat as: https://sangharshclasses.in/sitemap.xml"
-        ]
-      },
-      "acceptanceCriteria": [
-        "Chat output includes exactly: https://sangharshclasses.in/sitemap.xml"
-      ]
-    }
-  ],
-  "constraints": [
-    "Do not change any design, layout, or content.",
-    "Do not add, remove, or modify any files except sitemap.xml.",
-    "Generate sitemap entries only from existing frontend pages/routes.",
-    "Use absolute URLs with the custom domain https://sangharshclasses.in."
-  ],
-  "nonGoals": [
-    "Adding new pages or routes to the website.",
-    "Changing robots.txt, redirects, headers, SEO metadata, or any other deployment files.",
-    "Any UI/UX changes or content edits."
-  ],
+  "requirements": [],
+  "constraints": [],
+  "nonGoals": [],
   "imageRequirements": {
     "required": [],
     "edits": []

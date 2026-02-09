@@ -1,61 +1,25 @@
 {
   "kind": "coverage_report",
   "version": "1.0",
-  "generatedAt": "2026-02-05T07:53:48.929Z",
+  "generatedAt": "2026-02-06T04:03:15.359Z",
   "sources": {
     "buildRequest": true,
     "implementationPlan": true
   },
   "requirements": {
-    "total": 3,
-    "implemented": 3,
-    "items": [
-      {
-        "id": "REQ-1",
-        "summary": "Generate/overwrite a valid XML sitemap at frontend/public/sitemap.xml using absolute URLs rooted at https://sangharshclasses.in, including ONLY URLs that correspond to existing frontend pages/routes (no URL fragments like #about, and no new pages).",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/public/sitemap.xml"
-        ],
-        "matchedFiles": [
-          "frontend/public/sitemap.xml"
-        ]
-      },
-      {
-        "id": "REQ-2",
-        "summary": "Do not modify any design, layout, content, or any files other than the sitemap.xml file required in this request.",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/public/sitemap.xml"
-        ],
-        "matchedFiles": [
-          "frontend/public/sitemap.xml"
-        ]
-      },
-      {
-        "id": "REQ-3",
-        "summary": "After generating the sitemap.xml, output the public sitemap URL exactly as: https://sangharshclasses.in/sitemap.xml",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/public/sitemap.xml"
-        ],
-        "matchedFiles": [
-          "frontend/public/sitemap.xml"
-        ]
-      }
-    ]
+    "total": 0,
+    "implemented": 0,
+    "items": []
   },
   "changedFiles": [
-    "backend/main.mo",
     "build-request.json",
+    "caffeine.lock.json",
     "feature_evidence.json",
     "frontend-file-summaries.txt",
     "frontend-implementation-plan.json",
-    "frontend/public/sitemap.xml",
-    "frontend/src/backend.d.ts",
-    "frontend/src/backend.ts",
-    "frontend/src/declarations/backend.did.d.ts",
-    "frontend/src/declarations/backend.did.js",
+    "frontend/src/components/Footer.tsx",
+    "frontend/src/content/marketingSiteContent.ts",
+    "frontend/src/static-export/renderStaticSite.ts",
     "project_state.json",
     "scratch/component-selection.json",
     "spec.md",

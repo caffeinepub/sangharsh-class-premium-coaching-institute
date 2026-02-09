@@ -7,7 +7,7 @@
   "frontend/src/components/Faculty.tsx": "Faculty section displaying expert educators with photos, subjects, roles, and experience using canonical content source and shadcn Card/Badge components.",
   "frontend/src/components/Courses.tsx": "Courses section displaying class offerings with descriptions and features using canonical content source and shadcn Card/Badge components.",
   "frontend/src/components/Contact.tsx": "Contact section with phone, email, location information and interactive buttons using canonical content source and shadcn Card/Button components.",
-  "frontend/src/components/Footer.tsx": "Footer with branding, quick links, contact information, social media icons, and caffeine.ai attribution using canonical content source.",
+  "frontend/src/components/Footer.tsx": "Footer component with branding, quick links, contact information, and social media icons, displaying clean professional copyright text without AI attribution.",
   "frontend/src/components/WhatsAppButton.tsx": "Floating WhatsApp button that opens chat with institute phone number from canonical content source.",
   "frontend/src/index.css": "Clean global styles with OKLCH color system, simplified background without mathematical symbols overlay, basic animations and scrollbar styling.",
   "frontend/tailwind.config.js": "Tailwind configuration with brand color tokens and basic animations, simplified without custom shadows.",
@@ -52,9 +52,9 @@
   "frontend/src/utils/seoGuards.ts": "Runtime SEO guard utility that detects the current hostname and applies noindex/nofollow meta tags on the Caffeine subdomain while ensuring canonical and og:url tags always point to the custom domain https://sangharshclasses.in/.",
   "frontend/DOMAIN_SETUP.md": "Comprehensive custom domain setup guide with complete DNS configuration instructions for apex and www subdomains, 301 redirect setup for canonical host strategy (apex as canonical, www and Caffeine subdomain redirect to apex), SEO verification steps, deployment requirements, and troubleshooting for common domain/deployment issues.",
   "frontend/.ic-assets.json": "Internet Computer asset canister configuration with caching rules and Content-Type headers including specific rules for the website-code.zip download.",
-  "frontend/src/content/marketingSiteContent.ts": "Canonical content source for the entire marketing site including all text, images, navigation, and configuration used by both React components and static export generator.",
+  "frontend/src/content/marketingSiteContent.ts": "Canonical content source for the entire marketing site with footer copyright updated to display \"© 2026 Govind Kumar | Web Developer\" without AI branding.",
   "frontend/src/components/DownloadWebsiteCodeButton.tsx": "Button component that triggers download of the pre-generated static website ZIP file from frontend assets without requiring authentication.",
-  "frontend/src/static-export/renderStaticSite.ts": "Static site generator that produces complete offline-capable HTML, CSS, and JavaScript files from canonical content source with proper escaping and structure.",
+  "frontend/src/static-export/renderStaticSite.ts": "Static site generator that produces complete offline-capable HTML, CSS, and JavaScript files from canonical content source with proper escaping, structure, and updated footer displaying \"© 2026 Govind Kumar | Web Developer\" without AI branding.",
   "frontend/src/static-export/staticExportAssets.ts": "Asset manifest listing all images and files to be included in the static export package with source and destination paths.",
   "frontend/src/static-export/zipWriter.ts": "Lightweight ZIP writer utility placeholder for tracking files to be packaged in the static export archive."
 }

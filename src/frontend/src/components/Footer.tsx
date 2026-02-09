@@ -1,9 +1,7 @@
-import { Heart } from 'lucide-react';
 import { SiFacebook, SiInstagram, SiYoutube } from 'react-icons/si';
 import { marketingSiteContent } from '@/content/marketingSiteContent';
 
 const Footer = () => {
-  const currentYear = new Date().getFullYear();
   const { site, contact, footer } = marketingSiteContent;
 
   const socialIconMap = {
@@ -82,17 +80,8 @@ const Footer = () => {
 
           {/* Bottom Bar */}
           <div className="border-t border-white/20 pt-8 text-center">
-            <p className="text-white/90 flex items-center justify-center gap-2 flex-wrap">
-              © {currentYear}. {footer.attribution.text}{' '}
-              <Heart className="h-4 w-4 text-red-400 fill-red-400 inline" /> using{' '}
-              <a
-                href={footer.attribution.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="font-semibold hover:underline"
-              >
-                {footer.attribution.linkText}
-              </a>
+            <p className="text-white/90">
+              {footer.copyright}
             </p>
           </div>
         </div>
