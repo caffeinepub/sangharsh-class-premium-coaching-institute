@@ -17,10 +17,27 @@ const Header = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const scrollToSection = (id: string) => {
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  const handleNavigation = (id: string) => {
+    const currentPath = window.location.pathname;
+    
+    if (id === 'about') {
+      // Navigate to About page
+      window.location.href = '/about';
+    } else if (id === 'hero') {
+      // Navigate to homepage
+      window.location.href = '/';
+    } else {
+      // For other sections, check if we're on homepage
+      if (currentPath === '/' || currentPath === '') {
+        // Scroll to section on homepage
+        const element = document.getElementById(id);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      } else {
+        // Navigate to homepage with hash
+        window.location.href = `/#${id}`;
+      }
     }
     setIsOpen(false);
   };
@@ -38,7 +55,7 @@ const Header = () => {
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
-          <div className="flex items-center space-x-3 cursor-pointer" onClick={() => scrollToSection('hero')}>
+          <div className="flex items-center space-x-3 cursor-pointer" onClick={() => handleNavigation('hero')}>
             <img
               src={site.logo}
               alt={`${site.name} Logo`}
@@ -60,7 +77,7 @@ const Header = () => {
               <Button
                 key={item.id}
                 variant="ghost"
-                onClick={() => scrollToSection(item.id)}
+                onClick={() => handleNavigation(item.id)}
                 className={`font-medium transition-colors ${
                   isScrolled
                     ? 'text-foreground hover:text-brand-primary hover:bg-brand-primary/10'
@@ -94,7 +111,7 @@ const Header = () => {
                   <Button
                     key={item.id}
                     variant="ghost"
-                    onClick={() => scrollToSection(item.id)}
+                    onClick={() => handleNavigation(item.id)}
                     className="justify-start text-lg hover:text-brand-primary hover:bg-brand-primary/10"
                   >
                     {item.label}

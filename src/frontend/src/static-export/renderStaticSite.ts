@@ -13,7 +13,7 @@ function escapeHtml(text: string): string {
 }
 
 export function generateStaticHTML(): string {
-  const { site, hero, about, faculty, courses, coursesExtra, contact, footer, navigation } = marketingSiteContent;
+  const { site, hero, faculty, courses, coursesExtra, contact, footer, navigation } = marketingSiteContent;
 
   return `<!DOCTYPE html>
 <html lang="en">
@@ -29,7 +29,7 @@ export function generateStaticHTML(): string {
     <header id="header">
         <div class="container">
             <div class="header-content">
-                <div class="logo" onclick="scrollToSection('hero')">
+                <div class="logo" onclick="window.location.href='/'">
                     <img src="assets/images/logo.jpg" alt="${escapeHtml(site.name)} Logo">
                     <div class="logo-text">
                         <span class="logo-name">${escapeHtml(site.name)}</span>
@@ -37,7 +37,9 @@ export function generateStaticHTML(): string {
                     </div>
                 </div>
                 <nav class="desktop-nav">
-                    ${navigation.map(item => `<a href="#${item.id}" onclick="scrollToSection('${item.id}'); return false;">${escapeHtml(item.label)}</a>`).join('')}
+                    <a href="/">Home</a>
+                    <a href="/about">About</a>
+                    ${navigation.filter(item => item.id !== 'hero' && item.id !== 'about').map(item => `<a href="#${item.id}" onclick="scrollToSection('${item.id}'); return false;">${escapeHtml(item.label)}</a>`).join('')}
                 </nav>
                 <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
             </div>
@@ -47,7 +49,9 @@ export function generateStaticHTML(): string {
     <!-- Mobile Menu -->
     <div id="mobile-menu" class="mobile-menu">
         <button class="close-btn" onclick="toggleMobileMenu()">✕</button>
-        ${navigation.map(item => `<a href="#${item.id}" onclick="scrollToSection('${item.id}'); toggleMobileMenu(); return false;">${escapeHtml(item.label)}</a>`).join('')}
+        <a href="/">Home</a>
+        <a href="/about">About</a>
+        ${navigation.filter(item => item.id !== 'hero' && item.id !== 'about').map(item => `<a href="#${item.id}" onclick="scrollToSection('${item.id}'); toggleMobileMenu(); return false;">${escapeHtml(item.label)}</a>`).join('')}
     </div>
 
     <!-- Hero Section -->
@@ -75,22 +79,6 @@ export function generateStaticHTML(): string {
                         <div class="stat-label">${escapeHtml(stat.label)}</div>
                     </div>
                 `).join('')}
-            </div>
-        </div>
-    </section>
-
-    <!-- About Section -->
-    <section id="about" class="about">
-        <div class="container">
-            <h2 class="section-title">${escapeHtml(about.heading)}</h2>
-            <div class="section-divider"></div>
-            <div class="about-content">
-                ${about.paragraphs.map(p => `<p>${escapeHtml(p)}</p>`).join('')}
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">🎯</div>
-                <h3>${escapeHtml(about.feature.title)}</h3>
-                <p>${escapeHtml(about.feature.description)}</p>
             </div>
         </div>
     </section>
@@ -206,7 +194,127 @@ export function generateStaticHTML(): string {
                 <div class="footer-links">
                     <h3>Quick Links</h3>
                     <ul>
-                        ${footer.quickLinks.map(link => `<li><a href="#${link.toLowerCase()}" onclick="scrollToSection('${link.toLowerCase()}'); return false;">${escapeHtml(link)}</a></li>`).join('')}
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/about">About</a></li>
+                        ${footer.quickLinks.filter(link => link !== 'Home' && link !== 'About').map(link => `<li><a href="#${link.toLowerCase()}" onclick="scrollToSection('${link.toLowerCase()}'); return false;">${escapeHtml(link)}</a></li>`).join('')}
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h3>Contact Us</h3>
+                    <ul>
+                        <li>Phone: +91 ${contact.phone}</li>
+                        <li>Email: ${escapeHtml(contact.email)}</li>
+                        <li>Location: ${escapeHtml(contact.location)}</li>
+                    </ul>
+                    <div class="social-links">
+                        ${footer.social.map(s => `<a href="${s.url}" target="_blank" rel="noopener noreferrer" aria-label="${escapeHtml(s.platform)}">${s.platform.charAt(0)}</a>`).join('')}
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>${escapeHtml(footer.copyright)}</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Button -->
+    <a href="https://wa.me/91${contact.phone}" target="_blank" rel="noopener noreferrer" class="whatsapp-btn" aria-label="Contact on WhatsApp">
+        💬
+    </a>
+
+    <script src="js/script.js"></script>
+</body>
+</html>`;
+}
+
+export function generateAboutPageHTML(): string {
+  const { site, about, contact, footer } = marketingSiteContent;
+
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Sangharsh Classes | SSC, Railway & Banking Coaching in Muzaffarpur</title>
+    <meta name="description" content="Learn about Sangharsh Classes, a trusted SSC, Railway and Banking coaching institute in Muzaffarpur with experienced faculty and proven results.">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="assets/images/favicon.png" type="image/png">
+</head>
+<body>
+    <!-- Header -->
+    <header id="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo" onclick="window.location.href='/'">
+                    <img src="assets/images/logo.jpg" alt="${escapeHtml(site.name)} Logo">
+                    <div class="logo-text">
+                        <span class="logo-name">${escapeHtml(site.name)}</span>
+                        <span class="logo-tagline">${escapeHtml(site.tagline)}</span>
+                    </div>
+                </div>
+                <nav class="desktop-nav">
+                    <a href="/">Home</a>
+                    <a href="/about">About</a>
+                    <a href="/#faculty">Faculty</a>
+                    <a href="/#courses">Courses</a>
+                    <a href="/#contact">Contact</a>
+                </nav>
+                <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="mobile-menu">
+        <button class="close-btn" onclick="toggleMobileMenu()">✕</button>
+        <a href="/">Home</a>
+        <a href="/about">About</a>
+        <a href="/#faculty">Faculty</a>
+        <a href="/#courses">Courses</a>
+        <a href="/#contact">Contact</a>
+    </div>
+
+    <!-- About Section -->
+    <section class="about about-page">
+        <div class="container">
+            <h1 class="section-title">About Sangharsh Classes</h1>
+            <div class="section-divider"></div>
+            
+            <div class="about-content">
+                ${about.seoDescription.map(p => `<p>${escapeHtml(p)}</p>`).join('')}
+            </div>
+            
+            <div class="about-content">
+                ${about.paragraphs.map(p => `<p>${escapeHtml(p)}</p>`).join('')}
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">🎯</div>
+                <h3>${escapeHtml(about.feature.title)}</h3>
+                <p>${escapeHtml(about.feature.description)}</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-about">
+                    <div class="footer-logo">
+                        <img src="assets/images/logo.jpg" alt="${escapeHtml(site.name)}">
+                        <h3>${escapeHtml(site.name)}</h3>
+                    </div>
+                    <p>${escapeHtml(footer.description)}</p>
+                </div>
+                <div class="footer-links">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/about">About</a></li>
+                        <li><a href="/#faculty">Faculty</a></li>
+                        <li><a href="/#courses">Courses</a></li>
+                        <li><a href="/#contact">Contact</a></li>
                     </ul>
                 </div>
                 <div class="footer-contact">
@@ -606,7 +714,7 @@ body {
 }
 
 .btn-small:hover {
-    background: #b45309;
+    background: var(--brand-secondary);
 }
 
 .btn-outline {
@@ -616,12 +724,18 @@ body {
 }
 
 .btn-outline:hover {
-    background: rgba(217, 119, 6, 0.1);
+    background: var(--brand-primary);
+    color: white;
 }
 
-/* Sections */
-section {
+/* About Section */
+.about {
     padding: 5rem 0;
+    background: linear-gradient(to bottom, var(--background), var(--muted));
+}
+
+.about-page {
+    padding-top: 8rem;
 }
 
 .section-title {
@@ -631,44 +745,34 @@ section {
     margin-bottom: 1rem;
 }
 
-.section-divider {
-    width: 6rem;
-    height: 4px;
-    background: var(--brand-primary);
-    margin: 0 auto 2rem;
-    border-radius: 9999px;
-}
-
-.section-subtitle {
-    text-align: center;
-    font-size: 1.125rem;
-    color: var(--muted-foreground);
-    max-width: 42rem;
-    margin: 0 auto 3rem;
-}
-
-.highlight {
+.section-title .highlight {
     color: var(--brand-primary);
 }
 
-/* About Section */
-.about {
-    background: linear-gradient(to bottom, var(--background), var(--muted));
+.section-divider {
+    width: 6rem;
+    height: 0.25rem;
+    background: var(--brand-primary);
+    margin: 0 auto 3rem;
+    border-radius: 9999px;
 }
 
 .about-content {
     background: var(--card);
     border-radius: 1rem;
     padding: 3rem;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
     border: 1px solid var(--border);
     margin-bottom: 2rem;
+    max-width: 56rem;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .about-content p {
     font-size: 1.125rem;
-    margin-bottom: 1.5rem;
     line-height: 1.8;
+    margin-bottom: 1.5rem;
 }
 
 .about-content p:last-child {
@@ -676,69 +780,81 @@ section {
 }
 
 .feature-card {
-    max-width: 28rem;
-    margin: 0 auto;
     background: var(--card);
-    border-radius: 0.75rem;
-    padding: 1.5rem;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    border-radius: 1rem;
+    padding: 2rem;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     border: 1px solid var(--border);
     text-align: center;
+    max-width: 32rem;
+    margin: 0 auto;
+    transition: all 0.3s;
+}
+
+.feature-card:hover {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
 }
 
 .feature-icon {
-    font-size: 3.5rem;
+    font-size: 3rem;
     margin-bottom: 1rem;
 }
 
 .feature-card h3 {
-    font-size: 1.25rem;
+    font-size: 1.5rem;
+    font-weight: bold;
     margin-bottom: 0.75rem;
 }
 
 .feature-card p {
     color: var(--muted-foreground);
-    font-size: 0.875rem;
 }
 
 /* Faculty Section */
+.faculty {
+    padding: 5rem 0;
+    background: var(--background);
+}
+
+.section-subtitle {
+    text-align: center;
+    font-size: 1.125rem;
+    color: var(--muted-foreground);
+    margin-bottom: 3rem;
+}
+
 .faculty-grid {
     display: grid;
     grid-template-columns: 1fr;
     gap: 2rem;
-    margin-top: 3rem;
+    max-width: 56rem;
+    margin: 0 auto;
 }
 
 .faculty-card {
     background: var(--card);
     border-radius: 1rem;
     overflow: hidden;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-    border: 2px solid var(--border);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    border: 1px solid var(--border);
     transition: all 0.3s;
 }
 
 .faculty-card:hover {
     transform: translateY(-0.5rem);
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-    border-color: rgba(217, 119, 6, 0.5);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
 }
 
 .faculty-image {
     position: relative;
     height: 20rem;
-    background: linear-gradient(to bottom right, rgba(217, 119, 6, 0.2), rgba(59, 130, 246, 0.2));
+    overflow: hidden;
 }
 
 .faculty-image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.5s;
-}
-
-.faculty-card:hover .faculty-image img {
-    transform: scale(1.1);
 }
 
 .subject-badge {
@@ -751,7 +867,6 @@ section {
     border-radius: 9999px;
     font-weight: bold;
     font-size: 0.875rem;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
 }
 
 .faculty-info {
@@ -760,26 +875,21 @@ section {
 
 .faculty-info h3 {
     font-size: 1.5rem;
+    font-weight: bold;
     margin-bottom: 0.75rem;
-    transition: color 0.3s;
-}
-
-.faculty-card:hover .faculty-info h3 {
-    color: var(--brand-primary);
 }
 
 .faculty-role,
 .faculty-experience {
+    font-size: 1rem;
     color: var(--muted-foreground);
-    font-weight: 500;
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.5rem;
 }
 
 .faculty-specialization {
-    padding-top: 1rem;
-    border-top: 1px solid var(--border);
-    color: var(--muted-foreground);
     font-size: 0.875rem;
+    color: var(--muted-foreground);
+    margin-top: 0.75rem;
 }
 
 @media (min-width: 768px) {
@@ -788,37 +898,31 @@ section {
     }
 }
 
-@media (min-width: 1024px) {
-    .faculty-grid {
-        grid-template-columns: repeat(3, 1fr);
-    }
-}
-
 /* Courses Section */
 .courses {
+    padding: 5rem 0;
     background: linear-gradient(to bottom, var(--muted), var(--background));
 }
 
 .courses-grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 1.5rem;
+    gap: 2rem;
     margin-bottom: 3rem;
 }
 
 .course-card {
     background: var(--card);
     border-radius: 1rem;
-    padding: 1.5rem;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-    border: 2px solid var(--border);
+    padding: 2rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    border: 1px solid var(--border);
     transition: all 0.3s;
 }
 
 .course-card:hover {
     transform: translateY(-0.5rem);
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-    border-color: rgba(217, 119, 6, 0.5);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
 }
 
 .course-header {
@@ -833,75 +937,68 @@ section {
 }
 
 .course-badge {
-    border: 1px solid var(--brand-primary);
-    color: var(--brand-primary);
-    padding: 0.25rem 0.75rem;
+    background: var(--brand-primary);
+    color: white;
+    padding: 0.5rem 1rem;
     border-radius: 9999px;
+    font-weight: bold;
     font-size: 0.875rem;
 }
 
 .course-card h3 {
     font-size: 1.5rem;
-    margin-bottom: 1rem;
-    transition: color 0.3s;
-}
-
-.course-card:hover h3 {
-    color: var(--brand-primary);
+    font-weight: bold;
+    margin-bottom: 0.75rem;
 }
 
 .course-description {
     color: var(--muted-foreground);
     margin-bottom: 1rem;
-    min-height: 3rem;
 }
 
 .course-features {
     list-style: none;
+    padding: 0;
 }
 
 .course-features li {
-    color: var(--muted-foreground);
-    font-size: 0.875rem;
-    margin-bottom: 0.5rem;
+    padding: 0.5rem 0;
+    color: var(--foreground);
 }
 
 .courses-extra {
-    background: linear-gradient(to right, var(--brand-primary), var(--brand-secondary));
-    border-radius: 1.5rem;
-    padding: 3rem;
+    background: var(--card);
+    border-radius: 1rem;
+    padding: 2rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    border: 1px solid var(--border);
     text-align: center;
-    color: white;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
 }
 
 .courses-extra h3 {
-    font-size: 2rem;
+    font-size: 1.5rem;
+    font-weight: bold;
     margin-bottom: 1rem;
 }
 
 .courses-extra p {
-    font-size: 1.125rem;
+    color: var(--muted-foreground);
     margin-bottom: 1.5rem;
-    opacity: 0.9;
-    max-width: 48rem;
-    margin-left: auto;
-    margin-right: auto;
 }
 
 .subjects {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
     gap: 1rem;
+    justify-content: center;
 }
 
 .subject-tag {
-    background: rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(8px);
-    padding: 0.75rem 1.5rem;
+    background: var(--brand-primary);
+    color: white;
+    padding: 0.5rem 1rem;
     border-radius: 9999px;
-    font-weight: 600;
+    font-weight: 500;
 }
 
 @media (min-width: 768px) {
@@ -917,6 +1014,11 @@ section {
 }
 
 /* Contact Section */
+.contact {
+    padding: 5rem 0;
+    background: var(--background);
+}
+
 .contact-grid {
     display: grid;
     grid-template-columns: 1fr;
@@ -924,43 +1026,37 @@ section {
 }
 
 .contact-info {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 1fr;
     gap: 1.5rem;
 }
 
 .contact-card {
     background: var(--card);
     border-radius: 1rem;
-    padding: 1.5rem;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-    border: 2px solid var(--border);
-    transition: all 0.3s;
-}
-
-.contact-card:hover {
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-    border-color: rgba(217, 119, 6, 0.5);
+    padding: 2rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    border: 1px solid var(--border);
+    text-align: center;
 }
 
 .contact-icon {
-    font-size: 2rem;
+    font-size: 3rem;
     margin-bottom: 1rem;
 }
 
 .contact-card h3 {
     font-size: 1.25rem;
     font-weight: bold;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.75rem;
 }
 
 .contact-link {
-    font-size: 1.125rem;
+    display: block;
     color: var(--brand-primary);
     text-decoration: none;
-    font-weight: 600;
-    display: block;
-    margin-bottom: 0.75rem;
+    font-size: 1.125rem;
+    margin-bottom: 1rem;
 }
 
 .contact-link:hover {
@@ -969,18 +1065,16 @@ section {
 
 .contact-actions {
     display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    margin-top: 0.75rem;
+    gap: 0.75rem;
+    justify-content: center;
+    margin-top: 1rem;
 }
 
 .contact-image {
     position: relative;
-    height: 500px;
-    border-radius: 1.5rem;
+    border-radius: 1rem;
     overflow: hidden;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-    border: 2px solid var(--border);
+    height: 20rem;
 }
 
 .contact-image img {
@@ -992,7 +1086,7 @@ section {
 .contact-overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.3), transparent);
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
@@ -1001,27 +1095,29 @@ section {
 }
 
 .contact-overlay h3 {
-    font-size: 1.875rem;
+    font-size: 1.5rem;
+    font-weight: bold;
     margin-bottom: 0.5rem;
 }
 
 .contact-overlay p {
-    font-size: 1.125rem;
-    opacity: 0.9;
     margin-bottom: 1rem;
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 768px) {
     .contact-grid {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: 1fr 1fr;
+    }
+    .contact-image {
+        height: auto;
     }
 }
 
 /* Footer */
 .footer {
-    background: linear-gradient(to bottom right, var(--brand-primary), var(--brand-secondary), var(--brand-accent));
+    background: linear-gradient(to right, var(--brand-primary), var(--brand-secondary), var(--brand-accent));
     color: white;
-    padding: 3rem 0;
+    padding: 3rem 0 1.5rem;
 }
 
 .footer-grid {
@@ -1039,16 +1135,14 @@ section {
 }
 
 .footer-logo img {
-    height: 3rem;
-    width: 3rem;
+    height: 48px;
+    width: 48px;
     object-fit: contain;
-    background: white;
-    border-radius: 9999px;
-    padding: 0.25rem;
 }
 
 .footer-logo h3 {
-    font-size: 1.5rem;
+    font-size: 1.25rem;
+    font-weight: bold;
 }
 
 .footer-about p {
@@ -1058,28 +1152,31 @@ section {
 
 .footer-links h3,
 .footer-contact h3 {
-    font-size: 1.25rem;
+    font-size: 1.125rem;
+    font-weight: bold;
     margin-bottom: 1rem;
 }
 
 .footer-links ul,
 .footer-contact ul {
     list-style: none;
+    padding: 0;
 }
 
 .footer-links li,
 .footer-contact li {
     margin-bottom: 0.5rem;
-    opacity: 0.9;
 }
 
 .footer-links a {
     color: white;
     text-decoration: none;
-    transition: all 0.2s;
+    opacity: 0.9;
+    transition: opacity 0.2s;
 }
 
 .footer-links a:hover {
+    opacity: 1;
     text-decoration: underline;
 }
 
@@ -1090,40 +1187,32 @@ section {
 }
 
 .social-links a {
-    width: 2.5rem;
-    height: 2.5rem;
-    border-radius: 9999px;
-    background: rgba(255, 255, 255, 0.2);
     display: flex;
     align-items: center;
     justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
     color: white;
     text-decoration: none;
+    font-weight: bold;
     transition: all 0.2s;
 }
 
 .social-links a:hover {
-    background: rgba(255, 255, 255, 0.3);
+    background: white;
+    color: var(--brand-primary);
 }
 
 .footer-bottom {
-    border-top: 1px solid rgba(255, 255, 255, 0.2);
-    padding-top: 2rem;
     text-align: center;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .footer-bottom p {
     opacity: 0.9;
-}
-
-.footer-bottom a {
-    color: white;
-    font-weight: 600;
-    text-decoration: none;
-}
-
-.footer-bottom a:hover {
-    text-decoration: underline;
 }
 
 @media (min-width: 768px) {
@@ -1135,27 +1224,25 @@ section {
 /* WhatsApp Button */
 .whatsapp-btn {
     position: fixed;
-    bottom: 1.5rem;
-    right: 1.5rem;
-    z-index: 40;
-    width: 4rem;
-    height: 4rem;
-    border-radius: 9999px;
+    bottom: 2rem;
+    right: 2rem;
+    width: 3.5rem;
+    height: 3.5rem;
     background: #25D366;
-    color: white;
+    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 2rem;
-    text-decoration: none;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    z-index: 100;
     transition: all 0.3s;
-    animation: bounce 3s infinite;
+    text-decoration: none;
 }
 
 .whatsapp-btn:hover {
-    background: #20BA5A;
     transform: scale(1.1);
+    box-shadow: 0 6px 30px rgba(0, 0, 0, 0.4);
 }
 
 /* Animations */
@@ -1168,7 +1255,12 @@ section {
     }
 }
 
-/* Scrollbar */
+/* Utility Classes */
+.text-center {
+    text-align: center;
+}
+
+/* Scrollbar Styling */
 ::-webkit-scrollbar {
     width: 10px;
 }
@@ -1188,7 +1280,13 @@ section {
 }
 
 export function generateStaticJS(): string {
-  return `// Smooth scroll to section
+  return `// Mobile menu toggle
+function toggleMobileMenu() {
+    const menu = document.getElementById('mobile-menu');
+    menu.classList.toggle('open');
+}
+
+// Smooth scroll to section
 function scrollToSection(id) {
     const element = document.getElementById(id);
     if (element) {
@@ -1196,54 +1294,25 @@ function scrollToSection(id) {
     }
 }
 
-// Toggle mobile menu
-function toggleMobileMenu() {
-    const menu = document.getElementById('mobile-menu');
-    menu.classList.toggle('open');
-}
-
 // Header scroll effect
-let lastScroll = 0;
-window.addEventListener('scroll', () => {
+window.addEventListener('scroll', function() {
     const header = document.getElementById('header');
-    const currentScroll = window.pageYOffset;
-    
-    if (currentScroll > 20) {
+    if (window.scrollY > 20) {
         header.classList.add('scrolled');
     } else {
         header.classList.remove('scrolled');
     }
-    
-    lastScroll = currentScroll;
 });
 
 // Close mobile menu when clicking outside
-document.addEventListener('click', (e) => {
+document.addEventListener('click', function(event) {
     const menu = document.getElementById('mobile-menu');
     const menuBtn = document.querySelector('.mobile-menu-btn');
     
     if (menu.classList.contains('open') && 
-        !menu.contains(e.target) && 
-        !menuBtn.contains(e.target)) {
+        !menu.contains(event.target) && 
+        !menuBtn.contains(event.target)) {
         menu.classList.remove('open');
     }
-});
-
-// Prevent body scroll when mobile menu is open
-const mobileMenu = document.getElementById('mobile-menu');
-const observer = new MutationObserver((mutations) => {
-    mutations.forEach((mutation) => {
-        if (mutation.attributeName === 'class') {
-            if (mobileMenu.classList.contains('open')) {
-                document.body.style.overflow = 'hidden';
-            } else {
-                document.body.style.overflow = '';
-            }
-        }
-    });
-});
-
-observer.observe(mobileMenu, { attributes: true });
-
-console.log('Sangharsh Classes - Website loaded successfully');`;
+});`;
 }

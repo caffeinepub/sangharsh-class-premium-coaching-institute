@@ -16,7 +16,21 @@ const About = () => {
             <div className="w-24 h-1 bg-brand-primary mx-auto mb-8 rounded-full" />
           </div>
 
-          {/* Content */}
+          {/* SEO Content */}
+          <div className="bg-card rounded-2xl p-8 md:p-12 shadow-lg border border-border mb-8">
+            <div className="space-y-6">
+              {about.seoDescription.map((paragraph, index) => (
+                <p
+                  key={index}
+                  className="text-lg leading-relaxed text-foreground"
+                >
+                  {paragraph}
+                </p>
+              ))}
+            </div>
+          </div>
+
+          {/* Original Hindi Content */}
           <div className="bg-card rounded-2xl p-8 md:p-12 shadow-lg border border-border mb-8">
             <div className="space-y-6">
               {about.paragraphs.map((paragraph, index) => (

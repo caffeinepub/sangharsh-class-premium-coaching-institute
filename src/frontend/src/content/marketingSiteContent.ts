@@ -8,8 +8,8 @@ export const marketingSiteContent = {
     domain: 'https://sangharshclasses.in/',
   },
   hero: {
-    heading: 'From Struggle to Success',
-    headingHindi: 'संघर्ष से सफलता तक',
+    heading: 'Sangharsh Classes',
+    headingHindi: 'SSC, Railway & Banking Coaching in Muzaffarpur, Bihar',
     guaranteeBadge: '100% Result Guarantee',
     description: 'Quality Education for Class 7th to 12th with Expert Faculty and Result-Oriented Teaching',
     ctaPrimary: 'Enroll Now',
@@ -28,6 +28,14 @@ export const marketingSiteContent = {
       'Hamari coaching ka main focus concept clear karna, regular practice aur result-oriented teaching par hota hai। Sangharsh Classes me 5 experienced aur dedicated teachers hain, jo har student par personal attention dete hain, taaki koi bhi bachcha padhai me pichhe na rahe।',
       'Hum simple language me padhate hain, doubt clear classes rakhte hain aur students ko exam ke liye proper guidance, notes aur test practice dete hain। Yahi wajah hai ki parents aur students dono ka hum par bharosa bana hua hai।',
       'Sangharsh Classes – Jahan mehnat ka milta hai sahi result.',
+    ],
+    seoDescription: [
+      'Sangharsh Classes is a premier coaching institute located in Muzaffarpur, Bihar, dedicated to providing top-quality education for SSC, Railway, and Banking exam preparation. With over 4 years of teaching excellence and a proven track record of success, we have established ourselves as one of the most trusted coaching centers in the region. Our institute specializes in comprehensive exam preparation that combines conceptual clarity with practical problem-solving skills, ensuring that every student achieves their career goals.',
+      'At Sangharsh Classes, we understand the competitive nature of government job exams like SSC CGL, SSC CHSL, Railway RRB NTPC, Railway Group D, IBPS PO, IBPS Clerk, and SBI exams. Our experienced faculty members bring years of expertise in their respective subjects, offering personalized attention to each student. We believe that success in competitive exams requires not just hard work but also smart preparation strategies, regular practice, and proper guidance – all of which form the core of our teaching methodology.',
+      'Our coaching programs are designed to cater to students from diverse educational backgrounds. Whether you are a fresh graduate preparing for your first government job exam or a working professional looking to switch careers, Sangharsh Classes provides the right environment and resources for your success. We offer both offline classroom coaching and comprehensive study materials that cover the entire syllabus of SSC, Railway, and Banking exams. Our classes are conducted in a student-friendly manner, with emphasis on concept building, time management, and exam-oriented preparation.',
+      'What sets Sangharsh Classes apart from other coaching institutes in Muzaffarpur is our result-oriented approach. We don\'t just teach; we ensure that our students understand every concept thoroughly and can apply their knowledge effectively in exams. Our faculty conducts regular doubt-clearing sessions, provides personalized feedback, and tracks each student\'s progress through periodic tests and assessments. We also offer special crash courses and revision programs before major exams to help students consolidate their preparation.',
+      'Located conveniently at Speaker Chowk, Mai Sthan Gali, Muzaffarpur, our institute is easily accessible from all parts of the city. We maintain small batch sizes to ensure quality education and individual attention. Our affordable fee structure makes quality coaching accessible to students from all economic backgrounds. We believe that financial constraints should never be a barrier to quality education and career success.',
+      'Join Sangharsh Classes today and take the first step towards your dream government job. With our experienced faculty, comprehensive study materials, regular mock tests, and proven teaching methodology, we are committed to helping you succeed in SSC, Railway, and Banking exams. Admissions are now open for new batches. Contact us at 9262647420 or visit our institute to learn more about our courses and enrollment process. Your journey from struggle to success begins here at Sangharsh Classes, Muzaffarpur.',
     ],
     feature: {
       icon: 'Target',

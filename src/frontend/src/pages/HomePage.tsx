@@ -1,6 +1,5 @@
 import Header from '../components/Header';
 import Hero from '../components/Hero';
-import About from '../components/About';
 import Faculty from '../components/Faculty';
 import Courses from '../components/Courses';
 import Contact from '../components/Contact';
@@ -13,7 +12,6 @@ function HomePage() {
       <Header />
       <main>
         <Hero />
-        <About />
         <Faculty />
         <Courses />
         <Contact />

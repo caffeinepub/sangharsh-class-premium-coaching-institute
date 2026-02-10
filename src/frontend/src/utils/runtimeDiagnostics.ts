@@ -1,5 +1,5 @@
 // Runtime diagnostics for production debugging
-let diagnosticsEnabled = true;
+let diagnosticsEnabled = false;
 
 export function enableDiagnostics(enabled: boolean) {
   diagnosticsEnabled = enabled;
@@ -7,9 +7,6 @@ export function enableDiagnostics(enabled: boolean) {
 
 export function initRuntimeDiagnostics() {
   if (!diagnosticsEnabled) return;
-
-  // Log when diagnostics start
-  console.log('[Diagnostics] Runtime diagnostics initialized');
 
   // Catch unhandled errors
   window.addEventListener('error', (event) => {
@@ -29,9 +26,6 @@ export function initRuntimeDiagnostics() {
       promise: event.promise
     });
   });
-
-  // Log when React starts rendering
-  console.log('[Diagnostics] React initialization starting');
 }
 
 export function logRenderStart(componentName: string) {

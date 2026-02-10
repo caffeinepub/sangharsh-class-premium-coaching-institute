@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import HomePage from './pages/HomePage';
+import AboutPage from './pages/AboutPage';
 import AppErrorBoundary from './components/AppErrorBoundary';
 import { initRuntimeDiagnostics, logRenderStart } from './utils/runtimeDiagnostics';
 import { initializeSeoGuards } from './utils/seoGuards';
@@ -15,9 +16,13 @@ function App() {
     initializeSeoGuards();
   }, []);
 
+  // Simple pathname-based routing
+  const pathname = window.location.pathname;
+  const isAboutPage = pathname === '/about' || pathname === '/about/';
+
   return (
     <AppErrorBoundary>
-      <HomePage />
+      {isAboutPage ? <AboutPage /> : <HomePage />}
     </AppErrorBoundary>
   );
 }

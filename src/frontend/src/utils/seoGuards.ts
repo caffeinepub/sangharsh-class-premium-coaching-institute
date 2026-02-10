@@ -50,7 +50,6 @@ function ensureCanonicalUrl(): void {
     document.head.appendChild(canonicalLink);
   }
   
-  // Always point to the canonical domain
   const currentPath = window.location.pathname;
   const currentSearch = window.location.search;
   canonicalLink.href = `https://${CANONICAL_DOMAIN}${currentPath}${currentSearch}`;
@@ -68,7 +67,6 @@ function ensureOgUrl(): void {
     document.head.appendChild(ogUrlMeta);
   }
   
-  // Always point to the canonical domain
   const currentPath = window.location.pathname;
   const currentSearch = window.location.search;
   ogUrlMeta.content = `https://${CANONICAL_DOMAIN}${currentPath}${currentSearch}`;
@@ -79,18 +77,12 @@ function ensureOgUrl(): void {
  */
 export function initializeSeoGuards(): void {
   if (isCaffeineSubdomain()) {
-    // On Caffeine subdomain: add noindex and ensure canonical points to custom domain
     ensureRobotsNoIndex();
     ensureCanonicalUrl();
     ensureOgUrl();
-    
-    console.log('[SEO Guard] Running on Caffeine subdomain - noindex applied, canonical set to custom domain');
   } else {
-    // On custom domain: remove any noindex tags and ensure canonical/og:url are correct
     removeRobotsNoIndex();
     ensureCanonicalUrl();
     ensureOgUrl();
-    
-    console.log('[SEO Guard] Running on custom domain - indexing allowed, canonical URLs verified');
   }
 }
