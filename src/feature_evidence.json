@@ -2,12 +2,9 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-create-a-dedicated-route-page-for-about-sangharsh-classes-e-g-about-and-render-the-about-content-strictly-inside-that-about-page-not-on-the-homepage-remove-the-about-content-section-from-the-homepage-so-the-about-page-content-is-not-duplicated-or-visible-on",
-      "featureTitle": "Create a dedicated route/page for “About Sangharsh Classes” (e.g., /about) and render the About content strictly inside that About page (not on the homepage). Remove the About content/section from the homepage so the About page content is not duplicated or visible on /.",
+      "featureId": "feature-restore-the-original-homepage-about-section-exactly-as-it-existed-previously-by-re-rendering-the-existing-about-section-component-on-the-homepage-without-modifying-its-content-tone-design-layout-styling-or-wording",
+      "featureTitle": "Restore the original homepage About section exactly as it existed previously by re-rendering the existing About section component on the homepage (without modifying its content, tone, design, layout, styling, or wording).",
       "files": [
-        "frontend/src/App.tsx",
-        "frontend/src/components/Header.tsx",
-        "frontend/src/pages/AboutPage.tsx",
         "frontend/src/pages/HomePage.tsx"
       ],
       "components": [
@@ -19,144 +16,7 @@
         "authorization@4.0.0"
       ],
       "testIds": [
-        "REQ-7"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-on-the-about-page-set-the-page-h1-heading-text-exactly-to-about-sangharsh-classes-ensure-this-is-an-h1-on-the-about-page-not-an-h2",
-      "featureTitle": "On the About page, set the page H1 heading text exactly to: \"About Sangharsh Classes\". Ensure this is an H1 on the About page (not an H2).",
-      "files": [
-        "frontend/src/pages/AboutPage.tsx"
-      ],
-      "components": [
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0",
-        "authorization@4.0.0"
-      ],
-      "testIds": [
-        "REQ-8"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-set-about-page-seo-metadata-to-the-specified-values-when-about-is-rendered-1-document-title-title-tag-exactly-about-sangharsh-classes-ssc-railway-banking-coaching-in-muzaffarpur-2-meta-description-exactly-learn-about-sangharsh-classes-a-trusted-ssc-railway-and-banking-coaching-institute-in-muzaffarpur-with-experienced-faculty-and-proven-results",
-      "featureTitle": "Set About page SEO metadata to the specified values when /about is rendered: (1) document title (title tag) exactly \"About Sangharsh Classes | SSC, Railway & Banking Coaching in Muzaffarpur\"; (2) meta description exactly \"Learn about Sangharsh Classes, a trusted SSC, Railway and Banking coaching institute in Muzaffarpur with experienced faculty and proven results.\"",
-      "files": [
-        "frontend/src/pages/AboutPage.tsx"
-      ],
-      "components": [
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0",
-        "authorization@4.0.0"
-      ],
-      "testIds": [
-        "REQ-9"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-place-the-user-provided-about-page-body-content-on-the-about-page-exactly-as-provided-without-rewriting-shortening-expanding-paraphrasing-or-reformatting-the-text-use-the-content-only-on-the-about-page",
-      "featureTitle": "Place the user-provided About page body content on the About page exactly as provided, without rewriting, shortening, expanding, paraphrasing, or reformatting the text. Use the content only on the About page.",
-      "files": [
-        "frontend/src/pages/AboutPage.tsx",
-        "frontend/src/pages/HomePage.tsx"
-      ],
-      "components": [
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0",
-        "authorization@4.0.0"
-      ],
-      "testIds": [
-        "REQ-10"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-do-not-change-the-website-design-layout-fonts-colors-or-structure-while-implementing-the-about-page-changes-other-than-the-necessary-addition-of-the-about-page-route-and-removing-the-about-content-from-the-homepage-as-required-reuse-existing-site-components-styles-so-the-about-page-looks-consistent-with-the-current-design-system",
-      "featureTitle": "Do not change the website design, layout, fonts, colors, or structure while implementing the About page changes (other than the necessary addition of the About page route and removing the About content from the homepage as required). Reuse existing site components/styles so the About page looks consistent with the current design system.",
-      "files": [
-        "frontend/src/components/Header.tsx",
-        "frontend/src/pages/AboutPage.tsx"
-      ],
-      "components": [
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0",
-        "authorization@4.0.0"
-      ],
-      "testIds": [
-        "REQ-11"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-ensure-the-about-page-contains-no-system-messages-debug-text-or-ai-platform-branding-in-the-rendered-ui-and-in-any-generated-static-export-html-zip-outputs",
-      "featureTitle": "Ensure the About page contains no system messages, debug text, or AI/platform branding in the rendered UI and in any generated static export HTML/ZIP outputs.",
-      "files": [
-        "frontend/src/pages/AboutPage.tsx",
-        "frontend/src/static-export/renderStaticSite.ts"
-      ],
-      "components": [
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0",
-        "authorization@4.0.0"
-      ],
-      "testIds": [
-        "REQ-12"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-update-seo-discovery-artifacts-to-include-the-about-page-add-an-about-url-entry-to-the-sitemap-frontend-public-sitemap-xml-with-appropriate-metadata-without-modifying-the-existing-homepage-sitemap-entry",
-      "featureTitle": "Update SEO discovery artifacts to include the About page: add an /about URL entry to the sitemap (frontend/public/sitemap.xml) with appropriate metadata, without modifying the existing homepage sitemap entry.",
-      "files": [
-        "frontend/public/sitemap.xml"
-      ],
-      "components": [
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0",
-        "authorization@4.0.0"
-      ],
-      "testIds": [
-        "REQ-13"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-update-the-static-export-generator-so-it-does-not-embed-the-about-page-only-content-into-the-homepage-static-html-output-and-instead-outputs-an-about-page-html-with-the-specified-h1-seo-title-meta-description-and-the-exact-about-page-content",
-      "featureTitle": "Update the static export generator so it does not embed the About page-only content into the homepage static HTML output, and instead outputs an About page HTML with the specified H1/SEO title/meta description and the exact About page content.",
-      "files": [
-        "frontend/src/static-export/renderStaticSite.ts",
-        "frontend/vite.config.ts"
-      ],
-      "components": [
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0",
-        "authorization@4.0.0"
-      ],
-      "testIds": [
-        "REQ-14"
+        "REQ-1"
       ],
       "confidence": "high"
     }

@@ -1,172 +1,39 @@
 {
   "kind": "build_request",
-  "title": "Create dedicated About Sangharsh Classes page with exact content and page SEO",
+  "title": "Restore the previously removed About section exactly as it was",
   "priority": "normal",
   "requirements": [
     {
-      "id": "REQ-7",
-      "text": "Create a dedicated route/page for “About Sangharsh Classes” (e.g., /about) and render the About content strictly inside that About page (not on the homepage). Remove the About content/section from the homepage so the About page content is not duplicated or visible on /.",
+      "id": "REQ-1",
+      "text": "Restore the original homepage About section exactly as it existed previously by re-rendering the existing About section component on the homepage (without modifying its content, tone, design, layout, styling, or wording).",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-6"
+          "msg-1"
         ],
         "quotes": [
-          "Use the following content ONLY for the “About Sangharsh Classes” page.\n\nPlace it strictly inside the About section/page.\nDo NOT move this content to the homepage."
+          "Please restore the previous About section exactly as it was before.\nThe About section was removed by mistake.\nDo not change the content, tone, design, layout, or wording.\nJust bring back the same original About section that existed earlier.\nNo extra edits, no new text, no optimization — only restore the old About section."
         ]
       },
       "acceptanceCriteria": [
-        "Visiting /about shows the About content.",
-        "Visiting / (homepage) does not render the About content/section.",
-        "The About content is not duplicated across multiple routes/pages."
-      ]
-    },
-    {
-      "id": "REQ-8",
-      "text": "On the About page, set the page H1 heading text exactly to: \"About Sangharsh Classes\". Ensure this is an H1 on the About page (not an H2).",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-6"
-        ],
-        "quotes": [
-          "• Page H1 heading:\n\"About Sangharsh Classes\""
-        ]
-      },
-      "acceptanceCriteria": [
-        "/about contains exactly one primary H1 that reads \"About Sangharsh Classes\".",
-        "The homepage H1 remains the homepage hero H1 and is not changed as part of this requirement."
-      ]
-    },
-    {
-      "id": "REQ-9",
-      "text": "Set About page SEO metadata to the specified values when /about is rendered: (1) document title (title tag) exactly \"About Sangharsh Classes | SSC, Railway & Banking Coaching in Muzaffarpur\"; (2) meta description exactly \"Learn about Sangharsh Classes, a trusted SSC, Railway and Banking coaching institute in Muzaffarpur with experienced faculty and proven results.\"",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-6"
-        ],
-        "quotes": [
-          "• SEO Title (title tag):\n\"About Sangharsh Classes | SSC, Railway & Banking Coaching in Muzaffarpur\"\n\n• Meta Description:\n\"Learn about Sangharsh Classes, a trusted SSC, Railway and Banking coaching institute in Muzaffarpur with experienced faculty and proven results.\""
-        ]
-      },
-      "acceptanceCriteria": [
-        "When /about is loaded, the browser tab title is exactly \"About Sangharsh Classes | SSC, Railway & Banking Coaching in Muzaffarpur\".",
-        "When /about is loaded, the page has a meta description tag whose content matches exactly: \"Learn about Sangharsh Classes, a trusted SSC, Railway and Banking coaching institute in Muzaffarpur with experienced faculty and proven results.\"",
-        "Homepage SEO title/meta description remain unchanged from their currently specified homepage values."
-      ]
-    },
-    {
-      "id": "REQ-10",
-      "text": "Place the user-provided About page body content on the About page exactly as provided, without rewriting, shortening, expanding, paraphrasing, or reformatting the text. Use the content only on the About page.",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-6"
-        ],
-        "quotes": [
-          "Do NOT rewrite, shorten, expand, or paraphrase the text."
-        ]
-      },
-      "acceptanceCriteria": [
-        "The About page body text matches the user-provided About content verbatim (character-for-character), including punctuation and line breaks as provided.",
-        "No portion of the user-provided About content appears on the homepage (/)."
-      ]
-    },
-    {
-      "id": "REQ-11",
-      "text": "Do not change the website design, layout, fonts, colors, or structure while implementing the About page changes (other than the necessary addition of the About page route and removing the About content from the homepage as required). Reuse existing site components/styles so the About page looks consistent with the current design system.",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-6"
-        ],
-        "quotes": [
-          "Do NOT change the website design, layout, fonts, colors, or structure."
-        ]
-      },
-      "acceptanceCriteria": [
-        "No visual styling changes occur to existing shared components (Header, Hero, Faculty, Courses, Contact, Footer) outside what is necessary to support navigation to /about and removing About from the homepage.",
-        "Tailwind classes/theme variables remain consistent with the existing site styling."
-      ]
-    },
-    {
-      "id": "REQ-12",
-      "text": "Ensure the About page contains no system messages, debug text, or AI/platform branding in the rendered UI and in any generated static export HTML/ZIP outputs.",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-6"
-        ],
-        "quotes": [
-          "• Ensure this page contains no system messages, debug text, or AI/platform branding."
-        ]
-      },
-      "acceptanceCriteria": [
-        "No system/debug/AI/platform branding strings are visible anywhere on /about in the live UI.",
-        "The static export (generated HTML/ZIP, if produced by the build) does not contain any system/debug/AI/platform branding strings for the About page content."
-      ]
-    },
-    {
-      "id": "REQ-13",
-      "text": "Update SEO discovery artifacts to include the About page: add an /about URL entry to the sitemap (frontend/public/sitemap.xml) with appropriate metadata, without modifying the existing homepage sitemap entry.",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-6"
-        ],
-        "quotes": [
-          "Place it strictly inside the About section/page."
-        ]
-      },
-      "acceptanceCriteria": [
-        "frontend/public/sitemap.xml includes an additional <url> entry for https://sangharshclasses.in/about (or equivalent canonical About URL used by the app).",
-        "The existing homepage <url> entry remains present and unchanged."
-      ]
-    },
-    {
-      "id": "REQ-14",
-      "text": "Update the static export generator so it does not embed the About page-only content into the homepage static HTML output, and instead outputs an About page HTML with the specified H1/SEO title/meta description and the exact About page content.",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-6"
-        ],
-        "quotes": [
-          "Do NOT move this content to the homepage.",
-          "Deploy only after confirming the content is placed correctly."
-        ]
-      },
-      "acceptanceCriteria": [
-        "Static export homepage HTML does not include the About page-only content.",
-        "Static export includes an About page HTML artifact that contains the required H1, title tag, meta description, and verbatim body content."
+        "The homepage once again contains the About section (the section with id=\"about\") rendered from the existing About component.",
+        "No text changes occur anywhere inside the restored About section (including headings, paragraphs, and feature-card copy).",
+        "No design/layout/styling changes occur to the About section compared to the prior version (same structure, spacing, typography, and UI elements).",
+        "No additional sections, copy, or “optimized”/rewritten content is introduced as part of this change."
       ]
     }
   ],
   "constraints": [
-    "Do not rewrite, shorten, expand, paraphrase, or reformat the provided About page text.",
-    "Do not move the provided About content to the homepage.",
-    "Do not change the website design, layout, fonts, colors, or structure.",
-    "Frontend files listed as immutable in SYSTEM_CONTEXT must not be edited.",
-    "Keep the backend single-actor architecture; no backend changes are required for this request unless strictly necessary."
+    "Do not change the About section content, tone, design, layout, styling, or wording; only restore what was removed.",
+    "Limit the change to restoring the previously existing About section; avoid unrelated refactors or formatting changes."
   ],
   "nonGoals": [
-    "Building an admin editor for the About page content.",
-    "Adding new homepage sections or redesigning the homepage layout beyond removing the About section as required.",
-    "Adding third-party analytics, external CMS, or non-Internet-Computer hosting changes."
+    "Adding new About text, rewriting or optimizing existing About copy.",
+    "Changing navigation/routing behavior beyond what is strictly required to restore the removed About section.",
+    "Any backend changes or new data storage for About content."
   ],
   "imageRequirements": {
     "required": [],
     "edits": []
-  },
-  "userProfileUpdate": {
-    "goalsToAdd": [],
-    "goalsToRemove": [],
-    "preferencesToAdd": [],
-    "preferencesToRemove": [],
-    "miscToAdd": [],
-    "miscToRemove": [],
-    "fieldsToSet": {},
-    "fieldsToDelete": []
   }
 }

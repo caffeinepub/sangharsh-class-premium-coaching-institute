@@ -1,171 +1,24 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 9,
-  "summary": "Website updates now also include configuring the “About Sangharsh Classes” page: place provided About content only on the About page (not on homepage), set About page H1/SEO title/meta description to specified strings, ensure no system/debug/AI branding text appears on that page, and deploy only after confirming correct placement (without changing design/layout/fonts/colors/structure).",
-  "architectural_notes": [
-    "Do not change design, layout, colors, fonts, structure, styling, or content wording beyond the explicitly specified text fields.",
-    "Deploy only once after all specified SEO/content configurations are applied; avoid repeated redeploys unless required.",
-    "About page content must remain strictly on the About page/section; do not move it to the homepage.",
-    "Deploy only after confirming the About page content is placed correctly."
-  ],
+  "projectStateVersion": 3,
+  "summary": "New project",
+  "architectural_notes": [],
   "known_issues": [
-    "Internal/system debug message is currently rendering in the live hero/header area ('Diagnose and fix production deployment failure...') and must be removed.",
-    "Risk: system/debug/deployment/AI instruction text may be present outside the hero/header; must be removed from all public UI surfaces."
+    "About section was removed by mistake; needs to be restored exactly as it previously existed (no content/design/layout changes)."
   ],
   "isFixRequest": true,
   "existing_features": [
     {
-      "id": "feature-remove-the-internal-system-debug-text-string-diagnose-and-fix-production-deployment-failure-build-config-paths-dependencies-output-dir-from-the-live-ui-so-it-is-not-rendered-anywhere-in-the-hero-header-area-and-does-not-appear-in-either-the-react-rendered-page-or-the-static-exported-html",
-      "title": "Remove the internal/system/debug text string \"Diagnose and fix production deployment failure (build config, paths, dependencies, output dir)\" from the live UI so it is not rendered anywhere in the hero/header area (and does not appear in either the React-rendered page or the static-exported HTML).",
+      "id": "feature-restore-the-original-homepage-about-section-exactly-as-it-existed-previously-by-re-rendering-the-existing-about-section-component-on-the-homepage-without-modifying-its-content-tone-design-layout-styling-or-wording",
+      "title": "Restore the original homepage About section exactly as it existed previously by re-rendering the existing About section component on the homepage (without modifying its content, tone, design, layout, styling, or wording).",
       "reqIds": [
         "REQ-1"
       ],
       "version": 1
-    },
-    {
-      "id": "feature-update-the-hero-heading-text-source-so-the-primary-hero-heading-displays-exactly-sangharsh-classes-english-without-changing-styling-layout-colors-fonts-seo-content-or-page-structure",
-      "title": "Update the hero heading text source so the primary hero heading displays exactly \"Sangharsh Classes\" (English), without changing styling, layout, colors, fonts, SEO content, or page structure.",
-      "reqIds": [
-        "REQ-2"
-      ],
-      "version": 1
-    },
-    {
-      "id": "feature-if-a-hero-subheading-line-already-exists-in-the-current-hero-layout-replace-its-text-to-exactly-ssc-railway-banking-coaching-in-muzaffarpur-bihar-if-no-subheading-line-exists-do-not-add-any-new-subheading-element-or-new-layout",
-      "title": "If a hero subheading line already exists in the current hero layout, replace its text to exactly \"SSC, Railway & Banking Coaching in Muzaffarpur, Bihar\"; if no subheading line exists, do not add any new subheading element or new layout.",
-      "reqIds": [
-        "REQ-3"
-      ],
-      "version": 1
-    },
-    {
-      "id": "feature-set-the-homepage-seo-title-tag-to-exactly-sangharsh-classes-best-ssc-railway-coaching-in-muzaffarpur-and-set-the-homepage-meta-description-to-exactly-join-sangharsh-classes-muzaffarpur-for-ssc-railway-banking-exam-preparation-experienced-faculty-affordable-fees-offline-classes-admissions-open-without-changing-any-design-layout-colors-fonts-or-page-structure",
-      "title": "Set the homepage SEO <title> tag to exactly \"Sangharsh Classes | Best SSC & Railway Coaching in Muzaffarpur\" and set the homepage meta description to exactly \"Join Sangharsh Classes Muzaffarpur for SSC, Railway & Banking exam preparation. Experienced faculty, affordable fees & offline classes. Admissions open.\" without changing any design, layout, colors, fonts, or page structure.",
-      "reqIds": [
-        "REQ-4"
-      ],
-      "version": 1
-    },
-    {
-      "id": "feature-insert-the-already-generated-600-700-word-seo-optimized-homepage-description-for-sangharsh-classes-into-the-homepage-main-visible-content-body-without-rewriting-shortening-reformatting-or-changing-wording-and-without-adding-removing-any-sections-or-changing-styling",
-      "title": "Insert the already-generated 600–700 word SEO-optimized homepage description for Sangharsh Classes into the homepage main visible content/body without rewriting, shortening, reformatting, or changing wording, and without adding/removing any sections or changing styling.",
-      "reqIds": [
-        "REQ-5"
-      ],
-      "version": 1
-    },
-    {
-      "id": "feature-ensure-no-system-debug-deployment-ai-instruction-text-is-visible-anywhere-on-the-public-website-ui-not-limited-to-the-hero-header-including-both-the-react-rendered-page-and-any-generated-static-export-html-zip-outputs",
-      "title": "Ensure no system/debug/deployment/AI-instruction text is visible anywhere on the public website UI (not limited to the hero/header), including both the React-rendered page and any generated static-export HTML/ZIP outputs.",
-      "reqIds": [
-        "REQ-6"
-      ],
-      "version": 1
-    },
-    {
-      "id": "feature-create-a-dedicated-route-page-for-about-sangharsh-classes-e-g-about-and-render-the-about-content-strictly-inside-that-about-page-not-on-the-homepage-remove-the-about-content-section-from-the-homepage-so-the-about-page-content-is-not-duplicated-or-visible-on",
-      "title": "Create a dedicated route/page for “About Sangharsh Classes” (e.g., /about) and render the About content strictly inside that About page (not on the homepage). Remove the About content/section from the homepage so the About page content is not duplicated or visible on /.",
-      "reqIds": [
-        "REQ-7"
-      ],
-      "version": 1
-    },
-    {
-      "id": "feature-on-the-about-page-set-the-page-h1-heading-text-exactly-to-about-sangharsh-classes-ensure-this-is-an-h1-on-the-about-page-not-an-h2",
-      "title": "On the About page, set the page H1 heading text exactly to: \"About Sangharsh Classes\". Ensure this is an H1 on the About page (not an H2).",
-      "reqIds": [
-        "REQ-8"
-      ],
-      "version": 1
-    },
-    {
-      "id": "feature-set-about-page-seo-metadata-to-the-specified-values-when-about-is-rendered-1-document-title-title-tag-exactly-about-sangharsh-classes-ssc-railway-banking-coaching-in-muzaffarpur-2-meta-description-exactly-learn-about-sangharsh-classes-a-trusted-ssc-railway-and-banking-coaching-institute-in-muzaffarpur-with-experienced-faculty-and-proven-results",
-      "title": "Set About page SEO metadata to the specified values when /about is rendered: (1) document title (title tag) exactly \"About Sangharsh Classes | SSC, Railway & Banking Coaching in Muzaffarpur\"; (2) meta description exactly \"Learn about Sangharsh Classes, a trusted SSC, Railway and Banking coaching institute in Muzaffarpur with experienced faculty and proven results.\"",
-      "reqIds": [
-        "REQ-9"
-      ],
-      "version": 1
-    },
-    {
-      "id": "feature-place-the-user-provided-about-page-body-content-on-the-about-page-exactly-as-provided-without-rewriting-shortening-expanding-paraphrasing-or-reformatting-the-text-use-the-content-only-on-the-about-page",
-      "title": "Place the user-provided About page body content on the About page exactly as provided, without rewriting, shortening, expanding, paraphrasing, or reformatting the text. Use the content only on the About page.",
-      "reqIds": [
-        "REQ-10"
-      ],
-      "version": 1
-    },
-    {
-      "id": "feature-do-not-change-the-website-design-layout-fonts-colors-or-structure-while-implementing-the-about-page-changes-other-than-the-necessary-addition-of-the-about-page-route-and-removing-the-about-content-from-the-homepage-as-required-reuse-existing-site-components-styles-so-the-about-page-looks-consistent-with-the-current-design-system",
-      "title": "Do not change the website design, layout, fonts, colors, or structure while implementing the About page changes (other than the necessary addition of the About page route and removing the About content from the homepage as required). Reuse existing site components/styles so the About page looks consistent with the current design system.",
-      "reqIds": [
-        "REQ-11"
-      ],
-      "version": 1
-    },
-    {
-      "id": "feature-ensure-the-about-page-contains-no-system-messages-debug-text-or-ai-platform-branding-in-the-rendered-ui-and-in-any-generated-static-export-html-zip-outputs",
-      "title": "Ensure the About page contains no system messages, debug text, or AI/platform branding in the rendered UI and in any generated static export HTML/ZIP outputs.",
-      "reqIds": [
-        "REQ-12"
-      ],
-      "version": 1
-    },
-    {
-      "id": "feature-update-seo-discovery-artifacts-to-include-the-about-page-add-an-about-url-entry-to-the-sitemap-frontend-public-sitemap-xml-with-appropriate-metadata-without-modifying-the-existing-homepage-sitemap-entry",
-      "title": "Update SEO discovery artifacts to include the About page: add an /about URL entry to the sitemap (frontend/public/sitemap.xml) with appropriate metadata, without modifying the existing homepage sitemap entry.",
-      "reqIds": [
-        "REQ-13"
-      ],
-      "version": 1
-    },
-    {
-      "id": "feature-update-the-static-export-generator-so-it-does-not-embed-the-about-page-only-content-into-the-homepage-static-html-output-and-instead-outputs-an-about-page-html-with-the-specified-h1-seo-title-meta-description-and-the-exact-about-page-content",
-      "title": "Update the static export generator so it does not embed the About page-only content into the homepage static HTML output, and instead outputs an About page HTML with the specified H1/SEO title/meta description and the exact About page content.",
-      "reqIds": [
-        "REQ-14"
-      ],
-      "version": 1
     }
   ],
-  "new_feature_requests": [
-    {
-      "id": "AR-1",
-      "summary": "Update website footer: remove any AI/tool branding text and replace with exact text '© 2026 Govind Kumar | Web Developer' in a clean, minimal, premium-consistent style",
-      "reqIds": [],
-      "status": "pending"
-    },
-    {
-      "id": "AR-2",
-      "summary": "Remove internal/debug text from top of website UI and replace hero heading with 'Sangharsh Classes' (and only use existing subheading area for 'SSC, Railway & Banking Coaching in Muzaffarpur, Bihar' if one already exists); do not change design/layout/colors/fonts/SEO content; redeploy",
-      "reqIds": [],
-      "status": "pending"
-    },
-    {
-      "id": "AR-3",
-      "summary": "Set homepage SEO title tag exactly to 'Sangharsh Classes | Best SSC & Railway Coaching in Muzaffarpur' and meta description exactly to 'Join Sangharsh Classes Muzaffarpur for SSC, Railway & Banking exam preparation. Experienced faculty, affordable fees & offline classes. Admissions open.' without changing design/layout/structure",
-      "reqIds": [],
-      "status": "pending"
-    },
-    {
-      "id": "AR-4",
-      "summary": "Insert the already-generated 600–700 word SEO-optimized homepage description into the homepage main content/body without rewriting, shortening, or reformatting; do not add/remove sections or change styling",
-      "reqIds": [],
-      "status": "pending"
-    },
-    {
-      "id": "AR-5",
-      "summary": "Ensure NO system/debug/deployment/AI instruction text is visible anywhere on the public website UI (beyond just the hero/header) while keeping existing design/layout/structure unchanged; deploy once",
-      "reqIds": [],
-      "status": "pending"
-    },
-    {
-      "id": "AR-6",
-      "summary": "Configure the “About Sangharsh Classes” page only: place provided content strictly on the About page (not homepage) without rewriting; set H1 to 'About Sangharsh Classes', SEO title to 'About Sangharsh Classes | SSC, Railway & Banking Coaching in Muzaffarpur', meta description to 'Learn about Sangharsh Classes, a trusted SSC, Railway and Banking coaching institute in Muzaffarpur with experienced faculty and proven results.', ensure no system/debug/AI branding text on this page; deploy only after confirming correct placement",
-      "reqIds": [],
-      "status": "pending"
-    }
-  ],
-  "projectName": "Sangharsh Classes",
+  "new_feature_requests": [],
+  "projectName": "Restore the previously removed About section exactly as it was",
   "clarification_mode": "instant",
   "clarification_rounds": 0
 }

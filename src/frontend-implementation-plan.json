@@ -1,167 +1,22 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Dedicated About Sangharsh Classes page with SEO and static export separation",
+  "title": "Restore About section on homepage by re-rendering existing component",
   "requirements": [
     {
-      "id": "REQ-7",
-      "summary": "Add a dedicated /about page and remove About content/section from the homepage to avoid duplication.",
+      "id": "REQ-1",
+      "summary": "Re-render the existing About section component on the homepage exactly as it previously existed, without modifying any About content or styling.",
       "acceptanceCriteria": [
-        "Visiting /about shows the About content.",
-        "Visiting / (homepage) does not render the About content/section.",
-        "The About content is not duplicated across multiple routes/pages."
+        "The homepage once again contains the About section (the section with id=\"about\") rendered from the existing About component.",
+        "No text changes occur anywhere inside the restored About section (including headings, paragraphs, and feature-card copy).",
+        "No design/layout/styling changes occur to the About section compared to the prior version (same structure, spacing, typography, and UI elements).",
+        "No additional sections, copy, or “optimized”/rewritten content is introduced as part of this change."
       ],
       "file_operations": [
         {
           "path": "frontend/src/pages/HomePage.tsx",
           "operation": "modify",
-          "description": "Remove the About section/component from the homepage composition so About content is not rendered on /."
-        },
-        {
-          "path": "frontend/src/pages/AboutPage.tsx",
-          "operation": "create",
-          "description": "Create the dedicated About page for the /about route using existing site layout components (e.g., Header/Footer) for consistency."
-        },
-        {
-          "path": "frontend/src/App.tsx",
-          "operation": "modify",
-          "description": "Wire SPA routing to render HomePage at / and AboutPage at /about (simple pathname-based routing or existing routing approach), ensuring /about is navigable and not shown on /."
-        },
-        {
-          "path": "frontend/src/components/Header.tsx",
-          "operation": "modify",
-          "description": "Add navigation access to /about (and ensure existing section-scroll behavior remains for homepage sections). Use existing Header styles/components (shadcn-ui Button/Sheet already in use). Verify the component's usage instructions before implementing."
-        }
-      ]
-    },
-    {
-      "id": "REQ-8",
-      "summary": "Ensure the About page renders an H1 heading exactly \"About Sangharsh Classes\" and does not alter the homepage H1.",
-      "acceptanceCriteria": [
-        "/about contains exactly one primary H1 that reads \"About Sangharsh Classes\".",
-        "The homepage H1 remains the homepage hero H1 and is not changed as part of this requirement."
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/pages/AboutPage.tsx",
-          "operation": "modify",
-          "description": "Render a single primary H1 with the exact text \"About Sangharsh Classes\" on the /about page, ensuring no additional H1s are introduced."
-        }
-      ]
-    },
-    {
-      "id": "REQ-9",
-      "summary": "Set /about SEO metadata (document title and meta description) exactly as specified without changing homepage SEO.",
-      "acceptanceCriteria": [
-        "When /about is loaded, the browser tab title is exactly \"About Sangharsh Classes | SSC, Railway & Banking Coaching in Muzaffarpur\".",
-        "When /about is loaded, the page has a meta description tag whose content matches exactly: \"Learn about Sangharsh Classes, a trusted SSC, Railway and Banking coaching institute in Muzaffarpur with experienced faculty and proven results.\"",
-        "Homepage SEO title/meta description remain unchanged from their currently specified homepage values."
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/pages/AboutPage.tsx",
-          "operation": "modify",
-          "description": "On AboutPage mount, set document.title exactly as specified and ensure a meta[name=\"description\"] tag exists with the exact specified content; on unmount/navigation away, restore prior title/description so the homepage values remain unchanged."
-        }
-      ]
-    },
-    {
-      "id": "REQ-10",
-      "summary": "Place the user-provided About page body content on /about verbatim and only on /about.",
-      "acceptanceCriteria": [
-        "The About page body text matches the user-provided About content verbatim (character-for-character), including punctuation and line breaks as provided.",
-        "No portion of the user-provided About content appears on the homepage (/)."
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/content/aboutPageContent.ts",
-          "operation": "create",
-          "description": "Add a single exported multiline string constant containing the user-provided About page body content verbatim (character-for-character, including line breaks) from the BuildRequest source message; do not reuse this content anywhere else."
-        },
-        {
-          "path": "frontend/src/pages/AboutPage.tsx",
-          "operation": "modify",
-          "description": "Render the About body content from frontend/src/content/aboutPageContent.ts without rewriting or reformatting; preserve line breaks in rendering (e.g., via appropriate HTML structure) while keeping styling consistent."
-        },
-        {
-          "path": "frontend/src/pages/HomePage.tsx",
-          "operation": "modify",
-          "description": "Confirm the homepage no longer imports/renders any About content so none of the verbatim About page body text can appear on /."
-        }
-      ]
-    },
-    {
-      "id": "REQ-11",
-      "summary": "Keep the existing design system intact; reuse existing components/styles and avoid global styling changes.",
-      "acceptanceCriteria": [
-        "No visual styling changes occur to existing shared components (Header, Hero, Faculty, Courses, Contact, Footer) outside what is necessary to support navigation to /about and removing About from the homepage.",
-        "Tailwind classes/theme variables remain consistent with the existing site styling."
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/pages/AboutPage.tsx",
-          "operation": "modify",
-          "description": "Implement AboutPage using the same layout patterns (container, spacing, typography classes) and shared components already used on the site; avoid adding or changing global styles."
-        },
-        {
-          "path": "frontend/src/components/Header.tsx",
-          "operation": "modify",
-          "description": "Keep existing Header styling and behavior; only introduce the minimal navigation change needed to access /about while preserving current look and feel. Verify the component's usage instructions before implementing."
-        }
-      ]
-    },
-    {
-      "id": "REQ-12",
-      "summary": "Ensure /about contains no system/debug text or AI/platform branding in UI and in static export outputs.",
-      "acceptanceCriteria": [
-        "No system/debug/AI/platform branding strings are visible anywhere on /about in the live UI.",
-        "The static export (generated HTML/ZIP, if produced by the build) does not contain any system/debug/AI/platform branding strings for the About page content."
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/pages/AboutPage.tsx",
-          "operation": "modify",
-          "description": "Ensure AboutPage UI renders only the required heading and the verbatim provided content (plus existing site chrome like Header/Footer) with no debug/system/branding strings."
-        },
-        {
-          "path": "frontend/src/static-export/renderStaticSite.ts",
-          "operation": "modify",
-          "description": "Ensure the generated static About HTML contains only the required title/meta/H1/body content (and necessary site markup) and does not inject system/debug/AI/platform branding strings."
-        }
-      ]
-    },
-    {
-      "id": "REQ-13",
-      "summary": "Add /about to the sitemap without changing the existing homepage sitemap entry.",
-      "acceptanceCriteria": [
-        "frontend/public/sitemap.xml includes an additional <url> entry for https://sangharshclasses.in/about (or equivalent canonical About URL used by the app).",
-        "The existing homepage <url> entry remains present and unchanged."
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/public/sitemap.xml",
-          "operation": "modify",
-          "description": "Add a new <url> entry for https://sangharshclasses.in/about with appropriate <lastmod>, <changefreq>, and <priority>, keeping the existing homepage <url> entry unchanged."
-        }
-      ]
-    },
-    {
-      "id": "REQ-14",
-      "summary": "Update static export generation so homepage export excludes About-only content and a dedicated About HTML export is produced with correct H1/SEO/content.",
-      "acceptanceCriteria": [
-        "Static export homepage HTML does not include the About page-only content.",
-        "Static export includes an About page HTML artifact that contains the required H1, title tag, meta description, and verbatim body content."
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/static-export/renderStaticSite.ts",
-          "operation": "modify",
-          "description": "Refactor static export generation to (a) generate homepage HTML without embedding the About section/body content, and (b) generate a dedicated About page HTML that includes the required title tag, meta description, a single H1 \"About Sangharsh Classes\", and the verbatim About body content."
-        },
-        {
-          "path": "frontend/vite.config.ts",
-          "operation": "modify",
-          "description": "Update the static export plugin to write a dedicated About HTML artifact (e.g., static-export/about/index.html) alongside the homepage export, ensuring the homepage export remains free of About-only content and the About artifact includes the required SEO/H1/body content."
+          "description": "Restore the homepage About section by importing the existing `frontend/src/components/About.tsx` component and rendering it back within the homepage composition (placing it in the same position it previously occupied). Do not modify the About component itself or any of its content/styling; only re-add its render on the homepage."
         }
       ]
     }

@@ -19,7 +19,7 @@
   "frontend/public/sitemap.xml": "Valid XML sitemap with homepage and /about page entries including lastmod, changefreq, and priority metadata for search engine indexing.",
   "frontend/public/robots.txt": "Robots.txt file allowing all user agents to crawl the site and referencing the sitemap location at https://sangharshclasses.in/sitemap.xml.",
   "frontend/src/components/DomainSetupDialog.tsx": "Dialog component that displays comprehensive DNS configuration, deployment guidance, redirect setup, and verification checklist for configuring both sangharshclasses.in and www.sangharshclasses.in custom domains.",
-  "frontend/src/pages/HomePage.tsx": "Static homepage component that renders Header, Hero, Faculty, Courses, Contact, Footer sections with WhatsAppButton, excluding the About section.",
+  "frontend/src/pages/HomePage.tsx": "Static homepage component that renders Header, Hero, About, Faculty, Courses, Contact, Footer sections with WhatsAppButton, restoring the About section between Hero and Faculty.",
   "frontend/src/hooks/useWebsiteContent.ts": "React Query hooks for fetching and updating website content with automatic actor recovery on first failure (invalidates and refetches actor query), retry configuration (3 retries with exponential backoff), and developer-facing error logging.",
   "frontend/src/hooks/useSectionConfigs.ts": "React Query hooks for fetching and updating section configuration with bounded retry logic (2 retries) and console logging for developer diagnosis.",
   "frontend/src/hooks/useAdminStatus.ts": "React Query hook that checks if the current authenticated user has admin privileges, handling authorization errors gracefully.",
@@ -57,5 +57,5 @@
   "frontend/src/static-export/renderStaticSite.ts": "Static site generator that produces separate HTML files for homepage (without About section) and dedicated About page (with proper H1, SEO title/meta, and verbatim content), plus CSS and JS files.",
   "frontend/src/static-export/staticExportAssets.ts": "Asset manifest listing all images and files to be included in the static export package with source and destination paths.",
   "frontend/src/static-export/zipWriter.ts": "Lightweight ZIP writer utility placeholder for tracking files to be packaged in the static export archive.",
-  "frontend/src/pages/AboutPage.tsx": "Dedicated About page component with SEO metadata management (title and meta description), renders H1 \"About Sangharsh Classes\" and displays both SEO-optimized English content and original Hindi content from canonical source."
+  "frontend/src/pages/AboutPage.tsx": "Dedicated About page component with SEO metadata management, renders H1 \"About Sangharsh Classes\" and displays both SEO-optimized English content and original Hindi content from canonical source with min-height to ensure visibility."
 }
